@@ -36,7 +36,7 @@
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Featured" android:textColor="@color/warning" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="3 Days Free, then $9.99/month" android:textColor="@color/text_primary" android:textSize="24sp" android:textStyle="bold"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="✓ Personalized AI nutrition plan\n✓ Smart meal analysis\n✓ Premium progress insights\n✓ Priority coaching responses\n✓ Habit reminders & check-ins" android:textColor="@color/text_secondary"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="✓ Personalized AI nutrition plan\n✓ Smart meal analysis\n✓ Premium progress insights\n✓ Priority coaching responses\n✓ Habit reminders and check-ins" android:textColor="@color/text_secondary"/>
         </LinearLayout>
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="18dp">

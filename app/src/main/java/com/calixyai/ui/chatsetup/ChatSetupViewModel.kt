@@ -38,8 +38,10 @@ class ChatSetupViewModel @Inject constructor(
 
     private fun initialize() {
         if (_state.value.messages.isNotEmpty()) return
-        enqueueBot("Hey there! I'm Calixy, your personal AI nutrition coach. Before we dive in — what's your first name? 😄")
-        _state.value = _state.value.copy(showInput = true, chips = emptyList())
+        viewModelScope.launch {                          // ← wrap in coroutine
+            enqueueBot("Hey there! I'm Calixy, your personal AI nutrition coach. Before we dive in — what's your first name? 😄")
+            _state.value = _state.value.copy(showInput = true, chips = emptyList())
+        }
     }
 
     private fun processText(value: String) = viewModelScope.launch {
@@ -56,7 +58,11 @@ class ChatSetupViewModel @Inject constructor(
                 _state.value = _state.value.copy(profile = profile, step = ChatStep.GENDER)
                 enqueueBot("${profile.firstName} ${profile.lastName} — sounds like someone who's about to transform their life. Let's keep going! 💪")
                 enqueueBot("Alright ${profile.firstName}, quick one — how do you identify? This helps me personalize your plan.")
-                _state.value = _state.value.copy(showInput = false, chips = listOf("Male", "Female", "Other"), multiSelect = false)
+                _state.value = _state.value.copy(
+                    showInput = false,
+                    chips = listOf("Male", "Female", "Other"),
+                    multiSelect = false
+                )
             }
             ChatStep.AGE -> {
                 val age = value.filter { it.isDigit() }.toIntOrNull() ?: 0
@@ -72,8 +78,8 @@ class ChatSetupViewModel @Inject constructor(
                 val bmi = calculateBmi(height, weight)
                 val estimatedMonths = estimateMonths(bmi)
                 val verdict = when {
-                    bmi < 18.5f -> "Your BMI is %.1f — slightly under the normal zone. We’ll focus on stronger nutrition foundations.".format(bmi)
-                    bmi < 25f -> "Your BMI is %.1f — right around the healthy range. We’ll sharpen consistency and body composition.".format(bmi)
+                    bmi < 18.5f -> "Your BMI is %.1f — slightly under the normal zone. We'll focus on stronger nutrition foundations.".format(bmi)
+                    bmi < 25f -> "Your BMI is %.1f — right around the healthy range. We'll sharpen consistency and body composition.".format(bmi)
                     bmi < 30f -> "Your BMI is %.1f — you're slightly above normal range. Totally fixable! 🔥 With CalixyAI, people in your range typically reach their ideal weight in 3–4 months.".format(bmi)
                     else -> "Your BMI is %.1f — above the recommended range right now, but we can absolutely improve it step by step.".format(bmi)
                 }
@@ -81,12 +87,22 @@ class ChatSetupViewModel @Inject constructor(
                 _state.value = _state.value.copy(
                     profile = profile,
                     step = ChatStep.ACTIVITY,
-                    bmiUi = BmiUi(bmi, verdict, estimatedMonths, (((bmi.coerceIn(15f, 35f) - 15f) / 20f) * 100).roundToInt())
+                    bmiUi = BmiUi(
+                        bmi = bmi,
+                        verdict = verdict,
+                        estimatedMonths = estimatedMonths,
+                        progress = (((bmi.coerceIn(15f, 35f) - 15f) / 20f) * 100).roundToInt()
+                    )
                 )
                 enqueueBot(verdict)
-                _state.value = _state.value.copy(messages = _state.value.messages + ChatMessage(sender = Sender.BOT, text = "BMI", type = MessageType.BMI_CARD))
+                _state.value = _state.value.copy(
+                    messages = _state.value.messages + ChatMessage(sender = Sender.BOT, text = "BMI", type = MessageType.BMI_CARD)
+                )
                 enqueueBot("How would you describe your daily activity? Be honest — Calixy doesn't judge 😂")
-                _state.value = _state.value.copy(showInput = false, chips = listOf("🛋️ Couch Potato", "🚶 Light Walker", "🏃 Moderately Active", "🏋️ Gym Regular", "⚡ Athlete Mode", "🧘 Yoga & Zen"))
+                _state.value = _state.value.copy(
+                    showInput = false,
+                    chips = listOf("🛋️ Couch Potato", "🚶 Light Walker", "🏃 Moderately Active", "🏋️ Gym Regular", "⚡ Athlete Mode", "🧘 Yoga & Zen")
+                )
             }
             else -> Unit
         }
@@ -108,7 +124,11 @@ class ChatSetupViewModel @Inject constructor(
             }
             ChatStep.ACTIVITY -> {
                 val profile = _state.value.profile.copy(activityLevel = value)
-                _state.value = _state.value.copy(profile = profile, step = ChatStep.GOAL, chips = listOf("🔥 Lose Weight", "💪 Build Muscle", "📊 Stay at My Weight", "🏃 Improve Fitness", "❤️ Just Be Healthier"))
+                _state.value = _state.value.copy(
+                    profile = profile,
+                    step = ChatStep.GOAL,
+                    chips = listOf("🔥 Lose Weight", "💪 Build Muscle", "📊 Stay at My Weight", "🏃 Improve Fitness", "❤️ Just Be Healthier")
+                )
                 enqueueBot("Nice. That gives me a much better idea of your rhythm.")
                 enqueueBot("What's the mission? Pick your main goal:")
             }
@@ -121,7 +141,7 @@ class ChatSetupViewModel @Inject constructor(
                     multiSelect = true,
                     selectedItems = emptySet()
                 )
-                enqueueBot("Locked in. We’re building around $value.")
+                enqueueBot("Locked in. We're building around $value.")
                 enqueueBot("Any foods your body and you are… not on speaking terms with? 🤔")
             }
             else -> Unit
@@ -147,7 +167,7 @@ class ChatSetupViewModel @Inject constructor(
                     selectedItems = emptySet(),
                     multiSelect = true
                 )
-                enqueueBot("Helpful. I’ll keep those out of your plan.")
+                enqueueBot("Helpful. I'll keep those out of your plan.")
                 enqueueBot("Last one, I promise! Any dietary rules I should know about?")
             }
             ChatStep.DIETARY -> {
@@ -162,7 +182,9 @@ class ChatSetupViewModel @Inject constructor(
                     finalAnalysisUi = finalAnalysis
                 )
                 enqueueBot("Okay ${profile.firstName}, I've crunched the numbers. Let me show you your full picture... 📊")
-                _state.value = _state.value.copy(messages = _state.value.messages + ChatMessage(sender = Sender.BOT, text = "ANALYSIS", type = MessageType.ANALYSIS_CARD))
+                _state.value = _state.value.copy(
+                    messages = _state.value.messages + ChatMessage(sender = Sender.BOT, text = "ANALYSIS", type = MessageType.ANALYSIS_CARD)
+                )
                 enqueueBot("Based on everything you've told me, here's your personalized CalixyAI plan. Ready to unlock it? 🚀")
                 repository.saveSetup(profile)
                 _state.value = _state.value.copy(finished = true)
@@ -172,13 +194,19 @@ class ChatSetupViewModel @Inject constructor(
     }
 
     private suspend fun enqueueBot(text: String) {
-        _state.value = _state.value.copy(messages = _state.value.messages + ChatMessage(sender = Sender.BOT, text = "typing", type = MessageType.TYPING))
+        _state.value = _state.value.copy(
+            messages = _state.value.messages + ChatMessage(sender = Sender.BOT, text = "typing", type = MessageType.TYPING)
+        )
         delay(900)
-        _state.value = _state.value.copy(messages = _state.value.messages.dropLast(1) + ChatMessage(sender = Sender.BOT, text = text))
+        _state.value = _state.value.copy(
+            messages = _state.value.messages.dropLast(1) + ChatMessage(sender = Sender.BOT, text = text)
+        )
     }
 
     private fun appendUser(text: String) {
-        _state.value = _state.value.copy(messages = _state.value.messages + ChatMessage(sender = Sender.USER, text = text))
+        _state.value = _state.value.copy(
+            messages = _state.value.messages + ChatMessage(sender = Sender.USER, text = text)
+        )
     }
 
     private fun calculateBmi(heightCm: Int, weightKg: Float): Float {

@@ -30,8 +30,8 @@ class ChatAdapter(
         private const val TYPE_TYPING = 2
 
         val Diff = object : DiffUtil.ItemCallback<ChatMessage>() {
-            override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem.id == newItem.id
-            override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean = oldItem == newItem
+            override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage) = oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage) = oldItem == newItem
         }
     }
 
@@ -61,7 +61,11 @@ class ChatAdapter(
         }
         holder.itemView.translationY = 40f
         holder.itemView.alpha = 0f
-        holder.itemView.animate().translationY(0f).alpha(1f).setDuration(250).setInterpolator(DecelerateInterpolator()).start()
+        holder.itemView.animate()
+            .translationY(0f).alpha(1f)
+            .setDuration(250)
+            .setInterpolator(DecelerateInterpolator())
+            .start()
     }
 
     class UserViewHolder(private val binding: ItemChatUserBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -85,14 +89,20 @@ class ChatAdapter(
             binding.cardBmi.visibility = if (item.type == MessageType.BMI_CARD) View.VISIBLE else View.GONE
             binding.cardAnalysis.visibility = if (item.type == MessageType.ANALYSIS_CARD) View.VISIBLE else View.GONE
             binding.tvMessage.text = item.text
+
             if (item.type == MessageType.BMI_CARD && bmiUi != null) {
                 binding.tvBmiValue.text = "BMI ${bmiUi.bmi}"
                 binding.tvBmiVerdict.text = bmiUi.verdict
                 binding.bmiProgress.progress = bmiUi.progress
                 binding.tvBmiZones.text = "Underweight · Normal · Overweight · Obese"
             }
+
             if (item.type == MessageType.ANALYSIS_CARD && analysisUi != null) {
-                binding.tvStats.text = "Current BMI ${analysisUi.currentBmi}   ·   Target BMI ${analysisUi.targetBmi}\n${analysisUi.estimatedDuration} months   ·   ${analysisUi.dailyCalories} kcal/day"
+                binding.tvStats.text = buildString {
+                    append("Current BMI ${analysisUi.currentBmi}   ·   Target BMI ${analysisUi.targetBmi}\n")
+                    append("${analysisUi.estimatedDuration} months   ·   ${analysisUi.dailyCalories} kcal/day")
+                }
+
                 val entries = analysisUi.chartPoints.map { Entry(it.month, it.weight) }
                 val set = LineDataSet(entries, "Weight Projection").apply {
                     setDrawFilled(true)
@@ -100,10 +110,12 @@ class ChatAdapter(
                     setDrawCircles(true)
                     mode = LineDataSet.Mode.CUBIC_BEZIER
                     color = android.graphics.Color.parseColor("#7C4DFF")
-                    fillColor = android.graphics.Color.parseColor("#332A6DFF")
-                    circleColor = android.graphics.Color.parseColor("#00E5FF")
+                    fillColor = android.graphics.Color.parseColor("#2A6DFF")
+                    fillAlpha = 50
+                    setCircleColor(android.graphics.Color.parseColor("#00E5FF"))  // ← correct API
                     valueTextColor = android.graphics.Color.TRANSPARENT
                 }
+
                 binding.weightChart.apply {
                     data = LineData(set)
                     axisRight.isEnabled = false

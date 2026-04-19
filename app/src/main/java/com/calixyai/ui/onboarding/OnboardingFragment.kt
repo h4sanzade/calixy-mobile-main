@@ -23,19 +23,10 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentOnboardingBinding.bind(view)
 
-        launchAndRepeat {
-            viewModel.state.collect { state ->
-                if (binding.viewPager.adapter == null) {
-                    binding.viewPager.adapter = OnboardingPagerAdapter(state.pages)
-                    binding.indicator.attachTo(binding.viewPager)
-                }
-                binding.viewPager.setCurrentItem(state.currentPage, true)
-                binding.btnNext.text = if (state.currentPage == state.pages.lastIndex) getString(R.string.get_started) else getString(R.string.next)
-                if (state.finished) {
-                    findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToChatSetupFragment())
-                }
-            }
-        }
+        // Set adapter once with the static pages list — not inside collect
+        val pages = viewModel.state.value.pages
+        binding.viewPager.adapter = OnboardingPagerAdapter(pages)
+        binding.indicator.setViewPager(binding.viewPager)
 
         binding.viewPager.setPageTransformer(CompositePageTransformer().apply {
             addTransformer(MarginPageTransformer(24))
@@ -47,6 +38,7 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
                 page.scaleY = scale
             }
         })
+
         binding.viewPager.registerOnPageChangeCallback(object : androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.onIntent(OnboardingIntent.PageChanged(position))
@@ -55,6 +47,22 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
 
         binding.btnNext.setOnClickListener { viewModel.onIntent(OnboardingIntent.Next) }
         binding.tvSkip.setOnClickListener { viewModel.onIntent(OnboardingIntent.Skip) }
+
+        launchAndRepeat {
+            viewModel.state.collect { state ->
+                binding.viewPager.setCurrentItem(state.currentPage, true)
+                binding.btnNext.text = if (state.currentPage == pages.lastIndex) {
+                    getString(R.string.get_started)
+                } else {
+                    getString(R.string.next)
+                }
+                if (state.finished) {
+                    findNavController().navigate(
+                        OnboardingFragmentDirections.actionOnboardingFragmentToChatSetupFragment()
+                    )
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
