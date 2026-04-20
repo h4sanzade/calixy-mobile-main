@@ -35,19 +35,11 @@ class ChatSetupViewModel @Inject constructor(
         get() = context.getSharedPreferences("calixy_prefs", Context.MODE_PRIVATE)
             .getString("selected_locale", "en") ?: "en"
 
-    private fun t(
-        en: String,
-        az: String = en,
-        tr: String = en,
-        ru: String = en
-    ): String = when (locale) {
-        "az" -> az
-        "tr" -> tr
-        "ru" -> ru
-        else -> en
-    }
+    private fun t(en: String, az: String = en, tr: String = en, ru: String = en): String =
+        when (locale) { "az" -> az; "tr" -> tr; "ru" -> ru; else -> en }
 
-    // Activity chips per locale
+    // ── Chip helpers ──────────────────────────────────────────────────────────
+
     private fun activityChips() = when (locale) {
         "az" -> listOf("🛋️ Divan Sevəni", "🚶 Yüngül Gəzən", "🏃 Orta Aktiv", "🏋️ Zal Daimi", "⚡ Atlet Rejimi", "🧘 Yoqa & Zen")
         "tr" -> listOf("🛋️ Kanepe Tutkunu", "🚶 Hafif Yürüyüşçü", "🏃 Orta Aktif", "🏋️ Spor Salonu Düzenlisi", "⚡ Atlet Modu", "🧘 Yoga & Zen")
@@ -55,7 +47,6 @@ class ChatSetupViewModel @Inject constructor(
         else -> listOf("🛋️ Couch Potato", "🚶 Light Walker", "🏃 Moderately Active", "🏋️ Gym Regular", "⚡ Athlete Mode", "🧘 Yoga & Zen")
     }
 
-    // Goal chips per locale
     private fun goalChips() = when (locale) {
         "az" -> listOf("🔥 Arıqla", "💪 Əzələ Qur", "📊 Çəkimi Saxla", "🏃 Formanı Yaxşılaşdır", "❤️ Sadəcə Sağlam Ol")
         "tr" -> listOf("🔥 Kilo Ver", "💪 Kas Yap", "📊 Kilomu Koru", "🏃 Formu Geliştir", "❤️ Sadece Sağlıklı Ol")
@@ -63,7 +54,13 @@ class ChatSetupViewModel @Inject constructor(
         else -> listOf("🔥 Lose Weight", "💪 Build Muscle", "📊 Stay at My Weight", "🏃 Improve Fitness", "❤️ Just Be Healthier")
     }
 
-    // Allergy chips per locale
+    private fun weightDirectionChips() = when (locale) {
+        "az" -> listOf("⬇️ Arıqlamaq istəyirəm", "⬆️ Çəki qazanmaq istəyirəm", "↔️ Sabit saxlamaq istəyirəm")
+        "tr" -> listOf("⬇️ Kilo vermek istiyorum", "⬆️ Kilo almak istiyorum", "↔️ Sabit tutmak istiyorum")
+        "ru" -> listOf("⬇️ Хочу похудеть", "⬆️ Хочу набрать вес", "↔️ Хочу остаться таким же")
+        else -> listOf("⬇️ I want to lose weight", "⬆️ I want to gain weight", "↔️ I want to stay the same")
+    }
+
     private fun allergyChips() = when (locale) {
         "az" -> listOf("🥜 Yer fındığı", "🥛 Süd məhsulları", "🌾 Qluten", "🥚 Yumurta", "🐟 Dəniz məhsulları", "🍯 Soya", "🌰 Ağac qozları", "✏️ Özüm yazım…")
         "tr" -> listOf("🥜 Yer Fıstığı", "🥛 Süt Ürünleri", "🌾 Gluten", "🥚 Yumurta", "🐟 Deniz Ürünleri", "🍯 Soya", "🌰 Ağaç Kuruyemişi", "✏️ Özel…")
@@ -71,7 +68,6 @@ class ChatSetupViewModel @Inject constructor(
         else -> listOf("🥜 Peanuts", "🥛 Dairy", "🌾 Gluten", "🥚 Eggs", "🐟 Seafood", "🍯 Soy", "🌰 Tree Nuts", "✏️ Custom…")
     }
 
-    // Dietary chips per locale
     private fun dietaryChips() = when (locale) {
         "az" -> listOf("☪️ Halal", "✡️ Koşer", "🌱 Vegan", "🥗 Vegetarian", "🥩 Keto", "🌾 Paleo", "🚫 Məhdudiyyət Yoxdur")
         "tr" -> listOf("☪️ Helal", "✡️ Koşer", "🌱 Vegan", "🥗 Vejetaryen", "🥩 Keto", "🌾 Paleo", "🚫 Kısıtlama Yok")
@@ -79,27 +75,21 @@ class ChatSetupViewModel @Inject constructor(
         else -> listOf("☪️ Halal", "✡️ Kosher", "🌱 Vegan", "🥗 Vegetarian", "🥩 Keto", "🌾 Paleo", "🚫 No Restrictions")
     }
 
-    // Gender chips per locale
     private fun genderChips() = when (locale) {
-        "az" -> listOf("Kişi", "Qadın", "Digər")
-        "tr" -> listOf("Erkek", "Kadın", "Diğer")
-        "ru" -> listOf("Мужчина", "Женщина", "Другое")
-        else -> listOf("Male", "Female", "Other")
-    }
-
-    // Custom marker per locale
-    private fun customMarker() = when (locale) {
-        "az" -> "✏️ Özüm yazım…"
-        "tr" -> "✏️ Özel…"
-        "ru" -> "✏️ Своё…"
-        else -> "✏️ Custom…"
+        "az" -> listOf("👨 Kişi", "👩 Qadın", "🌈 Digər")
+        "tr" -> listOf("👨 Erkek", "👩 Kadın", "🌈 Diğer")
+        "ru" -> listOf("👨 Мужчина", "👩 Женщина", "🌈 Другое")
+        else -> listOf("👨 Male", "👩 Female", "🌈 Other")
     }
 
     private fun noRestrictionMarker() = when (locale) {
-        "az" -> "🚫 Məhdudiyyət Yoxdur"
-        "tr" -> "🚫 Kısıtlama Yok"
-        "ru" -> "🚫 Без ограничений"
-        else -> "🚫 No Restrictions"
+        "az" -> "🚫 Məhdudiyyət Yoxdur"; "tr" -> "🚫 Kısıtlama Yok"
+        "ru" -> "🚫 Без ограничений"; else -> "🚫 No Restrictions"
+    }
+
+    private fun customMarker() = when (locale) {
+        "az" -> "✏️ Özüm yazım…"; "tr" -> "✏️ Özel…"
+        "ru" -> "✏️ Своё…"; else -> "✏️ Custom…"
     }
 
     // ── Intent dispatcher ─────────────────────────────────────────────────────
@@ -112,166 +102,251 @@ class ChatSetupViewModel @Inject constructor(
             is ChatSetupIntent.ToggleMultiSelect -> toggleMulti(intent.value)
             is ChatSetupIntent.SubmitMultiSelect -> submitMulti(intent.customValue)
             is ChatSetupIntent.ConfirmSliders -> confirmSliders(intent.heightCm, intent.weightKg)
+            is ChatSetupIntent.EditMessage -> editMessage(intent.messageId)
         }
     }
 
-    // ── Steps ─────────────────────────────────────────────────────────────────
+    // ── Initialize ────────────────────────────────────────────────────────────
 
     private fun initialize() {
         if (_state.value.messages.isNotEmpty()) return
         viewModelScope.launch {
             enqueueBot(
                 t(
-                    en = "Hey there! I'm Calixy, your personal AI nutrition coach 🤖\n\nBefore we build your plan — what's your **first name**?",
-                    az = "Salam! Mən Calixy, şəxsi AI qidalanma məşqçinizəm 🤖\n\nPlanınızı qurmadan əvvəl — **adınız** nədir?",
-                    tr = "Merhaba! Ben Calixy, kişisel AI beslenme koçunuzum 🤖\n\nPlanınızı oluşturmadan önce — **adınız** nedir?",
-                    ru = "Привет! Я Calixy, ваш персональный AI-нутрициолог 🤖\n\nПрежде чем составить план — как вас **зовут**?"
+                    en = "Hey there! I'm Calixy, your personal AI nutrition coach 🤖\n\nWhat's your **first name**?",
+                    az = "Salam! Mən Calixy, şəxsi AI qidalanma məşqçinizəm 🤖\n\n**Adınız** nədir?",
+                    tr = "Merhaba! Ben Calixy, kişisel AI beslenme koçunuzum 🤖\n\n**Adınız** nedir?",
+                    ru = "Привет! Я Calixy, ваш персональный AI-нутрициолог 🤖\n\nКак вас **зовут**?"
                 )
             )
-            _state.value = _state.value.copy(showInput = true, chips = emptyList())
+            _state.value = _state.value.copy(
+                showInput = true,
+                chips = emptyList(),
+                requestKeyboard = true
+            )
         }
     }
+
+    // ── Edit a past message ───────────────────────────────────────────────────
+
+    private fun editMessage(messageId: Long) {
+        val messages = _state.value.messages
+        val target = messages.firstOrNull { it.id == messageId } ?: return
+        val editStep = target.editableStep ?: return
+
+        // Remove all messages from this message onward (user + subsequent bot)
+        val idx = messages.indexOf(target)
+        val trimmed = messages.take(idx)
+
+        // Restore profile state to before this step was answered
+        val profile = _state.value.profile
+        val restoredProfile = when (editStep) {
+            ChatStep.FIRST_NAME -> SetupProfile()
+            ChatStep.LAST_NAME -> profile.copy(lastName = "")
+            ChatStep.GENDER -> profile.copy(gender = "")
+            ChatStep.AGE -> profile.copy(age = null)
+            ChatStep.HEIGHT_WEIGHT -> profile.copy(heightCm = null, weightKg = null, bmi = null)
+            ChatStep.ACTIVITY -> profile.copy(activityLevel = "")
+            ChatStep.GOAL -> profile.copy(goal = "")
+            ChatStep.WEIGHT_DIRECTION -> profile.copy(weightDirection = "")
+            ChatStep.ALLERGIES -> profile.copy(allergies = emptyList(), customAllergy = null)
+            ChatStep.DIETARY -> profile.copy(dietaryRules = emptyList())
+            else -> profile
+        }
+
+        // Determine what UI to show for re-entry
+        val (chips, multiSelect, showInput, showSliders) = when (editStep) {
+            ChatStep.FIRST_NAME, ChatStep.LAST_NAME, ChatStep.AGE ->
+                Quad(emptyList(), false, true, false)
+            ChatStep.GENDER ->
+                Quad(genderChips(), false, false, false)
+            ChatStep.HEIGHT_WEIGHT ->
+                Quad(emptyList(), false, false, true)
+            ChatStep.ACTIVITY ->
+                Quad(activityChips(), false, false, false)
+            ChatStep.GOAL ->
+                Quad(goalChips(), false, false, false)
+            ChatStep.WEIGHT_DIRECTION ->
+                Quad(weightDirectionChips(), false, false, false)
+            ChatStep.ALLERGIES ->
+                Quad(allergyChips(), true, false, false)
+            ChatStep.DIETARY ->
+                Quad(dietaryChips(), true, false, false)
+            else -> Quad(emptyList(), false, true, false)
+        }
+
+        _state.value = _state.value.copy(
+            messages = trimmed,
+            step = editStep,
+            profile = restoredProfile,
+            chips = chips,
+            multiSelect = multiSelect,
+            showInput = showInput,
+            showSliders = showSliders,
+            selectedItems = emptySet(),
+            finished = false,
+            bmiUi = if (editStep <= ChatStep.HEIGHT_WEIGHT) null else _state.value.bmiUi,
+            finalAnalysisUi = null,
+            requestKeyboard = showInput
+        )
+    }
+
+    private data class Quad<A, B, C, D>(val a: A, val b: B, val c: C, val d: D)
+
+    // ── Text steps ────────────────────────────────────────────────────────────
 
     private fun processText(value: String) = viewModelScope.launch {
         if (value.isBlank()) return@launch
         when (_state.value.step) {
             ChatStep.FIRST_NAME -> {
-                val name = value.trim()
-                appendUser(name)
-                val profile = _state.value.profile.copy(firstName = name)
-                _state.value = _state.value.copy(profile = profile, step = ChatStep.LAST_NAME)
+                val name = value.trim().uppercase()
+                appendUser(value.trim(), ChatStep.FIRST_NAME)
+                val profile = _state.value.profile.copy(firstName = value.trim())
+                _state.value = _state.value.copy(
+                    profile = profile,
+                    step = ChatStep.LAST_NAME,
+                    requestKeyboard = false
+                )
                 enqueueBot(
                     t(
-                        en = "Love the name **$name**! 🎉 Now, what's your surname?",
-                        az = "Gözəl addir **$name**! 🎉 İndi, soyadınız nədir?",
-                        tr = "Harika bir isim **$name**! 🎉 Şimdi, soyadınız nedir?",
-                        ru = "Отличное имя **$name**! 🎉 Теперь — какая у вас **фамилия**?"
+                        en = "**$name!** Love that name 🎉 Now, what's your **surname**?",
+                        az = "**$name!** Gözəl addır 🎉 İndi, **soyadınız** nədir?",
+                        tr = "**$name!** Harika bir isim 🎉 Şimdi, **soyadınız** nedir?",
+                        ru = "**$name!** Отличное имя 🎉 Теперь — какая у вас **фамилия**?"
                     )
                 )
+                _state.value = _state.value.copy(showInput = true, requestKeyboard = true)
             }
 
             ChatStep.LAST_NAME -> {
-                val last = value.trim()
-                appendUser(last)
-                val profile = _state.value.profile.copy(lastName = last)
-                val full = "${profile.firstName} $last"
+                val last = value.trim().uppercase()
+                appendUser(value.trim(), ChatStep.LAST_NAME)
+                val profile = _state.value.profile.copy(lastName = value.trim())
+                val fullUpper = "${profile.firstName.uppercase()} $last"
                 _state.value = _state.value.copy(profile = profile, step = ChatStep.GENDER)
                 enqueueBot(
                     t(
-                        en = "**$full** — that's a name that means business. Let's keep the momentum going! 💪",
-                        az = "**$full** — bu ciddi bir addır. İrəliyə davam edək! 💪",
-                        tr = "**$full** — bu ciddi bir isim. Devam edelim! 💪",
-                        ru = "**$full** — серьёзное имя. Продолжаем! 💪"
+                        en = "**$fullUpper** — a name that means business. Let's keep going! 💪",
+                        az = "**$fullUpper** — bu ciddi bir addır. Davam edək! 💪",
+                        tr = "**$fullUpper** — ciddi bir isim. Devam edelim! 💪",
+                        ru = "**$fullUpper** — серьёзное имя. Продолжаем! 💪"
                     )
                 )
-                delay(400)
+                delay(350)
                 enqueueBot(
                     t(
-                        en = "Alright ${profile.firstName}, quick question — how do you identify? This helps me personalize your plan perfectly.",
-                        az = "${profile.firstName}, sürətli sual — özünüzü necə təyin edirsiniz? Bu planı mükəmməl fərdiləşdirməyə kömək edir.",
-                        tr = "${profile.firstName}, hızlı bir soru — kendinizi nasıl tanımlıyorsunuz? Bu planınızı mükemmel kişiselleştirmeme yardımcı olur.",
-                        ru = "${profile.firstName}, быстрый вопрос — как вы себя идентифицируете? Это поможет мне идеально персонализировать план."
+                        en = "How do you identify? This helps me personalize your plan perfectly.",
+                        az = "Özünüzü necə təyin edirsiniz?",
+                        tr = "Kendinizi nasıl tanımlıyorsunuz?",
+                        ru = "Как вы себя идентифицируете?"
                     )
                 )
                 _state.value = _state.value.copy(
                     showInput = false,
                     chips = genderChips(),
-                    multiSelect = false
+                    multiSelect = false,
+                    requestKeyboard = false
                 )
             }
 
             ChatStep.AGE -> {
                 val age = value.filter { it.isDigit() }.toIntOrNull() ?: 0
-                appendUser("$age")
+                appendUser("$age", ChatStep.AGE)
                 val profile = _state.value.profile.copy(age = age)
-                _state.value = _state.value.copy(profile = profile, step = ChatStep.HEIGHT_WEIGHT)
-
+                _state.value = _state.value.copy(
+                    profile = profile,
+                    step = ChatStep.HEIGHT_WEIGHT,
+                    requestKeyboard = false
+                )
                 val ageReply = when {
                     age in 13..25 -> t(
-                        en = "**$age** — peak energy years! ⚡ Your metabolism is your superpower right now. Let's use it well.",
-                        az = "**$age** — pik enerji illəri! ⚡ Metabolizmanız indi sizin super gücünüzdür. Ondan yaxşı istifadə edək.",
-                        tr = "**$age** — zirve enerji yılları! ⚡ Metabolizmanız şu an süper gücünüz. Onu iyi kullanalım.",
-                        ru = "**$age** — пик энергии! ⚡ Ваш метаболизм сейчас — ваша суперсила. Используем его на полную."
+                        en = "**$age** — peak energy years! ⚡ Your metabolism is your superpower.",
+                        az = "**$age** — pik enerji illəri! ⚡ Metabolizmanız sizin super gücünüzdür.",
+                        tr = "**$age** — zirve enerji yılları! ⚡ Metabolizmanız süper gücünüz.",
+                        ru = "**$age** — пик энергии! ⚡ Ваш метаболизм — ваша суперсила."
                     )
                     age in 26..45 -> t(
-                        en = "**$age**! That's the sweet spot where discipline meets experience. 🔥 You know what you want — we'll help you get there faster.",
-                        az = "**$age**! Bu intizamın təcrübəylə buluşduğu yerdir. 🔥 Nə istədiyinizi bilirsiniz — daha sürətli çatmağa kömək edəcəyik.",
-                        tr = "**$age**! Disiplinin deneyimle buluştuğu nokta. 🔥 Ne istediğinizi biliyorsunuz — daha hızlı ulaşmanıza yardımcı olacağız.",
-                        ru = "**$age**! Это точка, где дисциплина встречается с опытом. 🔥 Вы знаете, чего хотите — поможем достичь быстрее."
+                        en = "**$age**! Where discipline meets experience. 🔥",
+                        az = "**$age**! İntizamın təcrübəylə buluşduğu yer. 🔥",
+                        tr = "**$age**! Disiplinin deneyimle buluştuğu nokta. 🔥",
+                        ru = "**$age**! Дисциплина встречается с опытом. 🔥"
                     )
                     else -> t(
-                        en = "**$age** — and clearly taking health seriously. 💪 Smart move. At this stage, quality nutrition makes an enormous difference.",
-                        az = "**$age** — sağlamlığa ciddi yanaşırsınız. 💪 Ağıllı addım. Bu mərhələdə keyfiyyətli qidalanma böyük fərq yaradır.",
-                        tr = "**$age** — sağlığa ciddi yaklaşıyorsunuz. 💪 Akıllıca. Bu aşamada kaliteli beslenme büyük fark yaratır.",
-                        ru = "**$age** — явно серьёзно относитесь к здоровью. 💪 Правильный подход. На этом этапе питание играет огромную роль."
+                        en = "**$age** — and taking health seriously. 💪 Smart move.",
+                        az = "**$age** — sağlamlığa ciddi yanaşırsınız. 💪",
+                        tr = "**$age** — sağlığa ciddi yaklaşıyorsunuz. 💪",
+                        ru = "**$age** — серьёзно относитесь к здоровью. 💪"
                     )
                 }
                 enqueueBot(ageReply)
                 delay(300)
                 enqueueBot(
                     t(
-                        en = "Now let's get your body measurements. Use the sliders below — drag to your exact height and weight. 📏",
-                        az = "İndi bədən ölçülərinizi götürək. Aşağıdakı sürgülərdən istifadə edin — boy və çəkinizi dəqiq seçin. 📏",
-                        tr = "Şimdi vücut ölçülerinizi alalım. Aşağıdaki kaydırıcıları kullanın — boy ve kilonuzu tam olarak seçin. 📏",
-                        ru = "Теперь замерим ваши параметры. Используйте слайдеры ниже — выберите точный рост и вес. 📏"
+                        en = "Now let's get your measurements. Use the sliders below 📏",
+                        az = "İndi bədən ölçülərinizi götürək. Aşağıdakı sürgülərdən istifadə edin 📏",
+                        tr = "Şimdi vücut ölçülerinizi alalım. Aşağıdaki kaydırıcıları kullanın 📏",
+                        ru = "Теперь замерим ваши параметры. Используйте слайдеры ниже 📏"
                     )
                 )
-                _state.value = _state.value.copy(showInput = false, showSliders = true, chips = emptyList())
+                _state.value = _state.value.copy(
+                    showInput = false,
+                    showSliders = true,
+                    chips = emptyList()
+                )
             }
 
             else -> Unit
         }
     }
 
+    // ── Slider confirm ────────────────────────────────────────────────────────
+
     fun confirmSliders(heightCm: Int, weightKg: Float) = viewModelScope.launch {
         val displayWeight = if (weightKg == weightKg.toInt().toFloat())
             "${weightKg.toInt()} ${t("kg", "kq", "kg", "кг")}"
-        else
-            "${"%.1f".format(weightKg)} ${t("kg", "kq", "kg", "кг")}"
+        else "${"%.1f".format(weightKg)} ${t("kg", "kq", "kg", "кг")}"
 
         appendUser(
             t(
-                en = "Height: **$heightCm cm** · Weight: **$displayWeight**",
-                az = "Boy: **$heightCm sm** · Çəki: **$displayWeight**",
-                tr = "Boy: **$heightCm cm** · Ağırlık: **$displayWeight**",
-                ru = "Рост: **$heightCm см** · Вес: **$displayWeight**"
-            )
+                en = "Height: $heightCm cm · Weight: $displayWeight",
+                az = "Boy: $heightCm sm · Çəki: $displayWeight",
+                tr = "Boy: $heightCm cm · Ağırlık: $displayWeight",
+                ru = "Рост: $heightCm см · Вес: $displayWeight"
+            ),
+            ChatStep.HEIGHT_WEIGHT
         )
 
         val bmi = calculateBmi(heightCm, weightKg)
         val estimatedMonths = estimateMonths(bmi)
-
         val bmiCategory = when {
-            bmi < 18.5f -> "underweight"
-            bmi < 25f -> "normal"
-            bmi < 30f -> "overweight"
-            else -> "obese"
+            bmi < 18.5f -> "underweight"; bmi < 25f -> "normal"
+            bmi < 30f -> "overweight"; else -> "obese"
         }
 
         val verdict = when (bmiCategory) {
             "underweight" -> t(
-                en = "Your BMI is **${"%.1f".format(bmi)}** — you're in the underweight zone. No worries at all! 🌱 We'll focus on building strong nutritional foundations and helping you gain in the healthiest way possible.",
-                az = "BKİ-niz **${"%.1f".format(bmi)}** — az çəkili zonadasınız. Heç narahat olmayın! 🌱 Güclü qidalanma əsasları qurmağa diqqət edəcəyik.",
-                tr = "VKİ'niz **${"%.1f".format(bmi)}** — zayıf bölgedesiniz. Hiç merak etmeyin! 🌱 Güçlü beslenme temelleri oluşturmaya odaklanacağız.",
-                ru = "Ваш ИМТ **${"%.1f".format(bmi)}** — вы в зоне недостаточного веса. Не переживайте! 🌱 Сосредоточимся на построении правильного питания."
+                en = "Your BMI is **${"%.1f".format(bmi)}** — underweight zone. 🌱 We'll help you build strong foundations.",
+                az = "BKİ-niz **${"%.1f".format(bmi)}** — az çəkili zona. 🌱 Güclü əsaslar qurmağa kömək edəcəyik.",
+                tr = "VKİ'niz **${"%.1f".format(bmi)}** — zayıf bölge. 🌱 Güçlü temeller oluşturmanıza yardımcı olacağız.",
+                ru = "Ваш ИМТ **${"%.1f".format(bmi)}** — зона недостаточного веса. 🌱 Поможем выстроить крепкую основу."
             )
             "normal" -> t(
-                en = "Your BMI is **${"%.1f".format(bmi)}** — you're right in the healthy range. Excellent! ✅ Now we'll focus on dialing in your body composition, energy levels, and long-term consistency.",
-                az = "BKİ-niz **${"%.1f".format(bmi)}** — sağlam aralıqdasınız. Əla! ✅ İndi bədən kompozisiyasına, enerji səviyyəsinə və uzunmüddətli ardıcıllığa diqqət edəcəyik.",
-                tr = "VKİ'niz **${"%.1f".format(bmi)}** — sağlıklı aralıktasınız. Mükemmel! ✅ Şimdi vücut kompozisyonuna, enerji seviyesine ve uzun vadeli tutarlılığa odaklanacağız.",
-                ru = "Ваш ИМТ **${"%.1f".format(bmi)}** — вы в здоровой норме. Отлично! ✅ Теперь сосредоточимся на составе тела, уровне энергии и долгосрочной последовательности."
+                en = "Your BMI is **${"%.1f".format(bmi)}** — healthy range. ✅ Excellent! Let's dial in your composition and energy.",
+                az = "BKİ-niz **${"%.1f".format(bmi)}** — sağlam aralıq. ✅ Əla! Bədən kompozisiyası və enerjisinə diqqət edəcəyik.",
+                tr = "VKİ'niz **${"%.1f".format(bmi)}** — sağlıklı aralık. ✅ Mükemmel!",
+                ru = "Ваш ИМТ **${"%.1f".format(bmi)}** — здоровая норма. ✅ Отлично!"
             )
             "overweight" -> t(
-                en = "Your BMI is **${"%.1f".format(bmi)}** — slightly above the normal range. Nothing we can't fix together! 🔥 People in your exact range typically reach their target within 3–4 months.",
-                az = "BKİ-niz **${"%.1f".format(bmi)}** — normal aralığın bir az üstündədir. Birlikdə düzəldə biləcəyimiz bir şey! 🔥 Sizin aralığınızdakı insanlar adətən 3-4 ay içində hədəfə çatırlar.",
-                tr = "VKİ'niz **${"%.1f".format(bmi)}** — normal aralığın biraz üzerinde. Birlikte düzeltemeyeceğimiz bir şey yok! 🔥 Sizin aralığınızdaki kişiler genellikle 3-4 ay içinde hedefe ulaşıyor.",
-                ru = "Ваш ИМТ **${"%.1f".format(bmi)}** — немного выше нормы. Это поправимо! 🔥 Люди с таким ИМТ обычно достигают цели за 3–4 месяца."
+                en = "Your BMI is **${"%.1f".format(bmi)}** — slightly above normal. 🔥 Nothing we can't work on together!",
+                az = "BKİ-niz **${"%.1f".format(bmi)}** — normalın bir az üstündədir. 🔥 Birlikdə üzərində işləyə biləcəyimiz bir şey!",
+                tr = "VKİ'niz **${"%.1f".format(bmi)}** — normal aralığın biraz üzerinde. 🔥 Birlikte çalışabiliriz!",
+                ru = "Ваш ИМТ **${"%.1f".format(bmi)}** — немного выше нормы. 🔥 Вместе разберёмся!"
             )
             else -> t(
-                en = "Your BMI is **${"%.1f".format(bmi)}** — above the recommended range right now. But every great journey starts exactly where you are. 💚 Step by step, we'll get you there.",
-                az = "BKİ-niz **${"%.1f".format(bmi)}** — hazırda tövsiyə edilən aralığın üstündədir. Lakin hər böyük səyahət tam burada başlayır. 💚 Addım-addım, ora çatacağıq.",
-                tr = "VKİ'niz **${"%.1f".format(bmi)}** — şu an önerilen aralığın üzerinde. Ama her büyük yolculuk tam burada başlar. 💚 Adım adım oraya ulaşacağız.",
-                ru = "Ваш ИМТ **${"%.1f".format(bmi)}** — выше рекомендуемого. Но каждое большое путешествие начинается именно с того места, где вы находитесь. 💚 Шаг за шагом — дойдём."
+                en = "Your BMI is **${"%.1f".format(bmi)}** — above recommended range. 💚 Every great journey starts exactly here.",
+                az = "BKİ-niz **${"%.1f".format(bmi)}** — tövsiyə edilən aralığın üstündədir. 💚 Hər böyük səyahət buradan başlayır.",
+                tr = "VKİ'niz **${"%.1f".format(bmi)}** — önerilen aralığın üzerinde. 💚 Her büyük yolculuk buradan başlar.",
+                ru = "Ваш ИМТ **${"%.1f".format(bmi)}** — выше рекомендуемого. 💚 Каждое путешествие начинается здесь."
             )
         }
 
@@ -296,55 +371,57 @@ class ChatSetupViewModel @Inject constructor(
         delay(300)
         enqueueBot(
             t(
-                en = "How would you describe your typical day? Be real with me — I'm not here to judge 😄",
-                az = "Tipik gününüzü necə təsvir edərdiniz? Mənə açıq olun — mən mühakimə etmirəm 😄",
-                tr = "Tipik gününüzü nasıl tanımlarsınız? Bana gerçekçi olun — burada yargılamak için değilim 😄",
-                ru = "Как бы вы описали свой обычный день? Будьте честны — я не осуждаю 😄"
+                en = "How would you describe your typical day? Be real with me 😄",
+                az = "Tipik gününüzü necə təsvir edərdiniz? 😄",
+                tr = "Tipik gününüzü nasıl tanımlarsınız? 😄",
+                ru = "Как бы вы описали свой обычный день? 😄"
             )
         )
-        _state.value = _state.value.copy(
-            showInput = false,
-            chips = activityChips()
-        )
+        _state.value = _state.value.copy(showInput = false, chips = activityChips())
     }
 
+    // ── Single-select chips ───────────────────────────────────────────────────
+
     private fun processSelection(value: String) = viewModelScope.launch {
-        appendUser(value)
+        appendUser(value, _state.value.step)
         when (_state.value.step) {
+
             ChatStep.GENDER -> {
                 val profile = _state.value.profile.copy(gender = value)
                 _state.value = _state.value.copy(
                     profile = profile, step = ChatStep.AGE,
-                    showInput = true, chips = emptyList()
+                    showInput = true, chips = emptyList(), requestKeyboard = true
                 )
+                val isMale = value.contains("Male") || value.contains("Erkek") || value.contains("Kişi") || value.contains("Мужчина")
+                val isFemale = value.contains("Female") || value.contains("Kadın") || value.contains("Qadın") || value.contains("Женщина")
                 val response = when {
-                    value == "Male" || value == "Erkek" || value == "Kişi" || value == "Мужчина" -> t(
+                    isMale -> t(
                         en = "A man with a plan. I respect that. 🫡 Let's build something powerful together.",
-                        az = "Planı olan bir kişi. Hörmətlə qəbul edirəm. 🫡 Birlikdə güclü bir şey quracağıq.",
-                        tr = "Planı olan bir adam. Bunu saygıyla karşılıyorum. 🫡 Birlikte güçlü bir şey inşa edelim.",
-                        ru = "Мужчина с планом. Уважаю. 🫡 Вместе построим что-то мощное."
+                        az = "Planı olan bir kişi. 🫡 Birlikdə güclü bir şey quracağıq.",
+                        tr = "Planı olan bir adam. 🫡 Birlikte güçlü bir şey inşa edelim.",
+                        ru = "Мужчина с планом. 🫡 Вместе построим что-то мощное."
                     )
-                    value == "Female" || value == "Kadın" || value == "Qadın" || value == "Женщина" -> t(
-                        en = "Strong, determined, and ready to level up. ✨ I love that energy. Let's do this.",
-                        az = "Güclü, qətiyyətli və irəliləməyə hazır. ✨ Bu enerji xoşuma gəlir. Başlayaq.",
-                        tr = "Güçlü, kararlı ve seviye atlamaya hazır. ✨ Bu enerjiyi seviyorum. Hadi başlayalım.",
-                        ru = "Сильная, решительная и готовая к росту. ✨ Обожаю такую энергию. Поехали."
+                    isFemale -> t(
+                        en = "Strong, determined, and ready to level up. ✨ Let's do this.",
+                        az = "Güclü, qətiyyətli. ✨ Başlayaq.",
+                        tr = "Güçlü, kararlı. ✨ Hadi başlayalım.",
+                        ru = "Сильная и решительная. ✨ Поехали."
                     )
                     else -> t(
-                        en = "Individuality is strength. 🌈 Your uniqueness is exactly what makes this plan special.",
-                        az = "Fərdiyyət gücdür. 🌈 Sizin unikallığınız məhz bu planı xüsusi edir.",
-                        tr = "Bireysellik güçtür. 🌈 Benzersizliğiniz bu planı özel yapan şeydir.",
-                        ru = "Индивидуальность — это сила. 🌈 Ваша уникальность — именно то, что делает этот план особенным."
+                        en = "Individuality is strength. 🌈 Your uniqueness makes this plan special.",
+                        az = "Fərdiyyət gücdür. 🌈",
+                        tr = "Bireysellik güçtür. 🌈",
+                        ru = "Индивидуальность — сила. 🌈"
                     )
                 }
                 enqueueBot(response)
                 delay(300)
                 enqueueBot(
                     t(
-                        en = "How old are you? Age helps me calibrate your plan precisely. (Don't worry — it stays between us 🤫)",
-                        az = "Neçə yaşınız var? Yaş planı dəqiq kalibr etməyə kömək edir. (Narahat olmayın — aramızda qalır 🤫)",
-                        tr = "Kaç yaşındasınız? Yaş, planınızı hassas kalibre etmeme yardımcı olur. (Merak etmeyin — aramızda kalır 🤫)",
-                        ru = "Сколько вам лет? Возраст помогает точно настроить план. (Не беспокойтесь — это останется между нами 🤫)"
+                        en = "How old are you? (Don't worry — just between us 🤫)",
+                        az = "Neçə yaşınız var? (Narahat olmayın — aramızda qalır 🤫)",
+                        tr = "Kaç yaşındasınız? (Merak etmeyin — aramızda kalır 🤫)",
+                        ru = "Сколько вам лет? (Останется между нами 🤫)"
                     )
                 )
             }
@@ -352,88 +429,170 @@ class ChatSetupViewModel @Inject constructor(
             ChatStep.ACTIVITY -> {
                 val profile = _state.value.profile.copy(activityLevel = value)
                 val activityReply = when {
-                    value.contains("Couch") || value.contains("Divan") || value.contains("Kanepe") || value.contains("Диванный") -> t(
-                        en = "Honest answer — I love it! 😄 Starting from zero actually means the fastest early gains.",
-                        az = "Dürüst cavab — xoşuma gəlir! 😄 Sıfırdan başlamaq əslində ən sürətli ilkin nəticə deməkdir.",
-                        tr = "Dürüst cevap — bunu seviyorum! 😄 Sıfırdan başlamak aslında en hızlı erken kazanımlar anlamına gelir.",
-                        ru = "Честный ответ — обожаю! 😄 Начать с нуля — значит самые быстрые ранние результаты."
-                    )
-                    value.contains("Light") || value.contains("Yüngül") || value.contains("Hafif") || value.contains("Лёгкая") -> t(
-                        en = "A light walker — that's a great foundation. 🚶 Consistency beats intensity every time.",
-                        az = "Yüngül gəzən — bu əla bir əsasdır. 🚶 Ardıcıllıq hər zaman intensivliyi üstələyir.",
-                        tr = "Hafif yürüyüşçü — bu harika bir temel. 🚶 Tutarlılık her zaman yoğunluğu yener.",
-                        ru = "Лёгкая ходьба — отличная база. 🚶 Последовательность всегда побеждает интенсивность."
-                    )
-                    value.contains("Moderate") || value.contains("Orta") || value.contains("Умеренно") -> t(
-                        en = "Moderately active — solid base to build from! 🏃 You've already got the habit.",
-                        az = "Orta aktiv — güclü bir əsas! 🏃 Vərdişiniz artıq var.",
-                        tr = "Orta aktif — üzerine inşa edilecek sağlam bir temel! 🏃 Alışkanlığınız zaten var.",
-                        ru = "Умеренная активность — крепкая база! 🏃 Привычка уже есть."
-                    )
-                    value.contains("Gym") || value.contains("Zal") || value.contains("Spor") || value.contains("Постоянный") -> t(
-                        en = "Gym regular — now we're talking! 🏋️ We'll make sure your nutrition matches your effort.",
-                        az = "Zal daimi — indi danışırıq! 🏋️ Qidalanmanızın cəhdinizlə uyğun olduğundan əmin olacağıq.",
-                        tr = "Spor salonu düzenlisi — şimdi konuşuyoruz! 🏋️ Beslenmenizin çabalarınızla eşleşmesini sağlayacağız.",
-                        ru = "Постоянный в зале — вот теперь разговор! 🏋️ Убедимся, что питание соответствует вашим усилиям."
-                    )
-                    value.contains("Athlete") || value.contains("Atlet") || value.contains("атлета") -> t(
-                        en = "Athlete mode! ⚡ Performance nutrition is a whole different game — and Calixy is built for exactly that.",
-                        az = "Atlet rejimi! ⚡ Performans qidalanması tamam başqa oyundur — Calixy məhz bunun üçün qurulub.",
-                        tr = "Atlet modu! ⚡ Performans beslenmesi bambaşka bir oyun — Calixy tam da bunun için tasarlandı.",
-                        ru = "Режим атлета! ⚡ Спортивное питание — это совсем другая игра, и Calixy создан именно для этого."
-                    )
-                    else -> t(
-                        en = "Yoga & Zen — beautiful choice. 🧘 Mindful movement deserves mindful nutrition.",
-                        az = "Yoqa & Zen — gözəl seçim. 🧘 Şüurlu hərəkət şüurlu qidalanmaya layiqdir.",
-                        tr = "Yoga & Zen — güzel seçim. 🧘 Bilinçli hareket bilinçli beslenmeyi hak eder.",
-                        ru = "Йога и дзен — прекрасный выбор. 🧘 Осознанное движение заслуживает осознанного питания."
-                    )
+                    value.contains("Couch") || value.contains("Divan") || value.contains("Kanepe") || value.contains("Диванный") ->
+                        t(en = "Honest answer — love it! 😄 Starting from zero means fastest early gains.",
+                            az = "Dürüst cavab! 😄 Sıfırdan başlamaq ən sürətli nəticədir.",
+                            tr = "Dürüst cevap! 😄 Sıfırdan başlamak hızlı kazanımlar demek.",
+                            ru = "Честно — обожаю! 😄 Начать с нуля — самые быстрые результаты.")
+                    value.contains("Light") || value.contains("Yüngül") || value.contains("Hafif") || value.contains("Лёгкая") ->
+                        t(en = "Light walker — great foundation. 🚶 Consistency beats intensity.",
+                            az = "Yüngül gəzən — əla əsas. 🚶",
+                            tr = "Hafif yürüyüşçü — harika temel. 🚶",
+                            ru = "Лёгкая ходьба — отличная база. 🚶")
+                    value.contains("Moderate") || value.contains("Orta") || value.contains("Умеренно") ->
+                        t(en = "Moderately active — solid base! 🏃 You already have the habit.",
+                            az = "Orta aktiv — güclü əsas! 🏃",
+                            tr = "Orta aktif — sağlam temel! 🏃",
+                            ru = "Умеренная активность — крепкая база! 🏃")
+                    value.contains("Gym") || value.contains("Zal") || value.contains("Spor") || value.contains("Постоянный") ->
+                        t(en = "Gym regular — now we're talking! 🏋️ Nutrition must match your effort.",
+                            az = "Zal daimi! 🏋️",
+                            tr = "Spor salonu düzenlisi! 🏋️",
+                            ru = "Постоянный в зале! 🏋️")
+                    value.contains("Athlete") || value.contains("Atlet") || value.contains("атлета") ->
+                        t(en = "Athlete mode! ⚡ Performance nutrition is a different game.",
+                            az = "Atlet rejimi! ⚡",
+                            tr = "Atlet modu! ⚡",
+                            ru = "Режим атлета! ⚡")
+                    else ->
+                        t(en = "Yoga & Zen — beautiful choice. 🧘 Mindful movement deserves mindful nutrition.",
+                            az = "Yoqa & Zen — gözəl seçim. 🧘",
+                            tr = "Yoga & Zen — güzel seçim. 🧘",
+                            ru = "Йога и дзен — прекрасный выбор. 🧘")
                 }
-                _state.value = _state.value.copy(
-                    profile = profile,
-                    step = ChatStep.GOAL,
-                    chips = goalChips()
-                )
+                _state.value = _state.value.copy(profile = profile, step = ChatStep.GOAL, chips = goalChips())
                 enqueueBot(activityReply)
                 delay(300)
                 enqueueBot(
                     t(
-                        en = "Now for the big question — what's the main mission? Pick your primary goal:",
-                        az = "İndi böyük sual — əsas missiya nədir? Əsas hədəfinizi seçin:",
-                        tr = "Şimdi büyük soru — ana misyon nedir? Birincil hedefinizi seçin:",
-                        ru = "Теперь главный вопрос — в чём главная миссия? Выберите основную цель:"
+                        en = "Now for the big question — what's the main mission?",
+                        az = "İndi böyük sual — əsas missiya nədir?",
+                        tr = "Şimdi büyük soru — ana misyon nedir?",
+                        ru = "Теперь главный вопрос — в чём главная миссия?"
                     )
                 )
             }
 
             ChatStep.GOAL -> {
                 val profile = _state.value.profile.copy(goal = value)
+                val isWeightRelated = value.contains("Lose") || value.contains("Arıq") || value.contains("Kilo Ver") ||
+                        value.contains("Похуд") || value.contains("Muscle") || value.contains("Əzələ") ||
+                        value.contains("Kas Yap") || value.contains("мышц")
+
                 val goalReply = when {
-                    value.contains("Lose") || value.contains("Arıq") || value.contains("Kilo") || value.contains("Похуд") -> t(
-                        en = "Locked in. 🔥 Fat loss done right — sustainable, smart, and without starving yourself. That's the Calixy way.",
-                        az = "Qəbul edildi. 🔥 Düzgün edilmiş yağ itkisi — davamlı, ağıllı və ac qalmadan. Bu Calixy üsludur.",
-                        tr = "Kilitlendi. 🔥 Doğru yapılan yağ kaybı — sürdürülebilir, akıllı ve aç kalmadan. Calixy yolu bu.",
-                        ru = "Принято. 🔥 Жиросжигание правильно — устойчиво, умно и без голодания. Это путь Calixy."
+                    value.contains("Lose") || value.contains("Arıq") || value.contains("Kilo Ver") || value.contains("Похуд") ->
+                        t(en = "Locked in. 🔥 Smart, sustainable fat loss — the Calixy way.",
+                            az = "Qəbul edildi. 🔥 Davamlı, ağıllı yağ itkisi — Calixy üslubu.",
+                            tr = "Kilitlendi. 🔥 Akıllı, sürdürülebilir yağ kaybı.",
+                            ru = "Принято. 🔥 Умное, устойчивое жиросжигание.")
+                    value.contains("Muscle") || value.contains("Əzələ") || value.contains("Kas") || value.contains("мышц") ->
+                        t(en = "Building muscle! 💪 The right calories at the right time — we'll nail both.",
+                            az = "Əzələ qurmaq! 💪 Doğru kalorilər, doğru vaxtlama.",
+                            tr = "Kas yapmak! 💪 Doğru kalori, doğru zamanlama.",
+                            ru = "Набор мышц! 💪 Правильные калории в правильное время.")
+                    value.contains("Stay") || value.contains("Çəkimi") || value.contains("Kilomu") || value.contains("Сохран") ->
+                        t(en = "Maintenance is seriously underrated. 📊 Long-term strategy is the real game.",
+                            az = "Qoruma ciddi qiymətləndirilmir. 📊",
+                            tr = "Koruma ciddi şekilde küçümseniyor. 📊",
+                            ru = "Поддержание веса серьёзно недооценивается. 📊")
+                    else ->
+                        t(en = "A goal that changes everything. 🏃 Energy, sleep, mood — all improve.",
+                            az = "Hər şeyi dəyişdirən hədəf. 🏃",
+                            tr = "Her şeyi değiştiren hedef. 🏃",
+                            ru = "Цель, меняющая всё. 🏃")
+                }
+                enqueueBot(goalReply)
+                delay(350)
+
+                if (isWeightRelated) {
+                    // Ask for weight direction intent — #8 requirement
+                    _state.value = _state.value.copy(
+                        profile = profile,
+                        step = ChatStep.WEIGHT_DIRECTION,
+                        chips = weightDirectionChips(),
+                        multiSelect = false
                     )
-                    value.contains("Muscle") || value.contains("Əzələ") || value.contains("Kas") || value.contains("мышц") -> t(
-                        en = "Building muscle it is! 💪 Gains take the right calories and the right timing. We'll nail both.",
-                        az = "Əzələ qurmaq! 💪 Nəticələr doğru kalorilər və doğru vaxtlama tələb edir. İkisini də düzgün edəcəyik.",
-                        tr = "Kas yapmak! 💪 Kazanımlar doğru kalori ve doğru zamanlamayı gerektirir. İkisini de halledelim.",
-                        ru = "Набор мышц! 💪 Для роста нужны правильные калории и правильное время. Разберёмся с обоим."
+                    enqueueBot(
+                        t(
+                            en = "To personalise your roadmap — which direction are you aiming for?",
+                            az = "Yol xəritənizi fərdiləşdirmək üçün — hansı istiqamətə yönəlirsiniz?",
+                            tr = "Yol haritanızı kişiselleştirmek için — hangi yönü hedefliyorsunuz?",
+                            ru = "Для персонализации — в какую сторону вы движетесь?"
+                        )
                     )
-                    value.contains("Stay") || value.contains("Çəkimi") || value.contains("Kilomu") || value.contains("Сохран") -> t(
-                        en = "Maintenance is seriously underrated. 📊 Keeping a healthy weight long-term takes real strategy.",
-                        az = "Qoruma ciddi şəkildə qiymətləndirilmir. 📊 Uzunmüddətli sağlam çəkini saxlamaq həqiqi strategiya tələb edir.",
-                        tr = "Koruma ciddi şekilde küçümseniyor. 📊 Uzun vadede sağlıklı kiloyu korumak gerçek bir strateji gerektirir.",
-                        ru = "Поддержание веса серьёзно недооценивается. 📊 Долгосрочное удержание здорового веса требует реальной стратегии."
+                } else {
+                    // Skip weight direction, go straight to allergies
+                    _state.value = _state.value.copy(
+                        profile = profile,
+                        step = ChatStep.ALLERGIES,
+                        chips = allergyChips(),
+                        multiSelect = true,
+                        selectedItems = emptySet()
                     )
-                    else -> t(
-                        en = "A goal that changes everything. 🏃 Energy, sleep, mood — all of it improves. Let's go!",
-                        az = "Hər şeyi dəyişdirən bir hədəf. 🏃 Enerji, yuxu, əhval — hamısı yaxşılaşır. Gedək!",
-                        tr = "Her şeyi değiştiren bir hedef. 🏃 Enerji, uyku, ruh hali — hepsi iyileşir. Hadi gidelim!",
-                        ru = "Цель, меняющая всё. 🏃 Энергия, сон, настроение — всё улучшается. Поехали!"
+                    enqueueBot(
+                        t(
+                            en = "Almost there! Any foods your body can't get along with? Select all that apply 👇",
+                            az = "Az qalır! Bədəninizin uyğunlaşa bilmədiyi yeməklər varmı? 👇",
+                            tr = "Neredeyse bitti! Vücudunuzun geçinemediği yiyecekler var mı? 👇",
+                            ru = "Почти готово! Есть продукты, с которыми организм не ладит? 👇"
+                        )
                     )
                 }
+            }
+
+            ChatStep.WEIGHT_DIRECTION -> {
+                val direction = when {
+                    value.contains("lose") || value.contains("Arıqlamaq") || value.contains("vermek") || value.contains("похудеть", ignoreCase = true) -> "lose"
+                    value.contains("gain") || value.contains("qazanmaq") || value.contains("almak") || value.contains("набрать", ignoreCase = true) -> "gain"
+                    else -> "maintain"
+                }
+                val profile = _state.value.profile.copy(weightDirection = direction)
+                val bmi = profile.bmi ?: 22f
+                val isBmiHealthy = bmi in 18.5f..24.9f
+
+                val directionReply = when (direction) {
+                    "lose" -> when {
+                        bmi < 18.5f -> t(
+                            en = "Your BMI of ${"%.1f".format(bmi)} is already in the underweight range. Losing more weight could be risky. 🙏 I'd suggest focusing on building strength and nourishment instead.",
+                            az = "BKİ-niz ${"%.1f".format(bmi)} artıq az çəkili aralıqdadır. Daha çox arıqlamaq riskli ola bilər. 🙏 Bunun əvəzinə güc qurmağa diqqət etməyinizi tövsiyə edirəm.",
+                            tr = "VKİ'niz ${"%.1f".format(bmi)} zaten düşük kilolu aralıkta. Daha fazla kilo vermek riskli olabilir. 🙏 Güç inşasına odaklanmanızı öneririm.",
+                            ru = "Ваш ИМТ ${"%.1f".format(bmi)} уже в зоне недостаточного веса. Худеть дальше рискованно. 🙏 Предлагаю сосредоточиться на силе и питании."
+                        )
+                        isBmiHealthy -> t(
+                            en = "Your BMI of ${"%.1f".format(bmi)} is in the healthy range. Minor body recomposition is totally achievable — no need for aggressive cuts. ✅",
+                            az = "BKİ-niz ${"%.1f".format(bmi)} sağlam aralıqdadır. Kiçik bədən dəyişikliyi tamamilə əldə edilə bilər. ✅",
+                            tr = "VKİ'niz ${"%.1f".format(bmi)} sağlıklı aralıkta. Hafif vücut değişimi mükemmel şekilde ulaşılabilir. ✅",
+                            ru = "Ваш ИМТ ${"%.1f".format(bmi)} в норме. Лёгкое переформирование тела вполне достижимо. ✅"
+                        )
+                        else -> t(
+                            en = "Based on your BMI of ${"%.1f".format(bmi)}, losing weight is a healthy and achievable goal. 💪 We'll keep it smart — no crash diets.",
+                            az = "BKİ-niz ${"%.1f".format(bmi)}-ə görə, arıqlamaq sağlıklı və əldə edilə bilən bir hədəfdir. 💪",
+                            tr = "VKİ'niz ${"%.1f".format(bmi)}'e göre kilo vermek sağlıklı bir hedef. 💪 Akıllıca tutacağız.",
+                            ru = "При ИМТ ${"%.1f".format(bmi)} похудение — здоровая и достижимая цель. 💪"
+                        )
+                    }
+                    "gain" -> when {
+                        bmi > 25f -> t(
+                            en = "Your BMI of ${"%.1f".format(bmi)} is above normal. Gaining more weight may not be the healthiest path. 🤔 Consider muscle building through strength training instead.",
+                            az = "BKİ-niz ${"%.1f".format(bmi)} normaldan yuxarıdır. Daha çox çəki qazanmaq sağlıklı olmaya bilər. 🤔",
+                            tr = "VKİ'niz ${"%.1f".format(bmi)} normalın üzerinde. Daha fazla kilo almak en sağlıklı yol olmayabilir. 🤔",
+                            ru = "Ваш ИМТ ${"%.1f".format(bmi)} выше нормы. Набирать ещё вес может быть нездорово. 🤔"
+                        )
+                        else -> t(
+                            en = "With a BMI of ${"%.1f".format(bmi)}, gaining healthy weight through muscle and proper nutrition is absolutely the right move. 💪",
+                            az = "BKİ-niz ${"%.1f".format(bmi)} ilə, əzələ və düzgün qidalanma vasitəsilə sağlıklı çəki qazanmaq tamamilə doğru addımdır. 💪",
+                            tr = "VKİ'niz ${"%.1f".format(bmi)} ile kas ve uygun beslenme yoluyla sağlıklı kilo almak kesinlikle doğru hamle. 💪",
+                            ru = "При ИМТ ${"%.1f".format(bmi)} набор здорового веса через мышцы и питание — абсолютно правильный шаг. 💪"
+                        )
+                    }
+                    else -> t(
+                        en = "Maintenance at BMI ${"%.1f".format(bmi)} — smart choice. 📊 We'll focus on consistency and long-term health.",
+                        az = "BKİ ${"%.1f".format(bmi)}-də qoruma — ağıllı seçim. 📊",
+                        tr = "VKİ ${"%.1f".format(bmi)}'de koruma — akıllıca seçim. 📊",
+                        ru = "Поддержание при ИМТ ${"%.1f".format(bmi)} — разумный выбор. 📊"
+                    )
+                }
+
                 _state.value = _state.value.copy(
                     profile = profile,
                     step = ChatStep.ALLERGIES,
@@ -441,14 +600,14 @@ class ChatSetupViewModel @Inject constructor(
                     multiSelect = true,
                     selectedItems = emptySet()
                 )
-                enqueueBot(goalReply)
+                enqueueBot(directionReply)
                 delay(300)
                 enqueueBot(
                     t(
-                        en = "Almost there! Are there any foods your body just can't get along with? Select all that apply — or skip if you're allergy-free 👇",
-                        az = "Az qalır! Bədəninizin uyğunlaşa bilmədiyi yeməklər varmı? Hamısını seçin — allergiya yoxdursa keçin 👇",
-                        tr = "Neredeyse bitti! Vücudunuzun geçinemediği yiyecekler var mı? Tümünü seçin — alerjiniz yoksa atlayın 👇",
-                        ru = "Почти готово! Есть ли продукты, с которыми ваш организм не ладит? Выберите все подходящие — или пропустите, если аллергий нет 👇"
+                        en = "Almost there! Any foods your body can't get along with? Select all that apply 👇",
+                        az = "Az qalır! Bədəninizin uyğunlaşa bilmədiyi yeməklər varmı? 👇",
+                        tr = "Neredeyse bitti! Vücudunuzun geçinemediği yiyecekler var mı? 👇",
+                        ru = "Почти готово! Есть продукты, с которыми организм не ладит? 👇"
                     )
                 )
             }
@@ -457,33 +616,61 @@ class ChatSetupViewModel @Inject constructor(
         }
     }
 
+    // ── Multi-select with No Restrictions logic (#4) ──────────────────────────
+
     private fun toggleMulti(value: String) {
         val set = _state.value.selectedItems.toMutableSet()
-        if (set.contains(value)) set.remove(value) else set.add(value)
-        _state.value = _state.value.copy(selectedItems = set)
+        val noRestriction = noRestrictionMarker()
+        val customKey = customMarker()
+
+        when {
+            value == noRestriction -> {
+                // #4: selecting "No Restrictions" clears everything else
+                if (set.contains(noRestriction)) set.remove(noRestriction)
+                else { set.clear(); set.add(noRestriction) }
+            }
+            else -> {
+                // #4: if "No Restrictions" was selected, remove it
+                set.remove(noRestriction)
+                if (set.contains(value)) set.remove(value) else set.add(value)
+            }
+        }
+
+        val showCustom = set.contains(customKey)
+        _state.value = _state.value.copy(
+            selectedItems = set,
+            showCustomInput = showCustom,
+            requestKeyboard = showCustom   // #3: auto-open keyboard for Custom
+        )
     }
 
+    // ── Multi-select submit ───────────────────────────────────────────────────
+
     private fun submitMulti(customValue: String?) = viewModelScope.launch {
-        val currentSelected = _state.value.selectedItems.toMutableList()
+        val currentSelected = _state.value.selectedItems
+            .filterNot { it == customMarker() }
+            .toMutableList()
         if (!customValue.isNullOrBlank()) currentSelected.add(customValue)
-        appendUser(currentSelected.joinToString(" · ").ifBlank {
-            t("None", "Heç biri", "Hiçbiri", "Нет")
-        })
+
+        appendUser(
+            currentSelected.joinToString(" · ").ifBlank { t("None", "Heç biri", "Hiçbiri", "Нет") },
+            _state.value.step
+        )
 
         when (_state.value.step) {
             ChatStep.ALLERGIES -> {
                 val allergyReply = when {
                     currentSelected.isEmpty() -> t(
-                        en = "No allergies — lucky you! 🍀 That gives us maximum flexibility to design a truly varied and delicious plan.",
-                        az = "Allergiya yoxdur — şanslısınız! 🍀 Bu bizə həqiqətən müxtəlif və dadlı plan hazırlamaq üçün maksimum çeviklik verir.",
-                        tr = "Alerji yok — şanslısınız! 🍀 Bu bize gerçekten çeşitli ve lezzetli bir plan tasarlamak için maksimum esneklik veriyor.",
-                        ru = "Нет аллергий — вам повезло! 🍀 Это даёт нам максимальную гибкость для разнообразного и вкусного плана."
+                        en = "No allergies — lucky you! 🍀 Maximum flexibility to design a varied, delicious plan.",
+                        az = "Allergiya yoxdur! 🍀 Müxtəlif və dadlı plan hazırlamaq üçün maksimum çeviklik.",
+                        tr = "Alerji yok — şanslısınız! 🍀 Çeşitli, lezzetli plan tasarlamak için maksimum esneklik.",
+                        ru = "Нет аллергий — вам повезло! 🍀 Максимальная гибкость для разнообразного плана."
                     )
                     else -> t(
-                        en = "Got it — ${currentSelected.joinToString(", ")} are off the table. Don't worry, there's still a world of amazing food waiting for you. 🌍",
-                        az = "Qəbul edildi — ${currentSelected.joinToString(", ")} istisna edildi. Narahat olmayın, hələ sizin üçün gözəl yemək dünyası gözləyir. 🌍",
-                        tr = "Tamam — ${currentSelected.joinToString(", ")} devre dışı. Merak etmeyin, sizin için harika yiyeceklerle dolu bir dünya hâlâ bekliyor. 🌍",
-                        ru = "Понял — ${currentSelected.joinToString(", ")} исключены. Не переживайте, вас ждёт целый мир потрясающей еды. 🌍"
+                        en = "Got it — ${currentSelected.joinToString(", ")} are off the table. 🌍 There's still a world of amazing food for you.",
+                        az = "Qəbul edildi — ${currentSelected.joinToString(", ")} istisna edildi. 🌍",
+                        tr = "Tamam — ${currentSelected.joinToString(", ")} devre dışı. 🌍",
+                        ru = "Понял — ${currentSelected.joinToString(", ")} исключены. 🌍"
                     )
                 }
                 _state.value = _state.value.copy(
@@ -493,52 +680,57 @@ class ChatSetupViewModel @Inject constructor(
                     step = ChatStep.DIETARY,
                     chips = dietaryChips(),
                     selectedItems = emptySet(),
-                    multiSelect = true
+                    multiSelect = true,
+                    showCustomInput = false
                 )
                 enqueueBot(allergyReply)
                 delay(300)
                 enqueueBot(
                     t(
                         en = "Last question, I promise! 🙏 Any dietary rules or lifestyles I should know about?",
-                        az = "Son sual, söz verirəm! 🙏 Bilməli olduğum hər hansı pəhriz qaydaları və ya həyat tərzi varmı?",
-                        tr = "Son soru, söz veriyorum! 🙏 Bilmem gereken herhangi bir diyet kuralı veya yaşam tarzı var mı?",
-                        ru = "Последний вопрос, обещаю! 🙏 Есть ли какие-либо диетические правила или образ жизни, о которых мне стоит знать?"
+                        az = "Son sual, söz verirəm! 🙏 Bilməli olduğum pəhriz qaydaları varmı?",
+                        tr = "Son soru, söz veriyorum! 🙏 Bilmem gereken diyet kuralı var mı?",
+                        ru = "Последний вопрос, обещаю! 🙏 Есть диетические правила или образ жизни?"
                     )
                 )
             }
 
             ChatStep.DIETARY -> {
                 val profile = _state.value.profile.copy(dietaryRules = currentSelected)
-                val hasNoRestriction = currentSelected.any { it.contains("No Restrictions") || it.contains("Məhdudiyyət") || it.contains("Kısıtlama") || it.contains("Без ограничений") }
+                val hasNoRestriction = currentSelected.any {
+                    it.contains("No Restrictions") || it.contains("Məhdudiyyət") ||
+                            it.contains("Kısıtlama") || it.contains("Без ограничений")
+                }
                 val isVegan = currentSelected.any { it.contains("Vegan") || it.contains("Веган") }
                 val isKeto = currentSelected.any { it.contains("Keto") || it.contains("Кето") }
 
                 val dietaryReply = when {
                     hasNoRestriction || currentSelected.isEmpty() -> t(
-                        en = "No dietary restrictions — excellent! 🎯 That gives us the widest possible toolkit to build you an incredible, varied plan.",
-                        az = "Pəhriz məhdudiyyəti yoxdur — əla! 🎯 Bu bizə inanılmaz, müxtəlif plan qurmaq üçün ən geniş toolkit verir.",
-                        tr = "Diyet kısıtlaması yok — mükemmel! 🎯 Bu bize inanılmaz, çeşitli bir plan oluşturmak için en geniş araç setini veriyor.",
-                        ru = "Никаких диетических ограничений — отлично! 🎯 Это даёт нам широчайший инструментарий для создания разнообразного плана."
+                        en = "No dietary restrictions — excellent! 🎯 Widest possible toolkit for an incredible plan.",
+                        az = "Pəhriz məhdudiyyəti yoxdur! 🎯",
+                        tr = "Diyet kısıtlaması yok — mükemmel! 🎯",
+                        ru = "Никаких ограничений — отлично! 🎯"
                     )
                     isVegan -> t(
                         en = "Vegan lifestyle — respect! 🌿 Plant-based nutrition done right is genuinely powerful.",
-                        az = "Vegan həyat tərzi — hörmətlə! 🌿 Düzgün edilmiş bitki əsaslı qidalanma həqiqətən güclüdür.",
-                        tr = "Vegan yaşam tarzı — saygı! 🌿 Doğru yapılan bitki bazlı beslenme gerçekten güçlüdür.",
-                        ru = "Веганский образ жизни — уважаю! 🌿 Правильное растительное питание действительно мощное."
+                        az = "Vegan həyat tərzi! 🌿",
+                        tr = "Vegan yaşam tarzı — saygı! 🌿",
+                        ru = "Веганский образ жизни — уважаю! 🌿"
                     )
                     isKeto -> t(
-                        en = "Keto! ⚡ High fat, low carb — when done correctly, it's remarkable for fat burning.",
-                        az = "Keto! ⚡ Yüksək yağ, az karbohidrat — düzgün ediləndə yağ yandırmaq üçün əla.",
-                        tr = "Keto! ⚡ Yüksek yağ, düşük karbonhidrat — doğru yapıldığında yağ yakımı için mükemmel.",
-                        ru = "Кето! ⚡ Высокий жир, мало углеводов — при правильном выполнении отлично для жиросжигания."
+                        en = "Keto! ⚡ High fat, low carb — remarkable for fat burning when done correctly.",
+                        az = "Keto! ⚡",
+                        tr = "Keto! ⚡",
+                        ru = "Кето! ⚡"
                     )
                     else -> t(
-                        en = "Perfect — ${currentSelected.joinToString(", ")} noted. Your plan will respect every one of these preferences.",
-                        az = "Mükəmməl — ${currentSelected.joinToString(", ")} qeyd edildi. Planınız bu üstünlüklərin hər birinə hörmət edəcək.",
-                        tr = "Mükemmel — ${currentSelected.joinToString(", ")} not alındı. Planınız bu tercihlerin her birine saygı gösterecek.",
-                        ru = "Отлично — ${currentSelected.joinToString(", ")} отмечено. Ваш план учтёт каждое из этих предпочтений."
+                        en = "Perfect — ${currentSelected.joinToString(", ")} noted. Your plan will respect every preference.",
+                        az = "Mükəmməl — ${currentSelected.joinToString(", ")} qeyd edildi.",
+                        tr = "Mükemmel — ${currentSelected.joinToString(", ")} not alındı.",
+                        ru = "Отлично — ${currentSelected.joinToString(", ")} отмечено."
                     )
                 }
+
                 val finalAnalysis = buildFinalAnalysis(profile)
                 _state.value = _state.value.copy(
                     profile = profile,
@@ -546,16 +738,17 @@ class ChatSetupViewModel @Inject constructor(
                     chips = emptyList(),
                     showInput = false,
                     selectedItems = emptySet(),
-                    finalAnalysisUi = finalAnalysis
+                    finalAnalysisUi = finalAnalysis,
+                    showCustomInput = false
                 )
                 enqueueBot(dietaryReply)
                 delay(500)
                 enqueueBot(
                     t(
-                        en = "${profile.firstName}, I've crunched every number, cross-referenced your profile, and built your complete picture. 📊 Here it is:",
-                        az = "${profile.firstName}, hər rəqəmi hesabladım, profilinizi çarpaz yoxladım və tam tablonuzu hazırladım. 📊 Budur:",
-                        tr = "${profile.firstName}, her sayıyı hesapladım, profilinizi çapraz kontrol ettim ve tam tablonuzu oluşturdum. 📊 İşte:",
-                        ru = "${profile.firstName}, я проанализировал каждую цифру, сверился с вашим профилем и составил полную картину. 📊 Вот она:"
+                        en = "${profile.firstName.uppercase()}, I've crunched every number and built your complete picture. 📊 Here it is:",
+                        az = "${profile.firstName.uppercase()}, hər rəqəmi hesabladım. 📊 Budur:",
+                        tr = "${profile.firstName.uppercase()}, her sayıyı hesapladım. 📊 İşte:",
+                        ru = "${profile.firstName.uppercase()}, я проанализировал каждую цифру. 📊 Вот она:"
                     )
                 )
                 _state.value = _state.value.copy(
@@ -566,10 +759,10 @@ class ChatSetupViewModel @Inject constructor(
                 delay(300)
                 enqueueBot(
                     t(
-                        en = "This is your personalized CalixyAI roadmap — built around **you**, not a template. Ready to unlock the full plan? 🚀",
-                        az = "Bu sizin fərdi CalixyAI yol xəritənizdir — **sizin** ətrafında qurulub, şablon deyil. Tam planı açmağa hazırsınız? 🚀",
-                        tr = "Bu sizin kişiselleştirilmiş CalixyAI yol haritanız — **siz** etrafında oluşturuldu, şablon değil. Tam planı açmaya hazır mısınız? 🚀",
-                        ru = "Это ваша персональная дорожная карта CalixyAI — построена вокруг **вас**, а не по шаблону. Готовы разблокировать полный план? 🚀"
+                        en = "This is your personalized CalixyAI roadmap — built around **you**. Ready to unlock the full plan? 🚀",
+                        az = "Bu sizin fərdi CalixyAI yol xəritənizdir. Tam planı açmağa hazırsınız? 🚀",
+                        tr = "Bu sizin kişiselleştirilmiş CalixyAI yol haritanız. Tam planı açmaya hazır mısınız? 🚀",
+                        ru = "Это ваша персональная дорожная карта CalixyAI. Готовы открыть полный план? 🚀"
                     )
                 )
                 repository.saveSetup(profile)
@@ -597,9 +790,13 @@ class ChatSetupViewModel @Inject constructor(
         )
     }
 
-    private fun appendUser(text: String) {
+    private fun appendUser(text: String, step: ChatStep) {
         _state.value = _state.value.copy(
-            messages = _state.value.messages + ChatMessage(sender = Sender.USER, text = text)
+            messages = _state.value.messages + ChatMessage(
+                sender = Sender.USER,
+                text = text,
+                editableStep = step
+            )
         )
     }
 
@@ -609,23 +806,23 @@ class ChatSetupViewModel @Inject constructor(
     }
 
     private fun estimateMonths(bmi: Float): Int = when {
-        bmi < 18.5f -> 3
-        bmi < 25f -> 2
-        bmi < 30f -> 4
-        else -> 6
+        bmi < 18.5f -> 3; bmi < 25f -> 2; bmi < 30f -> 4; else -> 6
     }
 
     private fun buildFinalAnalysis(profile: SetupProfile): FinalAnalysisUi {
         val currentWeight = profile.weightKg ?: 70f
+        val direction = profile.weightDirection
         val targetWeight = when {
-            profile.goal.contains("Lose") || profile.goal.contains("Arıq") || profile.goal.contains("Kilo Ver") || profile.goal.contains("Похуд") -> currentWeight - 8f
-            profile.goal.contains("Muscle") || profile.goal.contains("Əzələ") || profile.goal.contains("Kas") || profile.goal.contains("мышц") -> currentWeight + 4f
+            direction == "lose" || profile.goal.contains("Lose") || profile.goal.contains("Arıq") ||
+                    profile.goal.contains("Kilo Ver") || profile.goal.contains("Похуд") -> currentWeight - 8f
+            direction == "gain" || profile.goal.contains("Muscle") || profile.goal.contains("Əzələ") ||
+                    profile.goal.contains("Kas") || profile.goal.contains("мышц") -> currentWeight + 4f
             else -> currentWeight - 2f
         }
         val months = estimateMonths(profile.bmi ?: 24f)
         val dailyCalories = when {
-            profile.goal.contains("Lose") || profile.goal.contains("Arıq") || profile.goal.contains("Kilo Ver") || profile.goal.contains("Похуд") -> 1900
-            profile.goal.contains("Muscle") || profile.goal.contains("Əzələ") || profile.goal.contains("Kas") || profile.goal.contains("мышц") -> 2500
+            direction == "lose" -> 1900
+            direction == "gain" -> 2500
             else -> 2150
         }
         val targetBmi = ((targetWeight / ((profile.heightCm ?: 170) / 100f).pow(2)) * 10).roundToInt() / 10f
@@ -642,3 +839,6 @@ class ChatSetupViewModel @Inject constructor(
         )
     }
 }
+
+// Helper operator for ChatStep comparison
+private operator fun ChatStep.compareTo(other: ChatStep): Int = this.ordinal.compareTo(other.ordinal)

@@ -6,7 +6,9 @@ data class ChatMessage(
     val id: Long = System.nanoTime(),
     val sender: Sender,
     val text: String,
-    val type: MessageType = MessageType.TEXT
+    val type: MessageType = MessageType.TEXT,
+    /** Which step produced this user message — used for edit re-entry */
+    val editableStep: ChatStep? = null
 )
 
 enum class MessageType { TEXT, BMI_CARD, ANALYSIS_CARD, TYPING }
@@ -19,6 +21,7 @@ enum class ChatStep {
     HEIGHT_WEIGHT,
     ACTIVITY,
     GOAL,
+    WEIGHT_DIRECTION,   // new: ask gain / lose / maintain intent
     ALLERGIES,
     DIETARY,
     COMPLETE
@@ -34,6 +37,7 @@ data class SetupProfile(
     val bmi: Float? = null,
     val activityLevel: String = "",
     val goal: String = "",
+    val weightDirection: String = "",   // "gain" | "lose" | "maintain"
     val allergies: List<String> = emptyList(),
     val dietaryRules: List<String> = emptyList(),
     val customAllergy: String? = null

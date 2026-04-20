@@ -4,87 +4,156 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_splash">
+    android:background="@color/background_primary">
 
-    <!-- Decorative circle top-right -->
+    <!-- Full-bleed top gradient accent band -->
     <View
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:layout_marginTop="-70dp"
-        android:layout_marginEnd="-70dp"
-        android:alpha="0.07"
-        android:background="@drawable/bg_avatar"
+        android:id="@+id/topAccentBand"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_lang_top_accent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cardPanel"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHeight_percent="0.46"/>
+
+    <!-- Large decorative circle — top right -->
+    <View
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="-80dp"
+        android:layout_marginEnd="-80dp"
+        android:alpha="0.10"
+        android:background="@drawable/bg_circle_deco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <!-- Small decorative circle — bottom left -->
+    <View
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="-50dp"
+        android:layout_marginBottom="-50dp"
+        android:alpha="0.07"
+        android:background="@drawable/bg_circle_deco"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <!-- Logo + Hero text -->
     <LinearLayout
-        android:id="@+id/headerGroup"
+        android:id="@+id/heroGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="80dp"
+        android:paddingTop="72dp"
         android:paddingHorizontal="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/ic_bot_avatar"/>
+        <!-- Logo mark with glow ring -->
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="20dp">
+
+            <View
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:alpha="0.18"
+                android:background="@drawable/bg_logo_glow"/>
+
+            <View
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_avatar"/>
+
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
-            android:letterSpacing="-0.02"
             android:text="CalixyAI"
-            android:textColor="@color/text_primary"
-            android:textSize="36sp"/>
+            android:textColor="@android:color/white"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            android:letterSpacing="-0.02"
+            android:fontFamily="sans-serif-black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="@string/select_language"
-            android:textColor="@color/text_primary"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/select_language_subtitle"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp"/>
+            android:layout_marginTop="4dp"
+            android:text="Your AI Nutrition Coach"
+            android:textColor="#CCFFFFFF"
+            android:textSize="14sp"
+            android:letterSpacing="0.04"/>
 
     </LinearLayout>
 
-    <!-- Language Chips -->
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroupLanguages"
+    <!-- White card panel that floats over the gradient -->
+    <LinearLayout
+        android:id="@+id/cardPanel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="28dp"
-        android:layout_marginTop="36dp"
-        app:chipSpacingHorizontal="10dp"
-        app:chipSpacingVertical="12dp"
-        app:singleSelection="false"
+        android:orientation="vertical"
+        android:background="@drawable/bg_lang_card"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="28dp"
+        android:elevation="12dp"
+        android:layout_marginHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerGroup"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heroGroup"
+        app:layout_constraintBottom_toTopOf="@id/btnContinueLang"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginTop="28dp">
 
-    <!-- Continue Button -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_language"
+            android:textColor="@color/text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:letterSpacing="-0.01"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_language_subtitle"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Language chips grid -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupLanguages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:chipSpacingHorizontal="10dp"
+            app:chipSpacingVertical="10dp"
+            app:singleSelection="false"/>
+
+    </LinearLayout>
+
+    <!-- CTA Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnContinueLang"
         style="@style/Widget.CalixyAI.Button.Primary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="36dp"
         android:text="@string/btn_continue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

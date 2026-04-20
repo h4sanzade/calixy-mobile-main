@@ -1,10 +1,10 @@
 package com.calixyai.ui.language
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.calixyai.R
 import com.calixyai.databinding.FragmentLanguageSelectBinding
@@ -40,10 +40,7 @@ class LanguageSelectFragment : BaseFragment(R.layout.fragment_language_select) {
 
         binding.btnContinueLang.setOnClickListener {
             applyLocale(selectedLocale)
-            // Restart activity so all string resources reload in new locale
             requireActivity().recreate()
-            // After recreate, SplashViewModel will re-read locale and navigate properly
-            // We store "lang_chosen" flag so after recreate we go to splash
             requireContext()
                 .getSharedPreferences("calixy_prefs", Context.MODE_PRIVATE)
                 .edit()
@@ -66,27 +63,10 @@ class LanguageSelectFragment : BaseFragment(R.layout.fragment_language_select) {
                 chipMinHeight = 52f
                 setPadding(8, 0, 8, 0)
 
-                setTextColor(ContextCompat.getColorStateList(context, R.color.chip_text_selector)
-                    ?: android.content.res.ColorStateList.valueOf(
-                        ContextCompat.getColor(context, R.color.text_primary)
-                    ))
-
                 updateChipStyle(this, lang.localeTag == selectedLocale)
 
-                setOnClickListener {
-                    selectedLocale = lang.localeTag
-                    // Update all chips
-                    for (i in 0 until chipGroup.childCount) {
-                        val c = chipGroup.getChildAt(i) as? com.google.android.material.chip.Chip
-                        val isThis = (c == this)
-                        c?.isChecked = isThis
-                        val tag = c?.tag as? String ?: continue
-                        updateChipStyle(c, tag == selectedLocale)
-                    }
-                }
                 tag = lang.localeTag
 
-                // Animate on click
                 setOnClickListener {
                     selectedLocale = lang.localeTag
                     animate().scaleX(0.93f).scaleY(0.93f).setDuration(70)
@@ -121,8 +101,8 @@ class LanguageSelectFragment : BaseFragment(R.layout.fragment_language_select) {
         else
             android.graphics.Color.parseColor("#5A7A6E")
 
-        chip.chipBackgroundColor = android.content.res.ColorStateList.valueOf(bgColor)
-        chip.chipStrokeColor = android.content.res.ColorStateList.valueOf(strokeColor)
+        chip.chipBackgroundColor = ColorStateList.valueOf(bgColor)
+        chip.chipStrokeColor = ColorStateList.valueOf(strokeColor)
         chip.chipStrokeWidth = if (selected) 2f else 1f
         chip.setTextColor(textColor)
     }

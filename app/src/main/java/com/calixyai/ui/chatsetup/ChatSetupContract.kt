@@ -10,8 +10,9 @@ sealed interface ChatSetupIntent {
     data class SelectOption(val value: String) : ChatSetupIntent
     data class ToggleMultiSelect(val value: String) : ChatSetupIntent
     data class SubmitMultiSelect(val customValue: String? = null) : ChatSetupIntent
-    /** Fired when user taps ✓ Confirm on the height/weight sliders */
     data class ConfirmSliders(val heightCm: Int, val weightKg: Float) : ChatSetupIntent
+    /** User tapped the pencil icon on a past message */
+    data class EditMessage(val messageId: Long) : ChatSetupIntent
 }
 
 data class ChartPoint(val month: Float, val weight: Float)
@@ -39,6 +40,10 @@ data class ChatSetupState(
     val multiSelect: Boolean = false,
     val showInput: Boolean = true,
     val showSliders: Boolean = false,
+    /** When true: view should request keyboard focus on inputMessage */
+    val requestKeyboard: Boolean = false,
+    /** When true: custom allergy text field shown & keyboard opens */
+    val showCustomInput: Boolean = false,
     val selectedItems: Set<String> = emptySet(),
     val profile: SetupProfile = SetupProfile(),
     val bmiUi: BmiUi? = null,
