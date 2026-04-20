@@ -17,24 +17,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <!-- Logo + Title -->
     <LinearLayout
         android:id="@+id/headerGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="72dp"
+        android:paddingTop="80dp"
         android:paddingHorizontal="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <View
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_avatar"/>
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/ic_bot_avatar"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,7 +45,6 @@
             android:textSize="36sp"/>
 
         <TextView
-            android:id="@+id/tvSelectLang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
@@ -56,7 +54,6 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/tvSelectLangSub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -66,219 +63,19 @@
 
     </LinearLayout>
 
-    <!-- Language Cards -->
-    <LinearLayout
-        android:id="@+id/langContainer"
+    <!-- Language Chips -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupLanguages"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
+        android:layout_marginHorizontal="28dp"
         android:layout_marginTop="36dp"
-        android:orientation="vertical"
+        app:chipSpacingHorizontal="10dp"
+        app:chipSpacingVertical="12dp"
+        app:singleSelection="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerGroup">
-
-        <!-- Azerbaijani -->
-        <LinearLayout
-            android:id="@+id/cardAz"
-            android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_card"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🇦🇿"
-                android:textSize="28sp"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lang_azerbaijani"
-                    android:textColor="@color/text_primary"
-                    android:textSize="17sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Azərbaycan dili"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/checkAz"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/checkbox_on_background"
-                android:visibility="gone"/>
-
-        </LinearLayout>
-
-        <!-- Turkish -->
-        <LinearLayout
-            android:id="@+id/cardTr"
-            android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_card"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🇹🇷"
-                android:textSize="28sp"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lang_turkish"
-                    android:textColor="@color/text_primary"
-                    android:textSize="17sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Türk dili"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/checkTr"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/checkbox_on_background"
-                android:visibility="gone"/>
-
-        </LinearLayout>
-
-        <!-- English -->
-        <LinearLayout
-            android:id="@+id/cardEn"
-            android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_card"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🇬🇧"
-                android:textSize="28sp"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lang_english"
-                    android:textColor="@color/text_primary"
-                    android:textSize="17sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="English language"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/checkEn"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/checkbox_on_background"
-                android:visibility="gone"/>
-
-        </LinearLayout>
-
-        <!-- Russian -->
-        <LinearLayout
-            android:id="@+id/cardRu"
-            android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_card"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🇷🇺"
-                android:textSize="28sp"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lang_russian"
-                    android:textColor="@color/text_primary"
-                    android:textSize="17sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Русский язык"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/checkRu"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/checkbox_on_background"
-                android:visibility="gone"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/headerGroup"/>
 
     <!-- Continue Button -->
     <com.google.android.material.button.MaterialButton
@@ -287,7 +84,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="44dp"
         android:text="@string/btn_continue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

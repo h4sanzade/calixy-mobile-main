@@ -12,8 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.Locale
-import android.content.res.Configuration
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
@@ -31,11 +29,6 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun load() = viewModelScope.launch {
-        val savedLocale = context
-            .getSharedPreferences("calixy_prefs", Context.MODE_PRIVATE)
-            .getString("selected_locale", "en") ?: "en"
-        applyLocale(savedLocale)
-
         delay(2000)
         val state = repository.getOnboardingState()
         val destination = when {
@@ -45,14 +38,5 @@ class SplashViewModel @Inject constructor(
             else -> SplashDestination.HOME
         }
         _state.value = SplashState(isLoading = false, destination = destination)
-    }
-
-    private fun applyLocale(localeTag: String) {
-        val locale = Locale(localeTag)
-        Locale.setDefault(locale)
-        val config = Configuration(context.resources.configuration)
-        config.setLocale(locale)
-        @Suppress("DEPRECATION")
-        context.resources.updateConfiguration(config, context.resources.displayMetrics)
     }
 }
