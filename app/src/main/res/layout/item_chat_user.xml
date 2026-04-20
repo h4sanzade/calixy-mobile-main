@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp">
+    android:paddingBottom="12dp">
 
     <TextView
         android:id="@+id/tvMessage"
@@ -10,8 +10,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:background="@drawable/bg_bubble_user"
-        android:maxWidth="270dp"
-        android:padding="14dp"
+        android:maxWidth="260dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
         android:textColor="@android:color/white"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:lineSpacingMultiplier="1.4"
+        android:elevation="2dp"/>
+
 </FrameLayout>

@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_gradient_splash">
+
+    <!-- Decorative circle top-right -->
+    <View
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="-60dp"
+        android:layout_marginEnd="-60dp"
+        android:alpha="0.06"
+        android:background="@drawable/bg_avatar"/>
+
+    <!-- Decorative circle bottom-left -->
+    <View
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginBottom="-50dp"
+        android:layout_marginStart="-50dp"
+        android:alpha="0.07"
+        android:background="@drawable/bg_avatar"/>
 
     <LinearLayout
         android:id="@+id/logoGroup"
@@ -11,26 +31,43 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Logo mark -->
+        <View
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_avatar"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
-            android:shadowColor="#7C4DFF"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="20"
             android:text="CalixyAI"
             android:textColor="@color/text_primary"
-            android:textSize="40sp" />
+            android:textSize="42sp"
+            android:letterSpacing="-0.02"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Your AI Nutrition Coach"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:letterSpacing="0.02"/>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieSplash"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="32dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/splash_pulse" />
+            app:lottie_rawRes="@raw/splash_pulse"/>
+
     </LinearLayout>
+
 </FrameLayout>

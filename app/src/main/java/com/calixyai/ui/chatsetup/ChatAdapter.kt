@@ -1,5 +1,6 @@
 package com.calixyai.ui.chatsetup
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,8 +31,10 @@ class ChatAdapter(
         private const val TYPE_TYPING = 2
 
         val Diff = object : DiffUtil.ItemCallback<ChatMessage>() {
-            override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage) = oldItem.id == newItem.id
-            override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage) = oldItem == newItem
+            override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage) =
+                oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage) =
+                oldItem == newItem
         }
     }
 
@@ -59,72 +62,110 @@ class ChatAdapter(
             is UserViewHolder -> holder.bind(getItem(position))
             is TypingViewHolder -> holder.bind()
         }
-        holder.itemView.translationY = 40f
+        holder.itemView.translationY = 32f
         holder.itemView.alpha = 0f
         holder.itemView.animate()
-            .translationY(0f).alpha(1f)
-            .setDuration(250)
+            .translationY(0f)
+            .alpha(1f)
+            .setDuration(220)
             .setInterpolator(DecelerateInterpolator())
             .start()
     }
 
-    class UserViewHolder(private val binding: ItemChatUserBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ChatMessage) { binding.tvMessage.text = item.text }
-    }
-
-    class TypingViewHolder(private val binding: ItemChatTypingBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
-            listOf(binding.dotOne, binding.dotTwo, binding.dotThree).forEachIndexed { index, view ->
-                view.animate().scaleX(1.35f).scaleY(1.35f).alpha(0.55f)
-                    .setStartDelay(index * 120L).setDuration(420).withEndAction {
-                        view.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(420).start()
-                    }.start()
-            }
+    class UserViewHolder(private val binding: ItemChatUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: ChatMessage) {
+            binding.tvMessage.text = item.text
         }
     }
 
-    class BotViewHolder(private val binding: ItemChatBotBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TypingViewHolder(private val binding: ItemChatTypingBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            listOf(binding.dotOne, binding.dotTwo, binding.dotThree).forEachIndexed { index, view ->
+                animateDot(view, index * 140L)
+            }
+        }
+
+        private fun animateDot(view: View, delay: Long) {
+            view.animate()
+                .translationY(-6f)
+                .alpha(0.4f)
+                .setStartDelay(delay)
+                .setDuration(380)
+                .withEndAction {
+                    view.animate()
+                        .translationY(0f)
+                        .alpha(1f)
+                        .setDuration(380)
+                        .withEndAction { animateDot(view, 0L) }
+                        .start()
+                }.start()
+        }
+    }
+
+    class BotViewHolder(private val binding: ItemChatBotBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: ChatMessage, bmiUi: BmiUi?, analysisUi: FinalAnalysisUi?) {
-            binding.tvMessage.visibility = if (item.type == MessageType.TEXT) View.VISIBLE else View.GONE
-            binding.cardBmi.visibility = if (item.type == MessageType.BMI_CARD) View.VISIBLE else View.GONE
-            binding.cardAnalysis.visibility = if (item.type == MessageType.ANALYSIS_CARD) View.VISIBLE else View.GONE
+            binding.tvMessage.visibility =
+                if (item.type == MessageType.TEXT) View.VISIBLE else View.GONE
+            binding.cardBmi.visibility =
+                if (item.type == MessageType.BMI_CARD) View.VISIBLE else View.GONE
+            binding.cardAnalysis.visibility =
+                if (item.type == MessageType.ANALYSIS_CARD) View.VISIBLE else View.GONE
+
             binding.tvMessage.text = item.text
 
             if (item.type == MessageType.BMI_CARD && bmiUi != null) {
                 binding.tvBmiValue.text = "BMI ${bmiUi.bmi}"
-                binding.tvBmiVerdict.text = bmiUi.verdict
+                binding.tvBmiVerdict.text = bmiUi.verdict.take(12).trim()
                 binding.bmiProgress.progress = bmiUi.progress
                 binding.tvBmiZones.text = "Underweight · Normal · Overweight · Obese"
             }
 
             if (item.type == MessageType.ANALYSIS_CARD && analysisUi != null) {
                 binding.tvStats.text = buildString {
-                    append("Current BMI ${analysisUi.currentBmi}   ·   Target BMI ${analysisUi.targetBmi}\n")
+                    append("Current BMI ${analysisUi.currentBmi}   ·   Target ${analysisUi.targetBmi}\n")
                     append("${analysisUi.estimatedDuration} months   ·   ${analysisUi.dailyCalories} kcal/day")
                 }
 
                 val entries = analysisUi.chartPoints.map { Entry(it.month, it.weight) }
+                val accentColor = Color.parseColor("#0DBF85")
                 val set = LineDataSet(entries, "Weight Projection").apply {
                     setDrawFilled(true)
-                    lineWidth = 3f
+                    lineWidth = 2.5f
                     setDrawCircles(true)
+                    circleRadius = 4f
                     mode = LineDataSet.Mode.CUBIC_BEZIER
-                    color = android.graphics.Color.parseColor("#7C4DFF")
-                    fillColor = android.graphics.Color.parseColor("#2A6DFF")
-                    fillAlpha = 50
-                    setCircleColor(android.graphics.Color.parseColor("#00E5FF"))  // ← correct API
-                    valueTextColor = android.graphics.Color.TRANSPARENT
+                    color = accentColor
+                    fillColor = accentColor
+                    fillAlpha = 30
+                    setCircleColor(accentColor)
+                    circleHoleColor = Color.WHITE
+                    valueTextColor = Color.TRANSPARENT
                 }
+
+                val textColor = Color.parseColor("#5A7A6E")
+                val gridColor = Color.parseColor("#DCF0EA")
 
                 binding.weightChart.apply {
                     data = LineData(set)
+                    setBackgroundColor(Color.TRANSPARENT)
                     axisRight.isEnabled = false
-                    axisLeft.textColor = android.graphics.Color.WHITE
-                    xAxis.position = XAxis.XAxisPosition.BOTTOM
-                    xAxis.textColor = android.graphics.Color.WHITE
+                    axisLeft.apply {
+
+                        axisLineColor = gridColor
+                    }
+                    xAxis.apply {
+                        position = XAxis.XAxisPosition.BOTTOM
+
+                        axisLineColor = gridColor
+                    }
                     legend.isEnabled = false
                     description = Description().apply { text = "" }
-                    animateX(900)
+                    setTouchEnabled(false)
+                    animateX(800)
                     invalidate()
                 }
             }

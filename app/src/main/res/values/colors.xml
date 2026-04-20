@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_primary">#0D0D1A</color>
-    <color name="background_surface">#12122A</color>
-    <color name="background_card">#1C1C3A</color>
-    <color name="accent_primary">#7C4DFF</color>
-    <color name="accent_secondary">#00E5FF</color>
-    <color name="text_primary">#F0F0FF</color>
-    <color name="text_secondary">#9090B0</color>
-    <color name="success">#00C853</color>
-    <color name="warning">#FFB300</color>
-    <color name="error">#FF5252</color>
-    <color name="nav_item_tint">#B9B9D9</color>
+    <!-- Backgrounds -->
+    <color name="background_primary">#F5FAF8</color>
+    <color name="background_surface">#FFFFFF</color>
+    <color name="background_card">#FFFFFF</color>
+    <color name="background_elevated">#EDF6F2</color>
+    <color name="background_input">#EEF5F2</color>
+
+    <!-- Accents -->
+    <color name="accent_primary">#0DBF85</color>
+    <color name="accent_primary_dark">#09A06E</color>
+    <color name="accent_secondary">#0098AA</color>
+    <color name="accent_glow">#0DBF8526</color>
+    <color name="accent_purple">#6C3FF5</color>
+    <color name="accent_cyan">#00C4D4</color>
+
+    <!-- Text -->
+    <color name="text_primary">#0D1F18</color>
+    <color name="text_secondary">#5A7A6E</color>
+    <color name="text_tertiary">#A0BDB5</color>
+    <color name="text_on_accent">#FFFFFF</color>
+    <color name="text_hint">#9BB8AF</color>
+
+    <!-- Semantic -->
+    <color name="success">#0DBF85</color>
+    <color name="warning">#F5A623</color>
+    <color name="error">#E8445A</color>
+
+    <!-- Nav -->
+    <color name="nav_item_tint">#8AADA4</color>
+    <color name="nav_item_active">#0DBF85</color>
+    <color name="nav_background">#FFFFFFEE</color>
+
+    <!-- Stroke / Divider -->
+    <color name="stroke_subtle">#DCF0EA</color>
+    <color name="stroke_accent">#0DBF8540</color>
+
+    <!-- Chat bubbles -->
+    <color name="bubble_bot_bg">#FFFFFF</color>
+    <color name="bubble_bot_text">#0D1F18</color>
+    <color name="bubble_user_start">#0DBF85</color>
+    <color name="bubble_user_end">#0098AA</color>
+
+    <!-- Cards -->
+    <color name="card_bmi_bg">#F0FAF6</color>
+    <color name="plan_featured_bg">#FFF8EC</color>
+    <color name="plan_featured_stroke">#F5A623</color>
 </resources>

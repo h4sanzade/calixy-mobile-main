@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="32dp">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieView"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:layout_marginBottom="16dp" />
+    <FrameLayout
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginBottom="36dp">
+
+        <!-- Soft glow circle behind animation -->
+        <View
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:alpha="0.12"
+            android:background="@drawable/bg_avatar"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tvTitle"
@@ -18,15 +34,26 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/text_primary"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:lineSpacingMultiplier="1.15"
+        android:letterSpacing="-0.01"/>
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/accent_primary"/>
 
     <TextView
         android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:gravity="center"
         android:textColor="@color/text_secondary"
-        android:textSize="16sp" />
+        android:textSize="15sp"
+        android:lineSpacingMultiplier="1.5"
+        android:paddingHorizontal="8dp"/>
+
 </LinearLayout>
