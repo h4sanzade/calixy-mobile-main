@@ -33,79 +33,132 @@ class ChatSetupViewModel @Inject constructor(
             is ChatSetupIntent.SelectOption -> processSelection(intent.value)
             is ChatSetupIntent.ToggleMultiSelect -> toggleMulti(intent.value)
             is ChatSetupIntent.SubmitMultiSelect -> submitMulti(intent.customValue)
+            is ChatSetupIntent.ConfirmSliders -> confirmSliders(intent.heightCm, intent.weightKg)
         }
     }
 
     private fun initialize() {
         if (_state.value.messages.isNotEmpty()) return
-        viewModelScope.launch {                          // ← wrap in coroutine
-            enqueueBot("Hey there! I'm Calixy, your personal AI nutrition coach. Before we dive in — what's your first name? 😄")
+        viewModelScope.launch {
+            enqueueBot("Hey there! I'm Calixy, your personal AI nutrition coach 🤖\n\nBefore we build your plan — what's your **first name**?")
             _state.value = _state.value.copy(showInput = true, chips = emptyList())
         }
     }
 
     private fun processText(value: String) = viewModelScope.launch {
         if (value.isBlank()) return@launch
-        appendUser(value)
         when (_state.value.step) {
             ChatStep.FIRST_NAME -> {
-                val profile = _state.value.profile.copy(firstName = value.trim())
+                val name = value.trim()
+                appendUser(name)
+                val profile = _state.value.profile.copy(firstName = name)
                 _state.value = _state.value.copy(profile = profile, step = ChatStep.LAST_NAME)
-                enqueueBot("${profile.firstName}! Love it. That's going in the VIP list. 🎉 Now, what's your surname?")
+                enqueueBot("Love the name **$name**! 🎉 Now, what's your surname?")
             }
+
             ChatStep.LAST_NAME -> {
-                val profile = _state.value.profile.copy(lastName = value.trim())
+                val last = value.trim()
+                appendUser(last)
+                val profile = _state.value.profile.copy(lastName = last)
+                val full = "${profile.firstName} $last"
                 _state.value = _state.value.copy(profile = profile, step = ChatStep.GENDER)
-                enqueueBot("${profile.firstName} ${profile.lastName} — sounds like someone who's about to transform their life. Let's keep going! 💪")
-                enqueueBot("Alright ${profile.firstName}, quick one — how do you identify? This helps me personalize your plan.")
+                enqueueBot("**$full** — that's a name that means business. Let's keep the momentum going! 💪")
+                delay(400)
+                enqueueBot("Alright ${profile.firstName}, quick question — how do you identify? This helps me personalize your plan perfectly.")
                 _state.value = _state.value.copy(
                     showInput = false,
                     chips = listOf("Male", "Female", "Other"),
                     multiSelect = false
                 )
             }
+
             ChatStep.AGE -> {
                 val age = value.filter { it.isDigit() }.toIntOrNull() ?: 0
+                appendUser("$age")
                 val profile = _state.value.profile.copy(age = age)
                 _state.value = _state.value.copy(profile = profile, step = ChatStep.HEIGHT_WEIGHT)
-                enqueueBot("$age! Prime time. Plenty of good years ahead to build something amazing.")
-                enqueueBot("Now for the numbers that actually matter — what's your height (cm) and weight (kg)?")
-            }
-            ChatStep.HEIGHT_WEIGHT -> {
-                val parts = value.split("/", " ", ",").mapNotNull { it.trim().toFloatOrNull() }
-                val height = parts.getOrNull(0)?.toInt() ?: 170
-                val weight = parts.getOrNull(1) ?: 70f
-                val bmi = calculateBmi(height, weight)
-                val estimatedMonths = estimateMonths(bmi)
-                val verdict = when {
-                    bmi < 18.5f -> "Your BMI is %.1f — slightly under the normal zone. We'll focus on stronger nutrition foundations.".format(bmi)
-                    bmi < 25f -> "Your BMI is %.1f — right around the healthy range. We'll sharpen consistency and body composition.".format(bmi)
-                    bmi < 30f -> "Your BMI is %.1f — you're slightly above normal range. Totally fixable! 🔥 With CalixyAI, people in your range typically reach their ideal weight in 3–4 months.".format(bmi)
-                    else -> "Your BMI is %.1f — above the recommended range right now, but we can absolutely improve it step by step.".format(bmi)
+
+                val ageReply = when {
+                    age in 13..17 ->
+                        "**$age** years young! 🌟 At your age, building solid habits now will pay off for decades. Your body is still developing, so we'll design a plan that's safe and powerful for you."
+                    age in 18..25 ->
+                        "**$age** — peak energy years! ⚡ Your metabolism is your superpower right now. Let's use it well."
+                    age in 26..35 ->
+                        "**$age**! That's the sweet spot where discipline meets experience. 🔥 You know what you want — we'll help you get there faster."
+                    age in 36..45 ->
+                        "**$age** — and clearly taking health seriously. 💪 Smart move. At this stage, quality nutrition makes an enormous difference in how you feel every single day."
+                    age in 46..55 ->
+                        "**$age**! Many of our best transformations happen in this decade. 🌿 With the right plan, energy and vitality are absolutely within reach."
+                    age in 56..65 ->
+                        "**$age** — wisdom and wellness together. 🧘 At your stage, we focus on longevity, joint health, and sustainable energy. You're going to feel the difference."
+                    age > 65 ->
+                        "**$age** years of life experience! 🌳 That's incredible. We'll create a gentle but effective plan focused on strength, balance, and feeling your very best every day."
+                    else ->
+                        "Got it — **$age**! Let's move forward."
                 }
-                val profile = _state.value.profile.copy(heightCm = height, weightKg = weight, bmi = bmi)
-                _state.value = _state.value.copy(
-                    profile = profile,
-                    step = ChatStep.ACTIVITY,
-                    bmiUi = BmiUi(
-                        bmi = bmi,
-                        verdict = verdict,
-                        estimatedMonths = estimatedMonths,
-                        progress = (((bmi.coerceIn(15f, 35f) - 15f) / 20f) * 100).roundToInt()
-                    )
-                )
-                enqueueBot(verdict)
-                _state.value = _state.value.copy(
-                    messages = _state.value.messages + ChatMessage(sender = Sender.BOT, text = "BMI", type = MessageType.BMI_CARD)
-                )
-                enqueueBot("How would you describe your daily activity? Be honest — Calixy doesn't judge 😂")
-                _state.value = _state.value.copy(
-                    showInput = false,
-                    chips = listOf("🛋️ Couch Potato", "🚶 Light Walker", "🏃 Moderately Active", "🏋️ Gym Regular", "⚡ Athlete Mode", "🧘 Yoga & Zen")
-                )
+                enqueueBot(ageReply)
+                delay(300)
+                enqueueBot("Now let's get your body measurements. Use the sliders below — drag to your exact height and weight. 📏")
+                _state.value = _state.value.copy(showInput = false, showSliders = true, chips = emptyList())
             }
+
             else -> Unit
         }
+    }
+
+    fun confirmSliders(heightCm: Int, weightKg: Float) = viewModelScope.launch {
+        val displayWeight = if (weightKg == weightKg.toInt().toFloat())
+            "${weightKg.toInt()} kg"
+        else
+            "${"%.1f".format(weightKg)} kg"
+
+        appendUser("Height: **$heightCm cm** · Weight: **$displayWeight**")
+
+        val bmi = calculateBmi(heightCm, weightKg)
+        val estimatedMonths = estimateMonths(bmi)
+
+        val bmiCategory = when {
+            bmi < 18.5f -> "underweight"
+            bmi < 25f -> "normal"
+            bmi < 30f -> "overweight"
+            else -> "obese"
+        }
+
+        val verdict = when (bmiCategory) {
+            "underweight" ->
+                "Your BMI is **${"%.1f".format(bmi)}** — you're in the underweight zone. No worries at all! 🌱 We'll focus on building strong nutritional foundations and helping you gain in the healthiest way possible."
+            "normal" ->
+                "Your BMI is **${"%.1f".format(bmi)}** — you're right in the healthy range. Excellent! ✅ Now we'll focus on dialing in your body composition, energy levels, and long-term consistency."
+            "overweight" ->
+                "Your BMI is **${"%.1f".format(bmi)}** — slightly above the normal range. Nothing we can't fix together! 🔥 With CalixyAI, people in your exact range typically reach their target within 3–4 months."
+            else ->
+                "Your BMI is **${"%.1f".format(bmi)}** — above the recommended range right now. But here's the thing — every great journey starts exactly where you are. 💚 Step by step, we'll get you there."
+        }
+
+        val profile = _state.value.profile.copy(heightCm = heightCm, weightKg = weightKg, bmi = bmi)
+        _state.value = _state.value.copy(
+            profile = profile,
+            step = ChatStep.ACTIVITY,
+            showSliders = false,
+            bmiUi = BmiUi(
+                bmi = bmi,
+                verdict = verdict,
+                estimatedMonths = estimatedMonths,
+                progress = (((bmi.coerceIn(15f, 35f) - 15f) / 20f) * 100).roundToInt()
+            )
+        )
+        enqueueBot(verdict)
+        _state.value = _state.value.copy(
+            messages = _state.value.messages + ChatMessage(
+                sender = Sender.BOT, text = "BMI", type = MessageType.BMI_CARD
+            )
+        )
+        delay(300)
+        enqueueBot("How would you describe your typical day? Be real with me — I'm not here to judge 😄")
+        _state.value = _state.value.copy(
+            showInput = false,
+            chips = listOf("🛋️ Couch Potato", "🚶 Light Walker", "🏃 Moderately Active", "🏋️ Gym Regular", "⚡ Athlete Mode", "🧘 Yoga & Zen")
+        )
     }
 
     private fun processSelection(value: String) = viewModelScope.launch {
@@ -113,37 +166,83 @@ class ChatSetupViewModel @Inject constructor(
         when (_state.value.step) {
             ChatStep.GENDER -> {
                 val profile = _state.value.profile.copy(gender = value)
-                _state.value = _state.value.copy(profile = profile, step = ChatStep.AGE, showInput = true, chips = emptyList())
+                _state.value = _state.value.copy(
+                    profile = profile, step = ChatStep.AGE,
+                    showInput = true, chips = emptyList()
+                )
                 val response = when (value) {
-                    "Male" -> "A man on a mission. Respect. 🫡"
-                    "Female" -> "Powerful choice. Let's build something strong together. ✨"
-                    else -> "Perfect — individuality matters here. 🌈"
+                    "Male" ->
+                        "A man with a plan. I respect that. 🫡 Let's build something powerful together."
+                    "Female" ->
+                        "Strong, determined, and ready to level up. ✨ I love that energy. Let's do this."
+                    else ->
+                        "Individuality is strength. 🌈 Your uniqueness is exactly what makes this plan special."
                 }
                 enqueueBot(response)
-                enqueueBot("How old are you? (Don't worry, I won't tell anyone 🤫)")
+                delay(300)
+                enqueueBot("How old are you? Age helps me calibrate your plan precisely. (Don't worry — it stays between us 🤫)")
             }
+
             ChatStep.ACTIVITY -> {
                 val profile = _state.value.profile.copy(activityLevel = value)
+                val activityReply = when {
+                    value.contains("Couch") ->
+                        "Honest answer — I love it! 😄 Starting from zero actually means the fastest early gains. We'll ease you in perfectly."
+                    value.contains("Light") ->
+                        "A light walker — that's a great foundation. 🚶 Consistency beats intensity every time, especially at the start."
+                    value.contains("Moderate") ->
+                        "Moderately active — solid base to build from! 🏃 You've already got the habit. Now we sharpen the fuel."
+                    value.contains("Gym") ->
+                        "Gym regular — now we're talking! 🏋️ You know the grind. We'll make sure your nutrition matches your effort."
+                    value.contains("Athlete") ->
+                        "Athlete mode! ⚡ Performance nutrition is a whole different game — and Calixy is built for exactly that."
+                    value.contains("Yoga") ->
+                        "Yoga & Zen — beautiful choice. 🧘 Mindful movement deserves mindful nutrition. We'll align them perfectly."
+                    else -> "Great activity level! Let's keep going."
+                }
                 _state.value = _state.value.copy(
                     profile = profile,
                     step = ChatStep.GOAL,
-                    chips = listOf("🔥 Lose Weight", "💪 Build Muscle", "📊 Stay at My Weight", "🏃 Improve Fitness", "❤️ Just Be Healthier")
+                    chips = listOf(
+                        "🔥 Lose Weight", "💪 Build Muscle",
+                        "📊 Stay at My Weight", "🏃 Improve Fitness", "❤️ Just Be Healthier"
+                    )
                 )
-                enqueueBot("Nice. That gives me a much better idea of your rhythm.")
-                enqueueBot("What's the mission? Pick your main goal:")
+                enqueueBot(activityReply)
+                delay(300)
+                enqueueBot("Now for the big question — what's the main mission? Pick your primary goal:")
             }
+
             ChatStep.GOAL -> {
                 val profile = _state.value.profile.copy(goal = value)
+                val goalReply = when {
+                    value.contains("Lose") ->
+                        "Locked in. 🔥 Fat loss done right — sustainable, smart, and without starving yourself. That's the Calixy way."
+                    value.contains("Muscle") ->
+                        "Building muscle it is! 💪 Gains take the right calories and the right timing. We'll nail both."
+                    value.contains("Stay") ->
+                        "Maintenance is seriously underrated. 📊 Keeping a healthy weight long-term takes real strategy. We've got you."
+                    value.contains("Fitness") ->
+                        "Fitness improvement — a goal that changes everything else too. 🏃 Energy, sleep, mood — all of it improves. Let's go!"
+                    value.contains("Healthier") ->
+                        "Just being healthier. ❤️ Honestly? That might be the smartest goal of all. We'll build lasting habits, not quick fixes."
+                    else -> "Great goal! Let's build your plan around it."
+                }
                 _state.value = _state.value.copy(
                     profile = profile,
                     step = ChatStep.ALLERGIES,
-                    chips = listOf("🥜 Peanuts", "🥛 Dairy", "🌾 Gluten", "🥚 Eggs", "🐟 Seafood", "🍯 Soy", "🌰 Tree Nuts", "✏️ Custom…"),
+                    chips = listOf(
+                        "🥜 Peanuts", "🥛 Dairy", "🌾 Gluten", "🥚 Eggs",
+                        "🐟 Seafood", "🍯 Soy", "🌰 Tree Nuts", "✏️ Custom…"
+                    ),
                     multiSelect = true,
                     selectedItems = emptySet()
                 )
-                enqueueBot("Locked in. We're building around $value.")
-                enqueueBot("Any foods your body and you are… not on speaking terms with? 🤔")
+                enqueueBot(goalReply)
+                delay(300)
+                enqueueBot("Almost there! Are there any foods your body just can't get along with? Select all that apply — or skip if you're allergy-free 👇")
             }
+
             else -> Unit
         }
     }
@@ -158,20 +257,46 @@ class ChatSetupViewModel @Inject constructor(
         val currentSelected = _state.value.selectedItems.toMutableList()
         if (!customValue.isNullOrBlank()) currentSelected.add(customValue)
         appendUser(currentSelected.joinToString(" · ").ifBlank { "None" })
+
         when (_state.value.step) {
             ChatStep.ALLERGIES -> {
+                val allergyReply = when {
+                    currentSelected.isEmpty() ->
+                        "No allergies — lucky you! 🍀 That gives us maximum flexibility to design a truly varied and delicious plan."
+                    currentSelected.size == 1 ->
+                        "Noted — I'll keep **${currentSelected[0]}** completely out of your plan. You'll never even notice it's missing."
+                    else ->
+                        "Got it — **${currentSelected.joinToString(", ")}** are off the table. Don't worry, there's still a world of amazing food waiting for you. 🌍"
+                }
                 _state.value = _state.value.copy(
-                    profile = _state.value.profile.copy(allergies = currentSelected, customAllergy = customValue),
+                    profile = _state.value.profile.copy(
+                        allergies = currentSelected, customAllergy = customValue
+                    ),
                     step = ChatStep.DIETARY,
-                    chips = listOf("☪️ Halal", "✡️ Kosher", "🌱 Vegan", "🥗 Vegetarian", "🥩 Keto", "🌾 Paleo", "🚫 No Restrictions"),
+                    chips = listOf(
+                        "☪️ Halal", "✡️ Kosher", "🌱 Vegan", "🥗 Vegetarian",
+                        "🥩 Keto", "🌾 Paleo", "🚫 No Restrictions"
+                    ),
                     selectedItems = emptySet(),
                     multiSelect = true
                 )
-                enqueueBot("Helpful. I'll keep those out of your plan.")
-                enqueueBot("Last one, I promise! Any dietary rules I should know about?")
+                enqueueBot(allergyReply)
+                delay(300)
+                enqueueBot("Last question, I promise! 🙏 Any dietary rules or lifestyles I should know about?")
             }
+
             ChatStep.DIETARY -> {
                 val profile = _state.value.profile.copy(dietaryRules = currentSelected)
+                val dietaryReply = when {
+                    currentSelected.contains("🚫 No Restrictions") || currentSelected.isEmpty() ->
+                        "No dietary restrictions — excellent! 🎯 That gives us the widest possible toolkit to build you an incredible, varied plan."
+                    currentSelected.contains("🌱 Vegan") ->
+                        "Vegan lifestyle — respect! 🌿 Plant-based nutrition done right is genuinely powerful. We'll make sure protein and micronutrients are perfectly covered."
+                    currentSelected.contains("🥩 Keto") ->
+                        "Keto! ⚡ High fat, low carb — when done correctly, it's remarkable for fat burning. We'll dial in your macros precisely."
+                    else ->
+                        "Perfect — **${currentSelected.joinToString(", ")}** noted. Your plan will respect every one of these preferences."
+                }
                 val finalAnalysis = buildFinalAnalysis(profile)
                 _state.value = _state.value.copy(
                     profile = profile,
@@ -181,25 +306,37 @@ class ChatSetupViewModel @Inject constructor(
                     selectedItems = emptySet(),
                     finalAnalysisUi = finalAnalysis
                 )
-                enqueueBot("Okay ${profile.firstName}, I've crunched the numbers. Let me show you your full picture... 📊")
+                enqueueBot(dietaryReply)
+                delay(500)
+                enqueueBot("${profile.firstName}, I've crunched every number, cross-referenced your profile, and built your complete picture. 📊 Here it is:")
                 _state.value = _state.value.copy(
-                    messages = _state.value.messages + ChatMessage(sender = Sender.BOT, text = "ANALYSIS", type = MessageType.ANALYSIS_CARD)
+                    messages = _state.value.messages + ChatMessage(
+                        sender = Sender.BOT, text = "ANALYSIS", type = MessageType.ANALYSIS_CARD
+                    )
                 )
-                enqueueBot("Based on everything you've told me, here's your personalized CalixyAI plan. Ready to unlock it? 🚀")
+                delay(300)
+                enqueueBot("This is your personalized CalixyAI roadmap — built around **you**, not a template. Ready to unlock the full plan? 🚀")
                 repository.saveSetup(profile)
                 _state.value = _state.value.copy(finished = true)
             }
+
             else -> Unit
         }
     }
 
     private suspend fun enqueueBot(text: String) {
         _state.value = _state.value.copy(
-            messages = _state.value.messages + ChatMessage(sender = Sender.BOT, text = "typing", type = MessageType.TYPING)
+            messages = _state.value.messages + ChatMessage(
+                sender = Sender.BOT, text = "typing", type = MessageType.TYPING
+            )
         )
-        delay(900)
+        // Typing delay scales with message length
+        val typingMs = (700L + (text.length * 12L)).coerceIn(700L, 2200L)
+        delay(typingMs)
         _state.value = _state.value.copy(
-            messages = _state.value.messages.dropLast(1) + ChatMessage(sender = Sender.BOT, text = text)
+            messages = _state.value.messages.dropLast(1) + ChatMessage(
+                sender = Sender.BOT, text = text
+            )
         )
     }
 

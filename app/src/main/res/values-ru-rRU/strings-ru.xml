@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CalixyAI</string>
+    <string name="next">Далее</string>
+    <string name="get_started">Начать</string>
+
+    <string name="select_language">Выберите язык</string>
+    <string name="select_language_subtitle">Мы персонализируем всё для вас</string>
+    <string name="lang_azerbaijani">Azərbaycan</string>
+    <string name="lang_turkish">Türkçe</string>
+    <string name="lang_english">English</string>
+    <string name="lang_russian">Русский</string>
+    <string name="btn_continue">Продолжить</string>
+
+    <string name="type_answer">Введите ваш ответ…</string>
+    <string name="type_custom">Введите своё значение…</string>
+    <string name="continue_arrow">Продолжить →</string>
+    <string name="unlock_plan">🚀 Открыть мой план</string>
+    <string name="send">Отправить</string>
+    <string name="online_status">AI Нутрициолог • Онлайн</string>
+
+    <string name="log_meal">+ Записать приём пищи</string>
+    <string name="active_plan">АКТИВНЫЙ ПЛАН</string>
+    <string name="bmi_label">ИМТ</string>
+    <string name="kcal_label">ккал / день</string>
+    <string name="plan_card">План</string>
+    <string name="streak_card">Серия</string>
+    <string name="high_protein">Высокий белок</string>
+    <string name="six_days">6 дней</string>
+    <string name="welcome_back">С возвращением</string>
+
+    <string name="start_trial_title">Начните бесплатный пробный период</string>
+    <string name="trial_subtitle">3 дня бесплатно — отмените в любое время</string>
+    <string name="featured">Рекомендуемый</string>
+    <string name="monthly_plan">3 дня бесплатно, затем $9.99/месяц</string>
+    <string name="plan_features">✓ Персональный план питания AI\n✓ Умный анализ питания\n✓ Премиум-аналитика прогресса\n✓ Приоритетные ответы тренера\n✓ Напоминания о привычках</string>
+    <string name="annual_plan">Годовой</string>
+    <string name="annual_price">$69.99/год</string>
+    <string name="lifetime_plan">Пожизненный</string>
+    <string name="lifetime_price">$149.99 единоразово</string>
+    <string name="btn_start_trial">Начать бесплатный период</string>
+    <string name="trial_disclaimer">Никаких списаний в течение 3 дней. Отменить можно до конца пробного периода.</string>
+
+    <string name="onboarding_title_1">Ваше тело. Ваши данные. Ваши правила.</string>
+    <string name="onboarding_subtitle_1">CalixyAI превращает ваши ежедневные привычки в чёткий, персональный ритм питания.</string>
+    <string name="onboarding_title_2">Умное отслеживание без лишнего шума.</string>
+    <string name="onboarding_subtitle_2">Быстро записывайте прогресс, понимайте калории и макросы, фокусируйтесь на важном.</string>
+    <string name="onboarding_title_3">Премиум-тренер для реальной жизни.</string>
+    <string name="onboarding_subtitle_3">Контекстные планы, напоминания о привычках и аналитика, которая держит вас в движении.</string>
+    <string name="skip">Пропустить</string>
+
+    <string name="activity_couch">🛋️ Диванный эксперт</string>
+    <string name="activity_walker">🚶 Лёгкая ходьба</string>
+    <string name="activity_moderate">🏃 Умеренно активный</string>
+    <string name="activity_gym">🏋️ Постоянный в зале</string>
+    <string name="activity_athlete">⚡ Режим атлета</string>
+    <string name="activity_yoga">🧘 Йога и дзен</string>
+
+    <string name="goal_lose">🔥 Похудеть</string>
+    <string name="goal_muscle">💪 Набрать мышцы</string>
+    <string name="goal_maintain">📊 Сохранить вес</string>
+    <string name="goal_fitness">🏃 Улучшить форму</string>
+    <string name="goal_health">❤️ Просто быть здоровым</string>
+
+    <string name="allergy_peanuts">🥜 Арахис</string>
+    <string name="allergy_dairy">🥛 Молочные продукты</string>
+    <string name="allergy_gluten">🌾 Глютен</string>
+    <string name="allergy_eggs">🥚 Яйца</string>
+    <string name="allergy_seafood">🐟 Морепродукты</string>
+    <string name="allergy_soy">🍯 Соя</string>
+    <string name="allergy_nuts">🌰 Древесные орехи</string>
+    <string name="allergy_custom">✏️ Своё…</string>
+
+    <string name="dietary_halal">☪️ Халяль</string>
+    <string name="dietary_kosher">✡️ Кошерное</string>
+    <string name="dietary_vegan">🌱 Веган</string>
+    <string name="dietary_vegetarian">🥗 Вегетарианец</string>
+    <string name="dietary_keto">🥩 Кето</string>
+    <string name="dietary_paleo">🌾 Палео</string>
+    <string name="dietary_none">🚫 Без ограничений</string>
+
+    <string name="gender_male">Мужчина</string>
+    <string name="gender_female">Женщина</string>
+    <string name="gender_other">Другое</string>
+
+    <string name="height_label">Рост</string>
+    <string name="height_unit">см</string>
+    <string name="weight_label">Вес</string>
+    <string name="weight_unit">кг</string>
+    <string name="slider_confirm">✓ Подтвердить</string>
+    <string name="bmi_zones">Недовес · Норма · Избыточный вес · Ожирение</string>
+</resources>

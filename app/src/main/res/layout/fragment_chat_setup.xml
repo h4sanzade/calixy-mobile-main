@@ -44,7 +44,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AI Nutrition Coach • Online"
+                android:text="@string/online_status"
                 android:textColor="@color/accent_primary"
                 android:textSize="12sp"/>
 
@@ -88,6 +88,148 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <!-- Slider panel: HEIGHT + WEIGHT (separate) -->
+        <LinearLayout
+            android:id="@+id/sliderPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@drawable/bg_card_elevated"
+            android:padding="18dp"
+            android:layout_marginBottom="12dp">
+
+            <!-- HEIGHT row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/height_label"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.06"/>
+
+                <TextView
+                    android:id="@+id/tvHeightValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="170 cm"
+                    android:textColor="@color/accent_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderHeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="140"
+                android:valueTo="220"
+                android:value="170"
+                android:stepSize="1"
+                app:thumbColor="@color/accent_primary"
+                app:trackColorActive="@color/accent_primary"
+                app:trackColorInactive="@color/stroke_subtle"
+                app:thumbRadius="10dp"
+                app:trackHeight="4dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="20dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="140 cm"
+                    android:textColor="@color/text_tertiary" android:textSize="11sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="220 cm"
+                    android:textColor="@color/text_tertiary" android:textSize="11sp"/>
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stroke_subtle"
+                android:layout_marginBottom="18dp"/>
+
+            <!-- WEIGHT row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/weight_label"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.06"/>
+
+                <TextView
+                    android:id="@+id/tvWeightValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="70 kg"
+                    android:textColor="@color/accent_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="30"
+                android:valueTo="200"
+                android:value="70"
+                android:stepSize="0.5"
+                app:thumbColor="@color/accent_primary"
+                app:trackColorActive="@color/accent_primary"
+                app:trackColorInactive="@color/stroke_subtle"
+                app:thumbRadius="10dp"
+                app:trackHeight="4dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="16dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="30 kg"
+                    android:textColor="@color/text_tertiary" android:textSize="11sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="200 kg"
+                    android:textColor="@color/text_tertiary" android:textSize="11sp"/>
+            </LinearLayout>
+
+            <!-- Confirm button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnConfirmSliders"
+                style="@style/Widget.CalixyAI.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/slider_confirm"/>
+
+        </LinearLayout>
+
         <!-- Chips / multi-select panel -->
         <LinearLayout
             android:id="@+id/selectionPanel"
@@ -110,7 +252,7 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_edit_text"
-                android:hint="Type custom value…"
+                android:hint="@string/type_custom"
                 android:paddingHorizontal="16dp"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint"
@@ -123,7 +265,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Continue →"
+                android:text="@string/continue_arrow"
                 android:visibility="gone"/>
 
         </LinearLayout>
@@ -142,7 +284,7 @@
                 android:layout_height="52dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_edit_text"
-                android:hint="Type your answer…"
+                android:hint="@string/type_answer"
                 android:paddingHorizontal="16dp"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint"
@@ -157,7 +299,7 @@
                 android:background="@drawable/bg_send_button"
                 android:src="@android:drawable/ic_menu_send"
                 android:tint="@android:color/white"
-                android:contentDescription="Send"
+                android:contentDescription="@string/send"
                 android:padding="12dp"/>
 
         </LinearLayout>
@@ -168,7 +310,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="🚀 Unlock My Plan"
+            android:text="@string/unlock_plan"
             android:visibility="gone"/>
 
     </LinearLayout>

@@ -2,39 +2,79 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/languageSelectFragment">
+
+    <!-- Language Selection (first screen ever) -->
+    <fragment
+        android:id="@+id/languageSelectFragment"
+        android:name="com.calixyai.ui.language.LanguageSelectFragment"
+        android:label="Language">
+        <action
+            android:id="@+id/action_languageSelectFragment_to_onboardingFragment"
+            app:destination="@id/splashFragment"
+            app:popUpTo="@id/languageSelectFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.calixyai.ui.splash.SplashFragment"
         android:label="Splash">
-        <action android:id="@+id/action_splashFragment_to_onboardingFragment" app:destination="@id/onboardingFragment" app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
-        <action android:id="@+id/action_splashFragment_to_chatSetupFragment" app:destination="@id/chatSetupFragment" app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
-        <action android:id="@+id/action_splashFragment_to_paymentFragment" app:destination="@id/paymentFragment" app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
-        <action android:id="@+id/action_splashFragment_to_homeFragment" app:destination="@id/homeFragment" app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
+        <action android:id="@+id/action_splashFragment_to_onboardingFragment"
+            app:destination="@id/onboardingFragment"
+            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
+        <action android:id="@+id/action_splashFragment_to_chatSetupFragment"
+            app:destination="@id/chatSetupFragment"
+            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
+        <action android:id="@+id/action_splashFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment"
+            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
+        <action android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
     </fragment>
 
-    <fragment android:id="@+id/onboardingFragment" android:name="com.calixyai.ui.onboarding.OnboardingFragment" android:label="Onboarding">
-        <action android:id="@+id/action_onboardingFragment_to_chatSetupFragment" app:destination="@id/chatSetupFragment" app:popUpTo="@id/onboardingFragment" app:popUpToInclusive="true"/>
+    <fragment android:id="@+id/onboardingFragment"
+        android:name="com.calixyai.ui.onboarding.OnboardingFragment"
+        android:label="Onboarding">
+        <action android:id="@+id/action_onboardingFragment_to_chatSetupFragment"
+            app:destination="@id/chatSetupFragment"
+            app:popUpTo="@id/onboardingFragment" app:popUpToInclusive="true"/>
     </fragment>
 
-    <fragment android:id="@+id/chatSetupFragment" android:name="com.calixyai.ui.chatsetup.ChatSetupFragment" android:label="Chat Setup">
-        <action android:id="@+id/action_chatSetupFragment_to_paymentFragment" app:destination="@id/paymentFragment" app:popUpTo="@id/chatSetupFragment" app:popUpToInclusive="true"/>
+    <fragment android:id="@+id/chatSetupFragment"
+        android:name="com.calixyai.ui.chatsetup.ChatSetupFragment"
+        android:label="Chat Setup">
+        <action android:id="@+id/action_chatSetupFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment"
+            app:popUpTo="@id/chatSetupFragment" app:popUpToInclusive="true"/>
     </fragment>
 
-    <fragment android:id="@+id/paymentFragment" android:name="com.calixyai.ui.payment.PaymentFragment" android:label="Payment">
-        <action android:id="@+id/action_paymentFragment_to_homeFragment" app:destination="@id/homeFragment" app:popUpTo="@id/paymentFragment" app:popUpToInclusive="true"/>
+    <fragment android:id="@+id/paymentFragment"
+        android:name="com.calixyai.ui.payment.PaymentFragment"
+        android:label="Payment">
+        <action android:id="@+id/action_paymentFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/paymentFragment" app:popUpToInclusive="true"/>
     </fragment>
 
-    <fragment android:id="@+id/homeFragment" android:name="com.calixyai.ui.home.HomeFragment" android:label="Home"/>
+    <fragment android:id="@+id/homeFragment"
+        android:name="com.calixyai.ui.home.HomeFragment"
+        android:label="Home"/>
 
-    <fragment android:id="@+id/tab_plan" android:name="com.calixyai.ui.navigation.SimplePlaceholderFragment" android:label="Plan">
+    <fragment android:id="@+id/tab_plan"
+        android:name="com.calixyai.ui.navigation.SimplePlaceholderFragment"
+        android:label="Plan">
         <argument android:name="arg_title" app:argType="string" android:defaultValue="Plan"/>
     </fragment>
-    <fragment android:id="@+id/tab_progress" android:name="com.calixyai.ui.navigation.SimplePlaceholderFragment" android:label="Progress">
+    <fragment android:id="@+id/tab_progress"
+        android:name="com.calixyai.ui.navigation.SimplePlaceholderFragment"
+        android:label="Progress">
         <argument android:name="arg_title" app:argType="string" android:defaultValue="Progress"/>
     </fragment>
-    <fragment android:id="@+id/tab_profile" android:name="com.calixyai.ui.navigation.SimplePlaceholderFragment" android:label="Profile">
+    <fragment android:id="@+id/tab_profile"
+        android:name="com.calixyai.ui.navigation.SimplePlaceholderFragment"
+        android:label="Profile">
         <argument android:name="arg_title" app:argType="string" android:defaultValue="Profile"/>
     </fragment>
 </navigation>

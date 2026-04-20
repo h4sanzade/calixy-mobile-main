@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CalixyAI</string>
+    <string name="next">İleri</string>
+    <string name="get_started">Başla</string>
+
+    <string name="select_language">Dil seçin</string>
+    <string name="select_language_subtitle">Her şeyi sizin için kişiselleştireceğiz</string>
+    <string name="lang_azerbaijani">Azərbaycan</string>
+    <string name="lang_turkish">Türkçe</string>
+    <string name="lang_english">English</string>
+    <string name="lang_russian">Русский</string>
+    <string name="btn_continue">Devam Et</string>
+
+    <string name="type_answer">Cevabınızı yazın…</string>
+    <string name="type_custom">Özel değerinizi yazın…</string>
+    <string name="continue_arrow">Devam Et →</string>
+    <string name="unlock_plan">🚀 Planımı Aç</string>
+    <string name="send">Gönder</string>
+    <string name="online_status">AI Beslenme Koçu • Çevrimiçi</string>
+
+    <string name="log_meal">+ Öğün Kaydet</string>
+    <string name="active_plan">AKTİF PLAN</string>
+    <string name="bmi_label">VKİ</string>
+    <string name="kcal_label">kkal / gün</string>
+    <string name="plan_card">Plan</string>
+    <string name="streak_card">Seri</string>
+    <string name="high_protein">Yüksek Protein</string>
+    <string name="six_days">6 gün</string>
+    <string name="welcome_back">Tekrar hoş geldiniz</string>
+
+    <string name="start_trial_title">Ücretsiz Denemenizi Başlatın</string>
+    <string name="trial_subtitle">3 gün ücretsiz — istediğiniz zaman iptal edin</string>
+    <string name="featured">Öne Çıkan</string>
+    <string name="monthly_plan">3 Gün Ücretsiz, ardından $9.99/ay</string>
+    <string name="plan_features">✓ Kişiselleştirilmiş AI beslenme planı\n✓ Akıllı öğün analizi\n✓ Premium ilerleme içgörüleri\n✓ Öncelikli koç yanıtları\n✓ Alışkanlık hatırlatıcıları</string>
+    <string name="annual_plan">Yıllık</string>
+    <string name="annual_price">$69.99/yıl</string>
+    <string name="lifetime_plan">Ömür Boyu</string>
+    <string name="lifetime_price">$149.99 tek seferlik</string>
+    <string name="btn_start_trial">Ücretsiz Denemeyi Başlat</string>
+    <string name="trial_disclaimer">3 gün boyunca ücret alınmaz. Deneme bitmeden iptal edebilirsiniz.</string>
+
+    <string name="onboarding_title_1">Vücudunuz. Veriniz. Kurallarınız.</string>
+    <string name="onboarding_subtitle_1">CalixyAI günlük alışkanlıklarınızı net, kişiselleştirilmiş bir beslenme ritmine dönüştürür.</string>
+    <string name="onboarding_title_2">Gürültüsüz akıllı takip.</string>
+    <string name="onboarding_subtitle_2">İlerlemeyi hızla kaydedin, kalori ve makroları anlayın, önemli olana odaklanın.</string>
+    <string name="onboarding_title_3">Gerçek yaşam için premium koç.</string>
+    <string name="onboarding_subtitle_3">Bağlam farkında planlar, alışkanlık hatırlatıcıları ve sizi hareket ettiren içgörüler.</string>
+    <string name="skip">Atla</string>
+
+    <string name="activity_couch">🛋️ Kanepe Tutkunu</string>
+    <string name="activity_walker">🚶 Hafif Yürüyüşçü</string>
+    <string name="activity_moderate">🏃 Orta Aktif</string>
+    <string name="activity_gym">🏋️ Spor Salonu Düzenlisi</string>
+    <string name="activity_athlete">⚡ Atlet Modu</string>
+    <string name="activity_yoga">🧘 Yoga &amp; Zen</string>
+
+    <string name="goal_lose">🔥 Kilo Ver</string>
+    <string name="goal_muscle">💪 Kas Yap</string>
+    <string name="goal_maintain">📊 Kilomu Koru</string>
+    <string name="goal_fitness">🏃 Formu Geliştir</string>
+    <string name="goal_health">❤️ Sadece Sağlıklı Ol</string>
+
+    <string name="allergy_peanuts">🥜 Yer Fıstığı</string>
+    <string name="allergy_dairy">🥛 Süt Ürünleri</string>
+    <string name="allergy_gluten">🌾 Gluten</string>
+    <string name="allergy_eggs">🥚 Yumurta</string>
+    <string name="allergy_seafood">🐟 Deniz Ürünleri</string>
+    <string name="allergy_soy">🍯 Soya</string>
+    <string name="allergy_nuts">🌰 Ağaç Kuruyemişi</string>
+    <string name="allergy_custom">✏️ Özel…</string>
+
+    <string name="dietary_halal">☪️ Helal</string>
+    <string name="dietary_kosher">✡️ Koşer</string>
+    <string name="dietary_vegan">🌱 Vegan</string>
+    <string name="dietary_vegetarian">🥗 Vejetaryen</string>
+    <string name="dietary_keto">🥩 Keto</string>
+    <string name="dietary_paleo">🌾 Paleo</string>
+    <string name="dietary_none">🚫 Kısıtlama Yok</string>
+
+    <string name="gender_male">Erkek</string>
+    <string name="gender_female">Kadın</string>
+    <string name="gender_other">Diğer</string>
+
+    <string name="height_label">Boy</string>
+    <string name="height_unit">cm</string>
+    <string name="weight_label">Ağırlık</string>
+    <string name="weight_unit">kg</string>
+    <string name="slider_confirm">✓ Onayla</string>
+    <string name="bmi_zones">Zayıf · Normal · Fazla Kilolu · Obez</string>
+</resources>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import androidx.core.text.toSpannable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -62,12 +63,13 @@ class ChatAdapter(
             is UserViewHolder -> holder.bind(getItem(position))
             is TypingViewHolder -> holder.bind()
         }
-        holder.itemView.translationY = 32f
+        // Slide-in animation
+        holder.itemView.translationY = 36f
         holder.itemView.alpha = 0f
         holder.itemView.animate()
             .translationY(0f)
             .alpha(1f)
-            .setDuration(220)
+            .setDuration(240)
             .setInterpolator(DecelerateInterpolator())
             .start()
     }
@@ -75,29 +77,25 @@ class ChatAdapter(
     class UserViewHolder(private val binding: ItemChatUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ChatMessage) {
-            binding.tvMessage.text = item.text
+            // User messages can also contain **bold** (e.g. height/weight confirm)
+            binding.tvMessage.text = item.text.toSpannable()
         }
     }
 
     class TypingViewHolder(private val binding: ItemChatTypingBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            listOf(binding.dotOne, binding.dotTwo, binding.dotThree).forEachIndexed { index, view ->
-                animateDot(view, index * 140L)
-            }
+            listOf(binding.dotOne, binding.dotTwo, binding.dotThree)
+                .forEachIndexed { index, view -> animateDot(view, index * 140L) }
         }
 
         private fun animateDot(view: View, delay: Long) {
             view.animate()
-                .translationY(-6f)
-                .alpha(0.4f)
-                .setStartDelay(delay)
-                .setDuration(380)
+                .translationY(-6f).alpha(0.4f)
+                .setStartDelay(delay).setDuration(380)
                 .withEndAction {
                     view.animate()
-                        .translationY(0f)
-                        .alpha(1f)
-                        .setDuration(380)
+                        .translationY(0f).alpha(1f).setDuration(380)
                         .withEndAction { animateDot(view, 0L) }
                         .start()
                 }.start()
@@ -115,18 +113,25 @@ class ChatAdapter(
             binding.cardAnalysis.visibility =
                 if (item.type == MessageType.ANALYSIS_CARD) View.VISIBLE else View.GONE
 
-            binding.tvMessage.text = item.text
+            // Render bold markdown in bot text
+            binding.tvMessage.text = item.text.toSpannable()
 
             if (item.type == MessageType.BMI_CARD && bmiUi != null) {
-                binding.tvBmiValue.text = "BMI ${bmiUi.bmi}"
-                binding.tvBmiVerdict.text = bmiUi.verdict.take(12).trim()
+                binding.tvBmiValue.text = "BMI ${"%.1f".format(bmiUi.bmi)}"
+                val verdictShort = when {
+                    bmiUi.bmi < 18.5f -> "Underweight"
+                    bmiUi.bmi < 25f -> "Healthy ✓"
+                    bmiUi.bmi < 30f -> "Overweight"
+                    else -> "Obese"
+                }
+                binding.tvBmiVerdict.text = verdictShort
                 binding.bmiProgress.progress = bmiUi.progress
                 binding.tvBmiZones.text = "Underweight · Normal · Overweight · Obese"
             }
 
             if (item.type == MessageType.ANALYSIS_CARD && analysisUi != null) {
                 binding.tvStats.text = buildString {
-                    append("Current BMI ${analysisUi.currentBmi}   ·   Target ${analysisUi.targetBmi}\n")
+                    append("Current BMI ${"%.1f".format(analysisUi.currentBmi)}   ·   Target ${"%.1f".format(analysisUi.targetBmi)}\n")
                     append("${analysisUi.estimatedDuration} months   ·   ${analysisUi.dailyCalories} kcal/day")
                 }
 
@@ -146,26 +151,20 @@ class ChatAdapter(
                     valueTextColor = Color.TRANSPARENT
                 }
 
-                val textColor = Color.parseColor("#5A7A6E")
                 val gridColor = Color.parseColor("#DCF0EA")
-
                 binding.weightChart.apply {
                     data = LineData(set)
                     setBackgroundColor(Color.TRANSPARENT)
                     axisRight.isEnabled = false
-                    axisLeft.apply {
-
-                        axisLineColor = gridColor
-                    }
+                    axisLeft.axisLineColor = gridColor
                     xAxis.apply {
                         position = XAxis.XAxisPosition.BOTTOM
-
                         axisLineColor = gridColor
                     }
                     legend.isEnabled = false
                     description = Description().apply { text = "" }
                     setTouchEnabled(false)
-                    animateX(800)
+                    animateX(900)
                     invalidate()
                 }
             }

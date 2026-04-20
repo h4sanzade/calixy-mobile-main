@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- BASE strings.xml (English default) -->
 <resources>
     <string name="app_name">CalixyAI</string>
     <string name="next">Next</string>
     <string name="get_started">Get Started</string>
+
+    <!-- Language Selection -->
+    <string name="select_language">Choose your language</string>
+    <string name="select_language_subtitle">We\'ll personalize everything for you</string>
+    <string name="lang_azerbaijani">Azərbaycan</string>
+    <string name="lang_turkish">Türkçe</string>
+    <string name="lang_english">English</string>
+    <string name="lang_russian">Русский</string>
+    <string name="btn_continue">Continue</string>
+
+    <!-- Chat Setup -->
+    <string name="type_answer">Type your answer…</string>
+    <string name="type_custom">Type custom value…</string>
+    <string name="continue_arrow">Continue →</string>
+    <string name="unlock_plan">🚀 Unlock My Plan</string>
+    <string name="send">Send</string>
+    <string name="online_status">AI Nutrition Coach • Online</string>
+
+    <!-- Home -->
+    <string name="log_meal">+ Log Meal</string>
+    <string name="active_plan">ACTIVE PLAN</string>
+    <string name="bmi_label">BMI</string>
+    <string name="kcal_label">kcal / day</string>
+    <string name="plan_card">Plan</string>
+    <string name="streak_card">Streak</string>
+    <string name="high_protein">High Protein</string>
+    <string name="six_days">6 days</string>
+    <string name="welcome_back">Welcome back</string>
+
+    <!-- Payment -->
+    <string name="start_trial_title">Start Your Free Trial</string>
+    <string name="trial_subtitle">3 days free — cancel anytime</string>
+    <string name="featured">Featured</string>
+    <string name="monthly_plan">3 Days Free, then $9.99/month</string>
+    <string name="plan_features">✓ Personalized AI nutrition plan\n✓ Smart meal analysis\n✓ Premium progress insights\n✓ Priority coaching responses\n✓ Habit reminders and check-ins</string>
+    <string name="annual_plan">Annual</string>
+    <string name="annual_price">$69.99/year</string>
+    <string name="lifetime_plan">Lifetime</string>
+    <string name="lifetime_price">$149.99 once</string>
+    <string name="btn_start_trial">Start Free Trial</string>
+    <string name="trial_disclaimer">No charge for 3 days. Cancel anytime before trial ends.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">Your body. Your data. Your rules.</string>
+    <string name="onboarding_subtitle_1">CalixyAI turns your daily habits into a clear, personalized nutrition rhythm.</string>
+    <string name="onboarding_title_2">Smart tracking without the noise.</string>
+    <string name="onboarding_subtitle_2">Log progress fast, understand calories and macros, and stay focused on what matters.</string>
+    <string name="onboarding_title_3">A premium coach for real life.</string>
+    <string name="onboarding_subtitle_3">Context-aware plans, habit reminders, and beautiful insights that keep you moving.</string>
+    <string name="skip">Skip</string>
+
+    <!-- Chat Steps - Activity Options -->
+    <string name="activity_couch">🛋️ Couch Potato</string>
+    <string name="activity_walker">🚶 Light Walker</string>
+    <string name="activity_moderate">🏃 Moderately Active</string>
+    <string name="activity_gym">🏋️ Gym Regular</string>
+    <string name="activity_athlete">⚡ Athlete Mode</string>
+    <string name="activity_yoga">🧘 Yoga &amp; Zen</string>
+
+    <!-- Chat Steps - Goal Options -->
+    <string name="goal_lose">🔥 Lose Weight</string>
+    <string name="goal_muscle">💪 Build Muscle</string>
+    <string name="goal_maintain">📊 Stay at My Weight</string>
+    <string name="goal_fitness">🏃 Improve Fitness</string>
+    <string name="goal_health">❤️ Just Be Healthier</string>
+
+    <!-- Allergy Options -->
+    <string name="allergy_peanuts">🥜 Peanuts</string>
+    <string name="allergy_dairy">🥛 Dairy</string>
+    <string name="allergy_gluten">🌾 Gluten</string>
+    <string name="allergy_eggs">🥚 Eggs</string>
+    <string name="allergy_seafood">🐟 Seafood</string>
+    <string name="allergy_soy">🍯 Soy</string>
+    <string name="allergy_nuts">🌰 Tree Nuts</string>
+    <string name="allergy_custom">✏️ Custom…</string>
+
+    <!-- Dietary Options -->
+    <string name="dietary_halal">☪️ Halal</string>
+    <string name="dietary_kosher">✡️ Kosher</string>
+    <string name="dietary_vegan">🌱 Vegan</string>
+    <string name="dietary_vegetarian">🥗 Vegetarian</string>
+    <string name="dietary_keto">🥩 Keto</string>
+    <string name="dietary_paleo">🌾 Paleo</string>
+    <string name="dietary_none">🚫 No Restrictions</string>
+
+    <!-- Gender Options -->
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_other">Other</string>
+
+    <!-- Slider labels -->
+    <string name="height_label">Height</string>
+    <string name="height_unit">cm</string>
+    <string name="weight_label">Weight</string>
+    <string name="weight_unit">kg</string>
+    <string name="slider_confirm">✓ Confirm</string>
+    <string name="bmi_zones">Underweight · Normal · Overweight · Obese</string>
 </resources>
