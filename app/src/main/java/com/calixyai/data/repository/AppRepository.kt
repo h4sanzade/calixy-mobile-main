@@ -51,9 +51,10 @@ class AppRepository @Inject constructor(
                 bmi = bmi
             )
         )
-        val targetWeight = when (profile.goal) {
-            "🔥 Lose Weight" -> (profile.weightKg ?: 0f) - 8f
-            "💪 Build Muscle" -> (profile.weightKg ?: 0f) + 4f
+        val targetWeight = when {
+            isLoseWeightGoal(profile.goal) -> (profile.weightKg ?: 0f) - 8f
+            isMuscleGoal(profile.goal) -> (profile.weightKg ?: 0f) + 4f
+            isGainWeightGoal(profile.goal) -> (profile.weightKg ?: 0f) + 4f
             else -> profile.weightKg ?: 0f
         }
         val estimatedMonths = estimateMonths(bmi, profile.goal)
@@ -79,24 +80,38 @@ class AppRepository @Inject constructor(
         setChatSetupDone()
     }
 
+    private fun isLoseWeightGoal(goal: String): Boolean =
+        goal.contains("Lose") || goal.contains("Arıq") ||
+                goal.contains("Kilo Ver") || goal.contains("Похуд")
+
+    private fun isMuscleGoal(goal: String): Boolean =
+        goal.contains("Muscle") || goal.contains("Əzələ") ||
+                goal.contains("Kas Yap") || goal.contains("мышц")
+
+    private fun isGainWeightGoal(goal: String): Boolean =
+        goal.contains("Gain Weight") || goal.contains("Çəki Artır") ||
+                goal.contains("Kilo Al") || goal.contains("Набрать вес")
+
     private fun estimateCalories(goal: String, activity: String): Int {
-        val base = when (activity) {
-            "⚡ Athlete Mode" -> 2500
-            "🏋️ Gym Regular" -> 2300
-            "🏃 Moderately Active" -> 2150
-            "🚶 Light Walker" -> 1950
+        val base = when {
+            activity.contains("Athlete") || activity.contains("Atlet") -> 2500
+            activity.contains("Gym") || activity.contains("Zal") || activity.contains("Spor") -> 2300
+            activity.contains("Moderate") || activity.contains("Orta") -> 2150
+            activity.contains("Light") || activity.contains("Yüngül") || activity.contains("Hafif") -> 1950
             else -> 1800
         }
-        return when (goal) {
-            "🔥 Lose Weight" -> base - 300
-            "💪 Build Muscle" -> base + 250
+        return when {
+            isLoseWeightGoal(goal) -> base - 300
+            isMuscleGoal(goal) -> base + 250
+            isGainWeightGoal(goal) -> base + 400   // Gain Weight: higher surplus than muscle
             else -> base
         }
     }
 
     private fun estimateMonths(bmi: Float, goal: String): Int {
         return when {
-            goal == "💪 Build Muscle" -> 4
+            isMuscleGoal(goal) -> 4
+            isGainWeightGoal(goal) -> 3
             bmi < 18.5f -> 3
             bmi < 25f -> 2
             bmi < 30f -> 4

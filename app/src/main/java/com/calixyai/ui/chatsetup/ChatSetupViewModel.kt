@@ -41,6 +41,20 @@ class ChatSetupViewModel @Inject constructor(
 
     private fun str(@androidx.annotation.StringRes id: Int): String = context.getString(id)
 
+    // ── Gain Weight keyword helpers ───────────────────────────────────────────
+
+    private fun isGainWeightGoal(goal: String): Boolean =
+        goal.contains("Gain Weight") || goal.contains("Çəki Artır") ||
+                goal.contains("Kilo Al") || goal.contains("Набрать вес")
+
+    private fun isLoseWeightGoal(goal: String): Boolean =
+        goal.contains("Lose") || goal.contains("Arıq") ||
+                goal.contains("Kilo Ver") || goal.contains("Похуд")
+
+    private fun isMuscleGoal(goal: String): Boolean =
+        goal.contains("Muscle") || goal.contains("Əzələ") ||
+                goal.contains("Kas Yap") || goal.contains("мышц")
+
     // ── Chip helpers ──────────────────────────────────────────────────────────
 
     private fun activityChips() = listOf(
@@ -54,9 +68,9 @@ class ChatSetupViewModel @Inject constructor(
 
     private fun goalChips() = listOf(
         str(R.string.goal_lose),
+        str(R.string.goal_gain),
         str(R.string.goal_muscle),
         str(R.string.goal_maintain),
-        str(R.string.goal_fitness),
         str(R.string.goal_health)
     )
 
@@ -125,17 +139,14 @@ class ChatSetupViewModel @Inject constructor(
         }
     }
 
-    // ── Edit: only allow editing the immediately previous user message ────────
+    // ── Edit ──────────────────────────────────────────────────────────────────
 
     private fun editMessage(messageId: Long) {
         val messages = _state.value.messages
         val target = messages.firstOrNull { it.id == messageId } ?: return
         val editStep = target.editableStep ?: return
 
-        // Find the last user message in the list
         val lastUserMsg = messages.lastOrNull { it.sender == Sender.USER }
-
-        // Only allow editing the immediately previous (last) user message
         if (lastUserMsg?.id != messageId) return
 
         val idx = messages.indexOf(target)
@@ -240,7 +251,6 @@ class ChatSetupViewModel @Inject constructor(
                         ru = "Как вы себя идентифицируете?"
                     )
                 )
-                // Problem 3 fix: chips are shown AFTER the question is sent
                 _state.value = _state.value.copy(
                     showInput = false,
                     chips = genderChips(),
@@ -295,25 +305,20 @@ class ChatSetupViewModel @Inject constructor(
                 )
             }
 
-            // Problem 4: TARGET_WEIGHT step — text input with validation
             ChatStep.TARGET_WEIGHT -> {
                 val currentWeight = _state.value.profile.weightKg ?: 70f
                 val goal = _state.value.profile.goal
-                val isLose = goal.contains("Lose") || goal.contains("Arıq") ||
-                        goal.contains("Kilo Ver") || goal.contains("Похуд")
-                val isGain = goal.contains("Muscle") || goal.contains("Əzələ") ||
-                        goal.contains("Kas Yap") || goal.contains("мышц")
+                val isLose = isLoseWeightGoal(goal)
+                val isGain = isGainWeightGoal(goal) || isMuscleGoal(goal)
 
                 val inputVal = value.replace(",", ".").trim().toFloatOrNull()
                 if (inputVal == null || inputVal <= 0f) {
-                    // Invalid — set hint error
                     _state.value = _state.value.copy(
                         inputError = str(R.string.target_weight_error_invalid)
                     )
                     return@launch
                 }
 
-                // Validation: lose → must be lower; gain → must be higher
                 if (isLose && inputVal >= currentWeight) {
                     _state.value = _state.value.copy(
                         inputError = str(R.string.target_weight_error_lose)
@@ -327,7 +332,6 @@ class ChatSetupViewModel @Inject constructor(
                     return@launch
                 }
 
-                // Valid — clear error and proceed
                 _state.value = _state.value.copy(inputError = null)
 
                 val unit = t("kg", "kq", "kg", "кг")
@@ -348,7 +352,13 @@ class ChatSetupViewModel @Inject constructor(
                         tr = "$months ayda ${"%.1f".format(-diff)} kg vermek. 🔥 Tutarlı ve sürdürülebilir!",
                         ru = "Сбросить ${"%.1f".format(-diff)} кг за $months мес. 🔥 Стабильно и устойчиво!"
                     )
-                    isGain -> t(
+                    isGainWeightGoal(goal) -> t(
+                        en = "Perfect — gaining ${"%.1f".format(diff)} kg over $months months. 📈 A healthy calorie surplus will get you there!",
+                        az = "$months ayda ${"%.1f".format(diff)} kq artırmaq. 📈 Sağlam kalori artımı sizi ora çatdıracaq!",
+                        tr = "$months ayda ${"%.1f".format(diff)} kg almak. 📈 Sağlıklı kalori fazlası sizi oraya ulaştıracak!",
+                        ru = "Набрать ${"%.1f".format(diff)} кг за $months мес. 📈 Здоровый профицит калорий поможет!"
+                    )
+                    isMuscleGoal(goal) -> t(
                         en = "Awesome — gaining ${"%.1f".format(diff)} kg over $months months. 💪 Smart muscle-building plan!",
                         az = "$months ayda ${"%.1f".format(diff)} kq qazanmaq. 💪 Ağıllı əzələ qurmaq planı!",
                         tr = "$months ayda ${"%.1f".format(diff)} kg almak. 💪 Akıllı kas yapım planı!",
@@ -371,7 +381,6 @@ class ChatSetupViewModel @Inject constructor(
                         ru = "Почти готово! Есть продукты, с которыми организм не ладит? 👇"
                     )
                 )
-                // Problem 3 fix: chips shown AFTER the question bot message
                 _state.value = _state.value.copy(
                     showInput = false,
                     chips = allergyChips(),
@@ -462,7 +471,6 @@ class ChatSetupViewModel @Inject constructor(
                 ru = "Как бы вы описали свой обычный день? 😄"
             )
         )
-        // Problem 3 fix: chips AFTER bot question
         _state.value = _state.value.copy(showInput = false, chips = activityChips())
     }
 
@@ -557,23 +565,25 @@ class ChatSetupViewModel @Inject constructor(
                         ru = "Теперь главный вопрос — в чём главная миссия?"
                     )
                 )
-                // Problem 3 fix: chips AFTER the question
                 _state.value = _state.value.copy(chips = goalChips())
             }
 
             ChatStep.GOAL -> {
                 val profile = _state.value.profile.copy(goal = value)
-                val isWeightRelated = value.contains("Lose") || value.contains("Arıq") || value.contains("Kilo Ver") ||
-                        value.contains("Похуд") || value.contains("Muscle") || value.contains("Əzələ") ||
-                        value.contains("Kas Yap") || value.contains("мышц")
+                val isWeightRelated = isLoseWeightGoal(value) || isMuscleGoal(value) || isGainWeightGoal(value)
 
                 val goalReply = when {
-                    value.contains("Lose") || value.contains("Arıq") || value.contains("Kilo Ver") || value.contains("Похуд") ->
+                    isLoseWeightGoal(value) ->
                         t(en = "Locked in. 🔥 Smart, sustainable fat loss — the Calixy way.",
                             az = "Qəbul edildi. 🔥 Davamlı, ağıllı yağ itkisi — Calixy üslubu.",
                             tr = "Kilitlendi. 🔥 Akıllı, sürdürülebilir yağ kaybı.",
                             ru = "Принято. 🔥 Умное, устойчивое жиросжигание.")
-                    value.contains("Muscle") || value.contains("Əzələ") || value.contains("Kas") || value.contains("мышц") ->
+                    isGainWeightGoal(value) ->
+                        t(en = "Gaining weight the healthy way! 📈 The right calorie surplus with quality nutrients — we've got a plan.",
+                            az = "Sağlam şəkildə çəki artırırıq! 📈 Doğru kalori artımı ilə keyfiyyətli qida — planımız var.",
+                            tr = "Sağlıklı şekilde kilo almak! 📈 Kaliteli besinlerle doğru kalori fazlası — bir planımız var.",
+                            ru = "Здоровый набор веса! 📈 Правильный профицит калорий с качественным питанием — у нас есть план.")
+                    isMuscleGoal(value) ->
                         t(en = "Building muscle! 💪 The right calories at the right time — we'll nail both.",
                             az = "Əzələ qurmaq! 💪 Doğru kalorilər, doğru vaxtlama.",
                             tr = "Kas yapmak! 💪 Doğru kalori, doğru zamanlama.",
@@ -594,21 +604,18 @@ class ChatSetupViewModel @Inject constructor(
                 delay(350)
 
                 if (isWeightRelated) {
-                    // Problem 4: ask for target weight via text input — no chips
                     val currentWeight = _state.value.profile.weightKg ?: 70f
-                    val isLose = value.contains("Lose") || value.contains("Arıq") || value.contains("Kilo Ver") || value.contains("Похуд")
-                    val hintText = if (isLose) {
-                        t(
+                    val hintText = when {
+                        isLoseWeightGoal(value) -> t(
                             en = "What weight do you want to reach? (must be lower than ${"%.1f".format(currentWeight)} kg)",
                             az = "Hansı çəkiyə çatmaq istəyirsiniz? (${"%.1f".format(currentWeight)} kq-dan az olmalıdır)",
                             tr = "Hangi kiloya ulaşmak istiyorsunuz? (${"%.1f".format(currentWeight)} kg'dan düşük olmalı)",
                             ru = "Какого веса хотите достичь? (должен быть ниже ${"%.1f".format(currentWeight)} кг)"
                         )
-                    } else {
-                        t(
+                        else -> t(
                             en = "What weight do you want to reach? (must be higher than ${"%.1f".format(currentWeight)} kg)",
-                            az = "Hansı çəkiyə çatmaq istəyirsiniz? (${"%.1f".format(currentWeight)} kq-dan çox olmalıdır — yuxarı çəki yazın)",
-                            tr = "Hangi kiloya ulaşmak istiyorsunuz? (${"%.1f".format(currentWeight)} kg'dan yüksek olmalı — hedef kilo yazın)",
+                            az = "Hansı çəkiyə çatmaq istəyirsiniz? (${"%.1f".format(currentWeight)} kq-dan çox olmalıdır)",
+                            tr = "Hangi kiloya ulaşmak istiyorsunuz? (${"%.1f".format(currentWeight)} kg'dan yüksek olmalı)",
                             ru = "Какого веса хотите достичь? (должен быть выше ${"%.1f".format(currentWeight)} кг)"
                         )
                     }
@@ -625,7 +632,6 @@ class ChatSetupViewModel @Inject constructor(
                         requestKeyboard = true
                     )
                 } else {
-                    // Skip target weight, go straight to allergies
                     _state.value = _state.value.copy(
                         profile = profile,
                         step = ChatStep.ALLERGIES,
@@ -641,7 +647,6 @@ class ChatSetupViewModel @Inject constructor(
                             ru = "Почти готово! Есть продукты, с которыми организм не ладит? 👇"
                         )
                     )
-                    // Problem 3: chips after question
                     _state.value = _state.value.copy(
                         showInput = false,
                         chips = allergyChips()
@@ -653,7 +658,7 @@ class ChatSetupViewModel @Inject constructor(
         }
     }
 
-    // ── Multi-select with No Restrictions logic ───────────────────────────────
+    // ── Multi-select ──────────────────────────────────────────────────────────
 
     private fun toggleMulti(value: String) {
         val set = _state.value.selectedItems.toMutableSet()
@@ -678,8 +683,6 @@ class ChatSetupViewModel @Inject constructor(
             requestKeyboard = showCustom
         )
     }
-
-    // ── Multi-select submit ───────────────────────────────────────────────────
 
     private fun submitMulti(customValue: String?) = viewModelScope.launch {
         val currentSelected = _state.value.selectedItems
@@ -728,7 +731,6 @@ class ChatSetupViewModel @Inject constructor(
                         ru = "Последний вопрос, обещаю! 🙏 Есть диетические правила или образ жизни?"
                     )
                 )
-                // Problem 3: chips after question
                 _state.value = _state.value.copy(chips = dietaryChips())
             }
 
@@ -846,36 +848,22 @@ class ChatSetupViewModel @Inject constructor(
         bmi < 18.5f -> 3; bmi < 25f -> 2; bmi < 30f -> 4; else -> 6
     }
 
-    // Problem 4: buildFinalAnalysis uses targetWeightKg from profile
     private fun buildFinalAnalysis(profile: SetupProfile): FinalAnalysisUi {
         val currentWeight = profile.weightKg ?: 70f
         val targetWeight = profile.targetWeightKg ?: when {
-            profile.goal.contains("Lose") || profile.goal.contains("Arıq") ||
-                    profile.goal.contains("Kilo Ver") || profile.goal.contains("Похуд") ->
-                currentWeight - 8f
-            profile.goal.contains("Muscle") || profile.goal.contains("Əzələ") ||
-                    profile.goal.contains("Kas") || profile.goal.contains("мышц") ->
-                currentWeight + 4f
+            isLoseWeightGoal(profile.goal) -> currentWeight - 8f
+            isMuscleGoal(profile.goal) || isGainWeightGoal(profile.goal) -> currentWeight + 4f
             else -> currentWeight - 2f
         }
         val months = estimateMonths(profile.bmi ?: 24f)
         val dailyCalories = when {
             targetWeight < currentWeight -> 1900
-            targetWeight > currentWeight -> 2500
+            targetWeight > currentWeight -> if (isGainWeightGoal(profile.goal)) 2700 else 2500
             else -> 2150
         }
         val heightM = (profile.heightCm ?: 170) / 100f
         val targetBmi = ((targetWeight / heightM.pow(2)) * 10).roundToInt() / 10f
-        // Chart: two points — current weight and target weight
-        val points = listOf(
-            ChartPoint(0f, currentWeight),
-            ChartPoint(months.toFloat(), targetWeight)
-        ) + (1 until months).map { month ->
-            val progress = month / months.toFloat()
-            ChartPoint(month.toFloat(), currentWeight + ((targetWeight - currentWeight) * progress))
-        }.sortedBy { it.month }
 
-        // Build smooth curve: start → intermediate → end
         val smoothPoints = (0..months).map { month ->
             val progress = month / months.toFloat().coerceAtLeast(1f)
             ChartPoint(month.toFloat(), currentWeight + ((targetWeight - currentWeight) * progress))
@@ -893,5 +881,4 @@ class ChatSetupViewModel @Inject constructor(
     }
 }
 
-// Helper operator for ChatStep comparison
 private operator fun ChatStep.compareTo(other: ChatStep): Int = this.ordinal.compareTo(other.ordinal)

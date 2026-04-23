@@ -73,6 +73,7 @@
     <string name="activity_yoga">🧘 Yoga &amp; Zen</string>
 
     <!-- Chat Steps - Goal Options -->
+    <string name="goal_gain">⬆️ Gain Weight</string>
     <string name="goal_lose">🔥 Lose Weight</string>
     <string name="goal_muscle">💪 Build Muscle</string>
     <string name="goal_maintain">📊 Stay at My Weight</string>
