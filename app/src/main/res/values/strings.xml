@@ -2,6 +2,7 @@
 <!-- BASE strings.xml (English default) -->
 <resources>
     <string name="app_name">CalixyAI</string>
+    <string name="app_tagline">Your AI Nutrition Coach</string>
     <string name="next">Next</string>
     <string name="get_started">Get Started</string>
 
@@ -21,6 +22,14 @@
     <string name="unlock_plan">🚀 Unlock My Plan</string>
     <string name="send">Send</string>
     <string name="online_status">AI Nutrition Coach • Online</string>
+
+    <!-- Target weight input -->
+    <string name="target_weight_hint_lose">Target weight (kg) — must be lower than current</string>
+    <string name="target_weight_hint_gain">Target weight (kg) — must be higher than current</string>
+    <string name="target_weight_hint_maintain">Target weight (kg)</string>
+    <string name="target_weight_error_lose">Please enter a weight lower than your current weight</string>
+    <string name="target_weight_error_gain">Please enter a weight higher than your current weight</string>
+    <string name="target_weight_error_invalid">Please enter a valid weight</string>
 
     <!-- Home -->
     <string name="log_meal">+ Log Meal</string>
@@ -90,9 +99,9 @@
     <string name="dietary_none">🚫 No Restrictions</string>
 
     <!-- Gender Options -->
-    <string name="gender_male">Male</string>
-    <string name="gender_female">Female</string>
-    <string name="gender_other">Other</string>
+    <string name="gender_male">👨 Male</string>
+    <string name="gender_female">👩 Female</string>
+    <string name="gender_other">🌈 Other</string>
 
     <!-- Slider labels -->
     <string name="height_label">Height</string>

@@ -47,7 +47,6 @@ class ChatSetupFragment : BaseFragment(R.layout.fragment_chat_setup) {
             },
             isSelected = { value -> viewModel.state.value.selectedItems.contains(value) },
             isDisabled = { value ->
-                // #4: disable other chips when "No Restrictions" is selected
                 val noRestriction = viewModel.state.value.chips.find {
                     it.contains("No Restrictions") || it.contains("Məhdudiyyət") ||
                             it.contains("Kısıtlama") || it.contains("Без ограничений")
@@ -80,7 +79,7 @@ class ChatSetupFragment : BaseFragment(R.layout.fragment_chat_setup) {
             hideKeyboard()
         }
 
-        // Slider listeners — #7: keyboard stays hidden
+        // Slider listeners
         binding.sliderHeight.addOnChangeListener { _, value, _ ->
             binding.tvHeightValue.text = "${value.toInt()} cm"
         }
@@ -112,19 +111,25 @@ class ChatSetupFragment : BaseFragment(R.layout.fragment_chat_setup) {
                 binding.inputLayout.isVisible = state.showInput
                 binding.selectionPanel.isVisible = state.chips.isNotEmpty()
                 binding.btnContinueSelections.isVisible = state.multiSelect && state.chips.isNotEmpty()
-                binding.inputCustom.isVisible = state.showCustomInput      // #3
+                binding.inputCustom.isVisible = state.showCustomInput
                 binding.sliderPanel.isVisible = state.showSliders
+
+                // Problem 4: show/hide validation error beneath input
+                if (state.inputError != null) {
+                    binding.tvInputError.text = state.inputError
+                    binding.tvInputError.isVisible = true
+                } else {
+                    binding.tvInputError.isVisible = false
+                }
 
                 if (state.finished) binding.btnUnlockPlan.isVisible = true
 
-                // #3 & #7: keyboard control
+                // Keyboard control
                 when {
-                    state.showSliders -> hideKeyboard()   // always hide for sliders
+                    state.showSliders -> hideKeyboard()
                     state.requestKeyboard && state.showInput -> {
                         binding.inputMessage.requestFocus()
                         showKeyboard(binding.inputMessage)
-                        // Reset flag after acting
-                        // (flag resets via next state emission naturally)
                     }
                     state.showCustomInput -> {
                         binding.inputCustom.requestFocus()

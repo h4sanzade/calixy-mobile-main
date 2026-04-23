@@ -88,7 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Slider panel: HEIGHT + WEIGHT (separate) -->
+        <!-- Slider panel: HEIGHT + WEIGHT -->
         <LinearLayout
             android:id="@+id/sliderPanel"
             android:layout_width="match_parent"
@@ -303,6 +303,16 @@
                 android:padding="12dp"/>
 
         </LinearLayout>
+
+        <!-- Problem 4: inline validation error message -->
+        <TextView
+            android:id="@+id/tvInputError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/error"
+            android:textSize="13sp"
+            android:visibility="gone"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUnlockPlan"

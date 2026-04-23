@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CalixyAI</string>
+    <string name="app_tagline">Ваш AI-нутрициолог</string>
     <string name="next">Далее</string>
     <string name="get_started">Начать</string>
 
@@ -18,6 +19,13 @@
     <string name="unlock_plan">🚀 Открыть мой план</string>
     <string name="send">Отправить</string>
     <string name="online_status">AI Нутрициолог • Онлайн</string>
+
+    <string name="target_weight_hint_lose">Целевой вес (кг) — должен быть ниже текущего</string>
+    <string name="target_weight_hint_gain">Целевой вес (кг) — должен быть выше текущего</string>
+    <string name="target_weight_hint_maintain">Целевой вес (кг)</string>
+    <string name="target_weight_error_lose">Введите вес ниже вашего текущего</string>
+    <string name="target_weight_error_gain">Введите вес выше вашего текущего (укажите желаемый вес)</string>
+    <string name="target_weight_error_invalid">Введите корректный вес</string>
 
     <string name="log_meal">+ Записать приём пищи</string>
     <string name="active_plan">АКТИВНЫЙ ПЛАН</string>
@@ -42,11 +50,11 @@
     <string name="trial_disclaimer">Никаких списаний в течение 3 дней. Отменить можно до конца пробного периода.</string>
 
     <string name="onboarding_title_1">Ваше тело. Ваши данные. Ваши правила.</string>
-    <string name="onboarding_subtitle_1">CalixyAI превращает ваши ежедневные привычки в чёткий, персональный ритм питания.</string>
+    <string name="onboarding_subtitle_1">CalixyAI превращает ваши привычки в чёткий, персональный ритм питания.</string>
     <string name="onboarding_title_2">Умное отслеживание без лишнего шума.</string>
     <string name="onboarding_subtitle_2">Быстро записывайте прогресс, понимайте калории и макросы, фокусируйтесь на важном.</string>
     <string name="onboarding_title_3">Премиум-тренер для реальной жизни.</string>
-    <string name="onboarding_subtitle_3">Контекстные планы, напоминания о привычках и аналитика, которая держит вас в движении.</string>
+    <string name="onboarding_subtitle_3">Контекстные планы, напоминания и аналитика, которая держит вас в движении.</string>
     <string name="skip">Пропустить</string>
 
     <string name="activity_couch">🛋️ Диванный эксперт</string>
@@ -79,9 +87,9 @@
     <string name="dietary_paleo">🌾 Палео</string>
     <string name="dietary_none">🚫 Без ограничений</string>
 
-    <string name="gender_male">Мужчина</string>
-    <string name="gender_female">Женщина</string>
-    <string name="gender_other">Другое</string>
+    <string name="gender_male">👨 Мужчина</string>
+    <string name="gender_female">👩 Женщина</string>
+    <string name="gender_other">🌈 Другое</string>
 
     <string name="height_label">Рост</string>
     <string name="height_unit">см</string>

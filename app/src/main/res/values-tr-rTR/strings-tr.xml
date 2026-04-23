@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CalixyAI</string>
+    <string name="app_tagline">AI Beslenme Koçunuz</string>
     <string name="next">İleri</string>
     <string name="get_started">Başla</string>
 
@@ -18,6 +19,13 @@
     <string name="unlock_plan">🚀 Planımı Aç</string>
     <string name="send">Gönder</string>
     <string name="online_status">AI Beslenme Koçu • Çevrimiçi</string>
+
+    <string name="target_weight_hint_lose">Hedef kilo (kg) — mevcut kilodan düşük olmalı</string>
+    <string name="target_weight_hint_gain">Hedef kilo (kg) — mevcut kilodan yüksek olmalı</string>
+    <string name="target_weight_hint_maintain">Hedef kilo (kg)</string>
+    <string name="target_weight_error_lose">Lütfen mevcut kilonuzdan düşük bir değer girin</string>
+    <string name="target_weight_error_gain">Lütfen mevcut kilonuzdan yüksek bir değer girin (hedef kilo yazın)</string>
+    <string name="target_weight_error_invalid">Lütfen geçerli bir kilo girin</string>
 
     <string name="log_meal">+ Öğün Kaydet</string>
     <string name="active_plan">AKTİF PLAN</string>
@@ -79,9 +87,9 @@
     <string name="dietary_paleo">🌾 Paleo</string>
     <string name="dietary_none">🚫 Kısıtlama Yok</string>
 
-    <string name="gender_male">Erkek</string>
-    <string name="gender_female">Kadın</string>
-    <string name="gender_other">Diğer</string>
+    <string name="gender_male">👨 Erkek</string>
+    <string name="gender_female">👩 Kadın</string>
+    <string name="gender_other">🌈 Diğer</string>
 
     <string name="height_label">Boy</string>
     <string name="height_unit">cm</string>

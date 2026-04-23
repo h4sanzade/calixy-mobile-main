@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CalixyAI</string>
+    <string name="app_tagline">AI Qidalanma Məşqçiniz</string>
     <string name="next">Növbəti</string>
     <string name="get_started">Başla</string>
 
@@ -18,6 +19,13 @@
     <string name="unlock_plan">🚀 Planımı Aç</string>
     <string name="send">Göndər</string>
     <string name="online_status">AI Qidalanma Məşqçisi • Onlayn</string>
+
+    <string name="target_weight_hint_lose">Hədəf çəki (kq) — cari çəkidən az olmalıdır</string>
+    <string name="target_weight_hint_gain">Hədəf çəki (kq) — cari çəkidən çox olmalıdır</string>
+    <string name="target_weight_hint_maintain">Hədəf çəki (kq)</string>
+    <string name="target_weight_error_lose">Zəhmət olmasa cari çəkinizdən az bir çəki daxil edin</string>
+    <string name="target_weight_error_gain">Zəhmət olmasa cari çəkinizdən çox bir çəki daxil edin (yuxarı çəki yazın)</string>
+    <string name="target_weight_error_invalid">Zəhmət olmasa etibarlı bir çəki daxil edin</string>
 
     <string name="log_meal">+ Yemək Qeyd Et</string>
     <string name="active_plan">AKTİV PLAN</string>
@@ -79,9 +87,9 @@
     <string name="dietary_paleo">🌾 Paleo</string>
     <string name="dietary_none">🚫 Məhdudiyyət Yoxdur</string>
 
-    <string name="gender_male">Kişi</string>
-    <string name="gender_female">Qadın</string>
-    <string name="gender_other">Digər</string>
+    <string name="gender_male">👨 Kişi</string>
+    <string name="gender_female">👩 Qadın</string>
+    <string name="gender_other">🌈 Digər</string>
 
     <string name="height_label">Boy</string>
     <string name="height_unit">sm</string>

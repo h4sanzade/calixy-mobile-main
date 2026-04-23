@@ -16,6 +16,7 @@ import com.calixyai.domain.model.ChatMessage
 import com.calixyai.domain.model.MessageType
 import com.calixyai.domain.model.Sender
 import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -57,9 +58,13 @@ class ChatAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        // Problem 5: determine if this is the LAST user message
+        val item = getItem(position)
+        val lastUserMsgId = currentList.lastOrNull { it.sender == Sender.USER }?.id
+
         when (holder) {
-            is BotViewHolder -> holder.bind(getItem(position), bmiProvider(), analysisProvider())
-            is UserViewHolder -> holder.bind(getItem(position), onEditClick)
+            is BotViewHolder -> holder.bind(item, bmiProvider(), analysisProvider())
+            is UserViewHolder -> holder.bind(item, onEditClick, isLastUserMsg = item.id == lastUserMsgId)
             is TypingViewHolder -> holder.bind()
         }
         holder.itemView.translationY = 36f
@@ -74,10 +79,11 @@ class ChatAdapter(
     class UserViewHolder(private val binding: ItemChatUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ChatMessage, onEdit: (Long) -> Unit) {
+        fun bind(item: ChatMessage, onEdit: (Long) -> Unit, isLastUserMsg: Boolean) {
             binding.tvMessage.text = item.text.toSpannable()
 
-            val canEdit = item.editableStep != null
+            // Problem 5: only show edit button for the last user message
+            val canEdit = item.editableStep != null && isLastUserMsg
             binding.btnEdit.visibility = if (canEdit) View.VISIBLE else View.GONE
             binding.btnEdit.setOnClickListener {
                 it.animate().scaleX(0.85f).scaleY(0.85f).setDuration(80)
@@ -88,7 +94,6 @@ class ChatAdapter(
             }
         }
     }
-
 
     class TypingViewHolder(private val binding: ItemChatTypingBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -134,7 +139,9 @@ class ChatAdapter(
             if (item.type == MessageType.ANALYSIS_CARD && analysisUi != null) {
                 binding.tvStats.text = buildString {
                     append("Current BMI ${"%.1f".format(analysisUi.currentBmi)}   ·   Target ${"%.1f".format(analysisUi.targetBmi)}\n")
-                    append("${analysisUi.estimatedDuration} months   ·   ${analysisUi.dailyCalories} kcal/day")
+                    append("${analysisUi.estimatedDuration} months   ·   ${analysisUi.dailyCalories} kcal/day\n")
+                    // Problem 4: show current → target weight
+                    append("${"%.1f".format(analysisUi.currentWeight)} kg  →  ${"%.1f".format(analysisUi.targetWeight)} kg")
                 }
 
                 val entries = analysisUi.chartPoints.map { Entry(it.month, it.weight) }
@@ -151,11 +158,33 @@ class ChatAdapter(
                 }
 
                 val gridColor = Color.parseColor("#DCF0EA")
+
+                // Problem 4: horizontal limit lines for current weight and target weight
+                val currentLine = LimitLine(analysisUi.currentWeight, "${"%.1f".format(analysisUi.currentWeight)} kg").apply {
+                    lineColor = Color.parseColor("#0098AA")
+                    lineWidth = 1f
+                    textColor = Color.parseColor("#0098AA")
+                    textSize = 9f
+                    labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+                }
+                val targetLine = LimitLine(analysisUi.targetWeight, "${"%.1f".format(analysisUi.targetWeight)} kg").apply {
+                    lineColor = Color.parseColor("#0DBF85")
+                    lineWidth = 1f
+                    textColor = Color.parseColor("#0DBF85")
+                    textSize = 9f
+                    labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
+                }
+
                 binding.weightChart.apply {
                     data = LineData(set)
                     setBackgroundColor(Color.TRANSPARENT)
                     axisRight.isEnabled = false
-                    axisLeft.axisLineColor = gridColor
+                    axisLeft.apply {
+                        axisLineColor = gridColor
+                        removeAllLimitLines()
+                        addLimitLine(currentLine)
+                        addLimitLine(targetLine)
+                    }
                     xAxis.apply { position = XAxis.XAxisPosition.BOTTOM; axisLineColor = gridColor }
                     legend.isEnabled = false
                     description = Description().apply { text = "" }

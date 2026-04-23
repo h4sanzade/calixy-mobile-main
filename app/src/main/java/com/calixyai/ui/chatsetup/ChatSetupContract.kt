@@ -29,7 +29,10 @@ data class FinalAnalysisUi(
     val targetBmi: Float,
     val estimatedDuration: Int,
     val dailyCalories: Int,
-    val chartPoints: List<ChartPoint>
+    val chartPoints: List<ChartPoint>,
+    /** Problem 4: used to label chart start/end points */
+    val currentWeight: Float = 0f,
+    val targetWeight: Float = 0f
 )
 
 data class ChatSetupState(
@@ -48,5 +51,9 @@ data class ChatSetupState(
     val profile: SetupProfile = SetupProfile(),
     val bmiUi: BmiUi? = null,
     val finalAnalysisUi: FinalAnalysisUi? = null,
-    val finished: Boolean = false
+    val finished: Boolean = false,
+    /** Problem 4: inline validation error shown beneath the input field */
+    val inputError: String? = null,
+    /** Problem 4: hint text for target weight input */
+    val inputHint: String? = null
 )

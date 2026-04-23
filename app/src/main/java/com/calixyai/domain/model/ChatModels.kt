@@ -21,7 +21,7 @@ enum class ChatStep {
     HEIGHT_WEIGHT,
     ACTIVITY,
     GOAL,
-    WEIGHT_DIRECTION,   // new: ask gain / lose / maintain intent
+    TARGET_WEIGHT,   // replaces WEIGHT_DIRECTION — text input for target weight
     ALLERGIES,
     DIETARY,
     COMPLETE
@@ -37,7 +37,8 @@ data class SetupProfile(
     val bmi: Float? = null,
     val activityLevel: String = "",
     val goal: String = "",
-    val weightDirection: String = "",   // "gain" | "lose" | "maintain"
+    /** Problem 4: the user-entered target weight */
+    val targetWeightKg: Float? = null,
     val allergies: List<String> = emptyList(),
     val dietaryRules: List<String> = emptyList(),
     val customAllergy: String? = null
