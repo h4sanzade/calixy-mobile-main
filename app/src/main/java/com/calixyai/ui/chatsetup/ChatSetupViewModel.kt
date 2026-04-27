@@ -125,10 +125,10 @@ class ChatSetupViewModel @Inject constructor(
         viewModelScope.launch {
             enqueueBot(
                 t(
-                    en = "Hey there! I'm Calixy, your personal AI nutrition coach 🤖\n\nWhat's your **first name**?",
-                    az = "Salam! Mən Calixy, şəxsi AI qidalanma məşqçinizəm 🤖\n\n**Adınız** nədir?",
-                    tr = "Merhaba! Ben Calixy, kişisel AI beslenme koçunuzum 🤖\n\n**Adınız** nedir?",
-                    ru = "Привет! Я Calixy, ваш персональный AI-нутрициолог 🤖\n\nКак вас **зовут**?"
+                    en = "Hey there! I'm Calixy, your personal AI nutrition coach 🤖\n\nWhat's your first name?",
+                    az = "Salam! Mən Calixy, şəxsi AI qidalanma məşqçinizəm 🤖\n\nAdınız nədir?",
+                    tr = "Merhaba! Ben Calixy, kişisel AI beslenme koçunuzum 🤖\n\nAdınız nedir?",
+                    ru = "Привет! Я Calixy, ваш персональный AI-нутрициолог 🤖\n\nКак вас зовут?"
                 )
             )
             _state.value = _state.value.copy(
@@ -219,10 +219,10 @@ class ChatSetupViewModel @Inject constructor(
                 )
                 enqueueBot(
                     t(
-                        en = "**$name!** Love that name 🎉 Now, what's your **surname**?",
-                        az = "**$name!** Gözəl addır 🎉 İndi, **soyadınız** nədir?",
-                        tr = "**$name!** Harika bir isim 🎉 Şimdi, **soyadınız** nedir?",
-                        ru = "**$name!** Отличное имя 🎉 Теперь — какая у вас **фамилия**?"
+                        en = "$name! Love that name 🎉 Now, what's your surname?",
+                        az = "$name! Gözəl addır 🎉 İndi, soyadınız nədir?",
+                        tr = "$name! Harika bir isim 🎉 Şimdi, soyadınız nedir?",
+                        ru = "$name! Отличное имя 🎉 Теперь — какая у вас фамилия?"
                     )
                 )
                 _state.value = _state.value.copy(showInput = true, requestKeyboard = true)
@@ -236,10 +236,10 @@ class ChatSetupViewModel @Inject constructor(
                 _state.value = _state.value.copy(profile = profile, step = ChatStep.GENDER)
                 enqueueBot(
                     t(
-                        en = "**$fullUpper** — a name that means business. Let's keep going! 💪",
-                        az = "**$fullUpper** — bu ciddi bir addır. Davam edək! 💪",
-                        tr = "**$fullUpper** — ciddi bir isim. Devam edelim! 💪",
-                        ru = "**$fullUpper** — серьёзное имя. Продолжаем! 💪"
+                        en = "$fullUpper — a name that means business. Let's keep going! 💪",
+                        az = "$fullUpper — bu ciddi bir addır. Davam edək! 💪",
+                        tr = "$fullUpper — ciddi bir isim. Devam edelim! 💪",
+                        ru = "$fullUpper — серьёзное имя. Продолжаем! 💪"
                     )
                 )
                 delay(350)

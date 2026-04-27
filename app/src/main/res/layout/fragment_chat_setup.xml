@@ -39,6 +39,7 @@
                 android:text="Calixy"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"
+                android:fontFamily="@font/inter_extrabold"
                 android:textStyle="bold"/>
 
             <TextView
@@ -46,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/online_status"
                 android:textColor="@color/accent_primary"
+                android:fontFamily="@font/inter_medium"
                 android:textSize="12sp"/>
 
         </LinearLayout>
@@ -115,6 +117,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp"
                     android:textAllCaps="true"
+                    android:fontFamily="@font/inter_regular"
                     android:letterSpacing="0.06"/>
 
                 <TextView
@@ -124,6 +127,7 @@
                     android:text="170 cm"
                     android:textColor="@color/accent_primary"
                     android:textSize="18sp"
+                    android:fontFamily="@font/inter_regular"
                     android:textStyle="bold"/>
 
             </LinearLayout>
@@ -148,12 +152,19 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="20dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:text="140 cm"
+                <TextView
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="140 cm"
+                    android:fontFamily="@font/inter_regular"
                     android:textColor="@color/text_tertiary" android:textSize="11sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="220 cm"
-                    android:textColor="@color/text_tertiary" android:textSize="11sp"/>
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="11sp"/>
             </LinearLayout>
 
             <!-- Divider -->
@@ -179,6 +190,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp"
                     android:textAllCaps="true"
+                    android:fontFamily="@font/inter_regular"
                     android:letterSpacing="0.06"/>
 
                 <TextView
@@ -186,6 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="70 kg"
+                    android:fontFamily="@font/inter_regular"
                     android:textColor="@color/accent_primary"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
@@ -257,6 +270,7 @@
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint"
                 android:textSize="15sp"
+                android:fontFamily="@font/inter_regular"
                 android:visibility="gone"/>
 
             <com.google.android.material.button.MaterialButton
@@ -265,6 +279,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/inter_bold"
                 android:text="@string/continue_arrow"
                 android:visibility="gone"/>
 
@@ -286,6 +301,7 @@
                 android:background="@drawable/bg_edit_text"
                 android:hint="@string/type_answer"
                 android:paddingHorizontal="16dp"
+                android:fontFamily="@font/inter_medium"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint"
                 android:textSize="15sp"
@@ -311,6 +327,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:textColor="@color/error"
+            android:fontFamily="@font/inter_regular"
             android:textSize="13sp"
             android:visibility="gone"/>
 
@@ -320,6 +337,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:fontFamily="@font/inter_extrabold"
             android:text="@string/unlock_plan"
             android:visibility="gone"/>
 

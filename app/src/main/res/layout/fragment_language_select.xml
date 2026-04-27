@@ -94,7 +94,7 @@
             android:textSize="40sp"
             android:textStyle="bold"
             android:letterSpacing="-0.02"
-            android:fontFamily="sans-serif-black"/>
+            android:fontFamily="@font/inter_extrabold"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,6 +102,7 @@
             android:layout_marginTop="6dp"
             android:text="@string/app_tagline"
             android:textColor="#CCFFFFFF"
+            android:fontFamily="@font/inter_medium"
             android:textSize="15sp"
             android:letterSpacing="0.03"/>
 
@@ -135,6 +136,7 @@
             android:textSize="22sp"
             android:textStyle="bold"
             android:letterSpacing="-0.01"
+            android:fontFamily="@font/inter_bold"
             android:layout_marginBottom="4dp"/>
 
         <TextView
@@ -143,6 +145,7 @@
             android:text="@string/select_language_subtitle"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
+            android:fontFamily="@font/inter_medium"
             android:layout_marginBottom="20dp"/>
 
         <!-- Language chips grid -->
@@ -165,8 +168,10 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="36dp"
         android:text="@string/btn_continue"
+        app:cornerRadius="1.5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/inter_bold"
         app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

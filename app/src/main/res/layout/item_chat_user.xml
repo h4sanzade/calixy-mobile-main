@@ -31,6 +31,7 @@
         android:paddingHorizontal="16dp"
         android:paddingVertical="12dp"
         android:textColor="@android:color/white"
+        android:fontFamily="@font/inter_medium"
         android:textSize="15sp"
         android:lineSpacingMultiplier="1.4"
         android:elevation="2dp"/>

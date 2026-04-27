@@ -36,6 +36,7 @@
         android:textColor="@color/text_primary"
         android:textSize="26sp"
         android:textStyle="bold"
+        android:fontFamily="@font/inter_extrabold"
         android:lineSpacingMultiplier="1.15"
         android:letterSpacing="-0.01"/>
 
@@ -53,6 +54,7 @@
         android:gravity="center"
         android:textColor="@color/text_secondary"
         android:textSize="15sp"
+        android:fontFamily="@font/inter_medium"
         android:lineSpacingMultiplier="1.5"
         android:paddingHorizontal="8dp"/>
 
