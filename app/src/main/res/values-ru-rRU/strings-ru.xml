@@ -98,4 +98,6 @@
     <string name="weight_unit">кг</string>
     <string name="slider_confirm">✓ Подтвердить</string>
     <string name="bmi_zones">Недовес · Норма · Избыточный вес · Ожирение</string>
+
+    <string name="lang_change_later">Вы можете изменить это позже в настройках</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.calixyai.ui.language
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -18,93 +17,61 @@ class LanguageSelectFragment : BaseFragment(R.layout.fragment_language_select) {
 
     private var selectedLocale: String = "en"
 
-    private data class LangChip(
+    private data class LangItem(
         val localeTag: String,
-        val flag: String,
-        val nativeName: String,
-        val englishName: String
-    )
-
-    private val languages = listOf(
-        LangChip("az", "🇦🇿", "Azərbaycan", "Azerbaijani"),
-        LangChip("tr", "🇹🇷", "Türkçe", "Turkish"),
-        LangChip("en", "🇬🇧", "English", "English"),
-        LangChip("ru", "🇷🇺", "Русский", "Russian")
+        val rootView: () -> View,
+        val radioView: () -> View
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLanguageSelectBinding.bind(view)
 
-        setupLanguageChips()
+        val items = listOf(
+            LangItem("az", { binding.itemAz }, { binding.radioAz }),
+            LangItem("tr", { binding.itemTr }, { binding.radioTr }),
+            LangItem("en", { binding.itemEn }, { binding.radioEn }),
+            LangItem("ru", { binding.itemRu }, { binding.radioRu })
+        )
+
+        fun applySelection(locale: String) {
+            selectedLocale = locale
+            items.forEach { item ->
+                val isSelected = item.localeTag == locale
+                item.rootView().background = requireContext().getDrawable(
+                    if (isSelected) R.drawable.bg_lang_item_selected
+                    else R.drawable.bg_lang_item
+                )
+                (item.radioView() as? android.widget.ImageView)?.setImageResource(
+                    if (isSelected) R.drawable.ic_radio_selected
+                    else R.drawable.ic_radio_unselected
+                )
+            }
+        }
+
+        // Set initial selection
+        applySelection("en")
+
+        // Attach click listeners
+        items.forEach { item ->
+            item.rootView().setOnClickListener {
+                it.animate().scaleX(0.96f).scaleY(0.96f).setDuration(70)
+                    .withEndAction {
+                        it.animate().scaleX(1f).scaleY(1f).setDuration(70).start()
+                    }.start()
+                applySelection(item.localeTag)
+            }
+        }
 
         binding.btnContinueLang.setOnClickListener {
             applyLocale(selectedLocale)
-            requireActivity().recreate()
             requireContext()
                 .getSharedPreferences("calixy_prefs", Context.MODE_PRIVATE)
                 .edit()
                 .putBoolean("lang_chosen", true)
                 .apply()
+            requireActivity().recreate()
         }
-    }
-
-    private fun setupLanguageChips() {
-        val chipGroup = binding.chipGroupLanguages
-        chipGroup.removeAllViews()
-
-        languages.forEach { lang ->
-            val chip = com.google.android.material.chip.Chip(requireContext()).apply {
-                text = "${lang.flag}  ${lang.nativeName}"
-                isCheckable = true
-                isChecked = lang.localeTag == selectedLocale
-                textSize = 15f
-                chipCornerRadius = 16f
-                chipMinHeight = 52f
-                setPadding(8, 0, 8, 0)
-
-                updateChipStyle(this, lang.localeTag == selectedLocale)
-
-                tag = lang.localeTag
-
-                setOnClickListener {
-                    selectedLocale = lang.localeTag
-                    animate().scaleX(0.93f).scaleY(0.93f).setDuration(70)
-                        .withEndAction {
-                            animate().scaleX(1f).scaleY(1f).setDuration(70).start()
-                        }.start()
-                    for (i in 0 until chipGroup.childCount) {
-                        val c = chipGroup.getChildAt(i) as? com.google.android.material.chip.Chip ?: continue
-                        val t = c.tag as? String ?: continue
-                        c.isChecked = (t == selectedLocale)
-                        updateChipStyle(c, t == selectedLocale)
-                    }
-                }
-            }
-            chipGroup.addView(chip)
-        }
-    }
-
-    private fun updateChipStyle(chip: com.google.android.material.chip.Chip, selected: Boolean) {
-        val bgColor = if (selected)
-            android.graphics.Color.parseColor("#E6F9F4")
-        else
-            android.graphics.Color.parseColor("#EDF6F2")
-
-        val strokeColor = if (selected)
-            android.graphics.Color.parseColor("#0DBF85")
-        else
-            android.graphics.Color.parseColor("#DCF0EA")
-
-        val textColor = if (selected)
-            android.graphics.Color.parseColor("#0D1F18")
-        else
-            android.graphics.Color.parseColor("#5A7A6E")
-
-        chip.chipBackgroundColor = ColorStateList.valueOf(bgColor)
-        chip.chipStrokeColor = ColorStateList.valueOf(strokeColor)
-        chip.chipStrokeWidth = if (selected) 2f else 1f
-        chip.setTextColor(textColor)
     }
 
     private fun applyLocale(localeTag: String) {

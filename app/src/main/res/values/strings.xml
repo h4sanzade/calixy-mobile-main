@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- BASE strings.xml (English default) -->
+<?xml version="1.0" encoding="utf-8"?><!-- BASE strings.xml (English default) -->
 <resources>
     <string name="app_name">CalixyAI</string>
     <string name="app_tagline">Your AI Nutrition Coach</string>
@@ -111,4 +110,8 @@
     <string name="weight_unit">kg</string>
     <string name="slider_confirm">✓ Confirm</string>
     <string name="bmi_zones">Underweight · Normal · Overweight · Obese</string>
+
+    <string name="lang_change_later">You can change this later in settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

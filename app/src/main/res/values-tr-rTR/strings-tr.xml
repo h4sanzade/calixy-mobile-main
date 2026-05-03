@@ -98,4 +98,7 @@
     <string name="weight_unit">kg</string>
     <string name="slider_confirm">✓ Onayla</string>
     <string name="bmi_zones">Zayıf · Normal · Fazla Kilolu · Obez</string>
+
+    <string name="lang_change_later">Bunu daha sonra ayarlardan değiştirebilirsiniz</string>
+
 </resources>

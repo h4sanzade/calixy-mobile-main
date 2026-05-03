@@ -98,4 +98,6 @@
     <string name="weight_unit">kq</string>
     <string name="slider_confirm">✓ Təsdiqlə</string>
     <string name="bmi_zones">Az çəkili · Normal · Artıq çəkili · Obez</string>
+    <string name="lang_change_later">Bunu daha sonra parametrlərdə dəyişə bilərsiniz</string>
+
 </resources>
