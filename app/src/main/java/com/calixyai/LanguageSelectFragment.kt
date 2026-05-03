@@ -62,10 +62,12 @@ class LanguageSelectFragment : BaseFragment(R.layout.fragment_language_select) {
         }
 
         binding.btnContinueLang.setOnClickListener {
+            // Əvvəlcə locale-i tətbiq et və SharedPreferences-ə yaz
             applyLocale(selectedLocale)
+            // DƏYIŞDI: indi Onboarding-ə keçirik (əvvəl Login idi)
             findNavController().navigate(
                 LanguageSelectFragmentDirections
-                    .actionLanguageSelectFragmentToLoginFragment()
+                    .actionLanguageSelectFragmentToOnboardingFragment()
             )
         }
     }

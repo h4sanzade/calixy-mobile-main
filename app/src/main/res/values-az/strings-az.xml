@@ -106,8 +106,8 @@
     <string name="label_email">E-poçt</string>
     <string name="label_password">Şifrə</string>
     <string name="label_confirm_password">Şifrəni Təsdiqlə</string>
-    <string name="hint_email">sizin@email.com</string>
-    <string name="hint_password">Min. 8 simvol</string>
+    <string name="hint_email">Emailinizi daxil edin</string>
+    <string name="hint_password">Şifrənizi daxil edin</string>
     <string name="hint_confirm_password">Şifrəni yenidən daxil edin</string>
     <string name="divider_or">VƏ YA</string>
     <string name="password_hint_note">Ən azı 8 simvol və bir rəqəm olmalıdır</string>

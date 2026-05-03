@@ -23,6 +23,11 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentOnboardingBinding.bind(view)
 
+        // LanguageSelectFragment locale-i SharedPreferences-ə yazdı və
+        // Activity.attachBaseContext() vasitəsilə context yeniləndi.
+        // ViewModel burada yaradılır, buildPages() artıq seçilmiş dili oxuyur.
+        viewModel.refreshPages()
+
         val pages = viewModel.state.value.pages
         binding.viewPager.adapter = OnboardingPagerAdapter(pages)
         binding.indicator.setViewPager(binding.viewPager)
@@ -51,17 +56,24 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
 
         launchAndRepeat {
             viewModel.state.collect { state ->
+                // Adapter yenilənibsə (refreshPages sonrası) ona tətbiq et
+                val currentAdapter = binding.viewPager.adapter as? OnboardingPagerAdapter
+                if (currentAdapter?.itemCount != state.pages.size) {
+                    binding.viewPager.adapter = OnboardingPagerAdapter(state.pages)
+                    binding.indicator.setViewPager(binding.viewPager)
+                }
+
                 binding.viewPager.setCurrentItem(state.currentPage, true)
-                binding.btnNext.text = if (state.currentPage == pages.lastIndex)
+                binding.btnNext.text = if (state.currentPage == state.pages.lastIndex)
                     getString(R.string.get_started)
                 else
                     getString(R.string.next)
 
                 if (state.finished) {
-                    // Onboarding bitti → dil seçiminə keç
+                    // DƏYIŞDI: artıq languageSelectFragment deyil, loginFragment-ə keçir
                     findNavController().navigate(
                         OnboardingFragmentDirections
-                            .actionOnboardingFragmentToLanguageSelectFragment()
+                            .actionOnboardingFragmentToLoginFragment()
                     )
                 }
             }

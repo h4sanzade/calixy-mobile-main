@@ -34,10 +34,24 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
         launchAndRepeat {
             viewModel.state.collect { state ->
                 when (state.destination) {
-                    SplashDestination.ONBOARDING -> findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
-                    SplashDestination.CHAT_SETUP -> findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToChatSetupFragment())
-                    SplashDestination.PAYMENT -> findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToPaymentFragment())
-                    SplashDestination.HOME -> findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
+                    // DƏYIŞDI: ONBOARDING indi languageSelectFragment-ə gedir
+                    // (yeni axın: LanguageSelect → Onboarding → Login)
+                    SplashDestination.ONBOARDING ->
+                        findNavController().navigate(
+                            SplashFragmentDirections.actionSplashFragmentToLanguageSelectFragment()
+                        )
+                    SplashDestination.CHAT_SETUP ->
+                        findNavController().navigate(
+                            SplashFragmentDirections.actionSplashFragmentToChatSetupFragment()
+                        )
+                    SplashDestination.PAYMENT ->
+                        findNavController().navigate(
+                            SplashFragmentDirections.actionSplashFragmentToPaymentFragment()
+                        )
+                    SplashDestination.HOME ->
+                        findNavController().navigate(
+                            SplashFragmentDirections.actionSplashFragmentToHomeFragment()
+                        )
                     null -> Unit
                 }
             }

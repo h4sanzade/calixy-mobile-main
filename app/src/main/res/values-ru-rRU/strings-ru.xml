@@ -106,8 +106,8 @@
     <string name="label_email">Электронная почта</string>
     <string name="label_password">Пароль</string>
     <string name="label_confirm_password">Подтвердите пароль</string>
-    <string name="hint_email">ваш@email.com</string>
-    <string name="hint_password">Мин. 8 символов</string>
+    <string name="hint_email">Введите ваш email</string>
+    <string name="hint_password">Введите ваш пароль</string>
     <string name="hint_confirm_password">Повторите пароль</string>
     <string name="divider_or">ИЛИ</string>
     <string name="password_hint_note">Минимум 8 символов, включая цифру</string>

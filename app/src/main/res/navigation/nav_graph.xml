@@ -8,8 +8,9 @@
         android:id="@+id/splashFragment"
         android:name="com.calixyai.ui.splash.SplashFragment"
         android:label="Splash">
-        <action android:id="@+id/action_splashFragment_to_onboardingFragment"
-            app:destination="@id/onboardingFragment"
+        <!-- DƏYIŞDI: onboarding yerinə indi languageSelect gəlir -->
+        <action android:id="@+id/action_splashFragment_to_languageSelectFragment"
+            app:destination="@id/languageSelectFragment"
             app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
         <action android:id="@+id/action_splashFragment_to_chatSetupFragment"
             app:destination="@id/chatSetupFragment"
@@ -25,28 +26,28 @@
             app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
     </fragment>
 
+    <!-- YENİ SIRALAMA: LanguageSelect indi Onboarding-dən ƏVVƏL gəlir -->
+    <fragment
+        android:id="@+id/languageSelectFragment"
+        android:name="com.calixyai.ui.language.LanguageSelectFragment"
+        android:label="Language">
+        <!-- DƏYIŞDI: loginFragment deyil, onboardingFragment-ə keçir -->
+        <action
+            android:id="@+id/action_languageSelectFragment_to_onboardingFragment"
+            app:destination="@id/onboardingFragment"
+            app:popUpTo="@id/languageSelectFragment" app:popUpToInclusive="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.calixyai.ui.onboarding.OnboardingFragment"
         android:label="Onboarding">
+        <!-- DƏYIŞDI: artıq languageSelect deyil, loginFragment-ə keçir -->
         <action
-            android:id="@+id/action_onboardingFragment_to_languageSelectFragment"
-            app:destination="@id/languageSelectFragment"
+            android:id="@+id/action_onboardingFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:popUpTo="@id/onboardingFragment" app:popUpToInclusive="true"/>
     </fragment>
-
-
-    <fragment
-        android:id="@+id/languageSelectFragment"
-        android:name="com.calixyai.ui.language.LanguageSelectFragment"
-        android:label="Language">
-        <action
-            android:id="@+id/action_languageSelectFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/languageSelectFragment" app:popUpToInclusive="true"/>
-    </fragment>
-
 
     <fragment
         android:id="@+id/loginFragment"
@@ -127,7 +128,6 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/paymentFragment" app:popUpToInclusive="true"/>
     </fragment>
-
 
     <fragment android:id="@+id/homeFragment"
         android:name="com.calixyai.ui.home.HomeFragment"

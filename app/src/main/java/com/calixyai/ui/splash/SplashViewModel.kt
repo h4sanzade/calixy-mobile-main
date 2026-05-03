@@ -32,11 +32,12 @@ class SplashViewModel @Inject constructor(
         delay(2000)
         val state = repository.getOnboardingState()
         val destination = when {
+            // İlk açılış: onboarding bitməyib → LanguageSelect-dən başla
+            // (LanguageSelect → Onboarding → Login axını)
             !state.isOnboardingDone -> SplashDestination.ONBOARDING
             !state.isChatSetupDone -> SplashDestination.CHAT_SETUP
-            !state.isPaymentShown -> SplashDestination.PAYMENT
-            // Hamısı tamamdır → home
-            else -> SplashDestination.HOME
+            !state.isPaymentShown  -> SplashDestination.PAYMENT
+            else                   -> SplashDestination.HOME
         }
         _state.value = SplashState(isLoading = false, destination = destination)
     }

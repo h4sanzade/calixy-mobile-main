@@ -119,8 +119,8 @@
     <string name="label_email">Email</string>
     <string name="label_password">Password</string>
     <string name="label_confirm_password">Confirm Password</string>
-    <string name="hint_email">your@email.com</string>
-    <string name="hint_password">Min. 8 characters</string>
+    <string name="hint_email">Enter your email</string>
+    <string name="hint_password">Enter your password</string>
     <string name="hint_confirm_password">Re-enter your password</string>
     <string name="divider_or">OR</string>
     <string name="password_hint_note">Must be at least 8 characters and include a number</string>

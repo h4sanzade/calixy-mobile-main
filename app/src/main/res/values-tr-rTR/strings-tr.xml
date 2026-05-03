@@ -106,8 +106,8 @@
     <string name="label_email">E-posta</string>
     <string name="label_password">Şifre</string>
     <string name="label_confirm_password">Şifreyi Onayla</string>
-    <string name="hint_email">sizin@email.com</string>
-    <string name="hint_password">Min. 8 karakter</string>
+    <string name="hint_email">E-posta adresinizi girin</string>
+    <string name="hint_password">Şifrenizi girin</string>
     <string name="hint_confirm_password">Şifreyi tekrar girin</string>
     <string name="divider_or">VEYA</string>
     <string name="password_hint_note">En az 8 karakter ve bir rakam içermelidir</string>

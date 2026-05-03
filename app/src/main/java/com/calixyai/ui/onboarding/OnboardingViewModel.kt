@@ -81,9 +81,18 @@ class OnboardingViewModel @Inject constructor(
         )
     )
 
-    // ViewModel yaradılanda dili oxu, pages-i qur
     private val _state = MutableStateFlow(OnboardingState(pages = buildPages()))
     val state: StateFlow<OnboardingState> = _state.asStateFlow()
+
+    /**
+     * OnboardingFragment.onViewCreated() çağırır.
+     * LanguageSelectFragment dili SharedPreferences-ə yazdıqdan sonra
+     * bu ViewModel yaradılır (Hilt scope) və locale artıq düzgün oxunur.
+     * Bununla belə, ehtiyat olaraq pages-i yenidən qururuq.
+     */
+    fun refreshPages() {
+        _state.value = _state.value.copy(pages = buildPages(), currentPage = 0)
+    }
 
     fun onIntent(intent: OnboardingIntent) {
         when (intent) {
