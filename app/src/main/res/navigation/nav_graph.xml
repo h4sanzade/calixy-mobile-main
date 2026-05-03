@@ -4,149 +4,245 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
+    <!--  SPLASH                                                               -->
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.calixyai.ui.splash.SplashFragment"
         android:label="Splash">
-        <!-- DƏYIŞDI: onboarding yerinə indi languageSelect gəlir -->
-        <action android:id="@+id/action_splashFragment_to_languageSelectFragment"
+
+        <action
+            android:id="@+id/action_splashFragment_to_languageSelectFragment"
             app:destination="@id/languageSelectFragment"
-            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
-        <action android:id="@+id/action_splashFragment_to_chatSetupFragment"
-            app:destination="@id/chatSetupFragment"
-            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
-        <action android:id="@+id/action_splashFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment"
-            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
-        <action android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
-        <action android:id="@+id/action_splashFragment_to_loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_splashFragment_to_chatSetupFragment"
+            app:destination="@id/chatSetupFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_splashFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
-    <!-- YENİ SIRALAMA: LanguageSelect indi Onboarding-dən ƏVVƏL gəlir -->
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
+    <!--  ONBOARDING FLOW  (Language → Onboarding → Login)                    -->
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
     <fragment
         android:id="@+id/languageSelectFragment"
         android:name="com.calixyai.ui.language.LanguageSelectFragment"
         android:label="Language">
-        <!-- DƏYIŞDI: loginFragment deyil, onboardingFragment-ə keçir -->
+
         <action
             android:id="@+id/action_languageSelectFragment_to_onboardingFragment"
             app:destination="@id/onboardingFragment"
-            app:popUpTo="@id/languageSelectFragment" app:popUpToInclusive="true"/>
+            app:popUpTo="@id/languageSelectFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.calixyai.ui.onboarding.OnboardingFragment"
         android:label="Onboarding">
-        <!-- DƏYIŞDI: artıq languageSelect deyil, loginFragment-ə keçir -->
+
         <action
             android:id="@+id/action_onboardingFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/onboardingFragment" app:popUpToInclusive="true"/>
+            app:popUpTo="@id/onboardingFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
+    <!--  AUTH FLOW                                                            -->
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.calixyai.ui.auth.login.LoginFragment"
         android:label="Login">
+
+        <!-- Success → Home (clears auth stack) -->
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"/>
+
+        <!-- → Register -->
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"/>
+
+        <!-- → Forgot Password -->
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment"/>
+
+        <!-- → Email Verify (after login detects unverified account) -->
         <action
             android:id="@+id/action_loginFragment_to_emailVerifyFragment"
-            app:destination="@id/emailVerifyFragment">
-            <argument
-                android:name="email"
-                app:argType="string"
-                android:defaultValue=""/>
-        </action>
+            app:destination="@id/emailVerifyFragment"/>
+
+        <!-- → Chat Setup (clears auth stack) -->
         <action
             android:id="@+id/action_loginFragment_to_chatSetupFragment"
             app:destination="@id/chatSetupFragment"
-            app:popUpTo="@id/loginFragment" app:popUpToInclusive="true"/>
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.calixyai.ui.auth.register.RegisterFragment"
         android:label="Register">
+
+        <!-- → Email Verify (after successful registration) -->
         <action
             android:id="@+id/action_registerFragment_to_emailVerifyFragment"
-            app:destination="@id/emailVerifyFragment">
-            <argument
-                android:name="email"
-                app:argType="string"
-                android:defaultValue=""/>
-        </action>
+            app:destination="@id/emailVerifyFragment"/>
+
+        <!-- → Home (Google sign-up success, clears auth stack) -->
+        <action
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/emailVerifyFragment"
         android:name="com.calixyai.ui.auth.verify.EmailVerifyFragment"
         android:label="Verify Email">
+
         <argument
             android:name="email"
             app:argType="string"
             android:defaultValue=""/>
+
+        <!-- → Home (verify success, clears entire auth stack) -->
+        <action
+            android:id="@+id/action_emailVerifyFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+
+        <!-- → Login (user already verified, wants to sign in) -->
         <action
             android:id="@+id/action_emailVerifyFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment" app:popUpToInclusive="true"/>
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.calixyai.ui.auth.forgot.ForgotPasswordFragment"
-        android:label="Forgot Password"/>
+        android:label="Forgot Password">
 
-    <!-- ── Post-Auth Setup ────────────────────────────────────────────────────── -->
+        <!-- → Reset Password (after code is sent) -->
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment"/>
+    </fragment>
 
-    <fragment android:id="@+id/chatSetupFragment"
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.calixyai.ui.auth.reset.ResetPasswordFragment"
+        android:label="Reset Password">
+
+        <argument
+            android:name="email"
+            app:argType="string"
+            android:defaultValue=""/>
+
+        <!-- → Login (reset success, clears reset + forgot from stack) -->
+        <action
+            android:id="@+id/action_resetPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
+    <!--  POST-AUTH SETUP FLOW  (Chat Setup → Payment → Home)                 -->
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
+    <fragment
+        android:id="@+id/chatSetupFragment"
         android:name="com.calixyai.ui.chatsetup.ChatSetupFragment"
         android:label="Chat Setup">
-        <action android:id="@+id/action_chatSetupFragment_to_paymentFragment"
+
+        <action
+            android:id="@+id/action_chatSetupFragment_to_paymentFragment"
             app:destination="@id/paymentFragment"
-            app:popUpTo="@id/chatSetupFragment" app:popUpToInclusive="true"/>
+            app:popUpTo="@id/chatSetupFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
-    <fragment android:id="@+id/paymentFragment"
+    <fragment
+        android:id="@+id/paymentFragment"
         android:name="com.calixyai.ui.payment.PaymentFragment"
         android:label="Payment">
-        <action android:id="@+id/action_paymentFragment_to_homeFragment"
+
+        <action
+            android:id="@+id/action_paymentFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:popUpTo="@id/paymentFragment" app:popUpToInclusive="true"/>
+            app:popUpTo="@id/paymentFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
-    <fragment android:id="@+id/homeFragment"
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
+    <!--  MAIN APP                                                             -->
+    <!-- ══════════════════════════════════════════════════════════════════════ -->
+    <fragment
+        android:id="@+id/homeFragment"
         android:name="com.calixyai.ui.home.HomeFragment"
         android:label="Home"/>
 
-    <fragment android:id="@+id/tab_plan"
+    <fragment
+        android:id="@+id/tab_plan"
         android:name="com.calixyai.ui.navigation.SimplePlaceholderFragment"
         android:label="Plan">
-        <argument android:name="arg_title" app:argType="string" android:defaultValue="Plan"/>
+        <argument
+            android:name="arg_title"
+            app:argType="string"
+            android:defaultValue="Plan"/>
     </fragment>
-    <fragment android:id="@+id/tab_progress"
+
+    <fragment
+        android:id="@+id/tab_progress"
         android:name="com.calixyai.ui.navigation.SimplePlaceholderFragment"
         android:label="Progress">
-        <argument android:name="arg_title" app:argType="string" android:defaultValue="Progress"/>
+        <argument
+            android:name="arg_title"
+            app:argType="string"
+            android:defaultValue="Progress"/>
     </fragment>
-    <fragment android:id="@+id/tab_profile"
+
+    <fragment
+        android:id="@+id/tab_profile"
         android:name="com.calixyai.ui.navigation.SimplePlaceholderFragment"
         android:label="Profile">
-        <argument android:name="arg_title" app:argType="string" android:defaultValue="Profile"/>
+        <argument
+            android:name="arg_title"
+            app:argType="string"
+            android:defaultValue="Profile"/>
     </fragment>
 
 </navigation>

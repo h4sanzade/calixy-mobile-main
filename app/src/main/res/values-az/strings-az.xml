@@ -156,4 +156,23 @@
     <string name="error_invalid_email">Zəhmət olmasa etibarlı e-poçt ünvanı daxil edin.</string>
     <string name="error_empty_password">Zəhmət olmasa şifrənizi daxil edin.</string>
 
+    <!-- Email Verify -->
+    <string name="btn_verify">E-poçtu təsdiqlə</string>
+    <string name="btn_verifying">Təsdiqlənir…</string>
+    <string name="btn_resend">Kodu yenidən göndər</string>
+    <string name="btn_resend_sending">Göndərilir…</string>
+
+    <!-- Reset Password Screen -->
+    <string name="reset_heading">Yeni şifrə təyin et 🔒</string>
+    <string name="reset_subheading">E-poçtunuza göndərilən kodu daxil edin və yeni şifrə seçin.</string>
+    <string name="label_reset_code">Təsdiq kodu</string>
+    <string name="hint_reset_code">6 rəqəmli kodu daxil edin</string>
+    <string name="label_new_password">Yeni şifrə</string>
+    <string name="hint_new_password">Yeni şifrəni daxil edin</string>
+    <string name="btn_reset_password">Şifrəni sıfırla</string>
+    <string name="btn_resetting">Sıfırlanır…</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_subheading">Hesabınızla əlaqəli e-poçt ünvanını daxil edin, sizə sıfırlama kodu göndərək.</string>
+
 </resources>

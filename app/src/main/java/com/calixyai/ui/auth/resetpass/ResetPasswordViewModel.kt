@@ -1,4 +1,4 @@
-package com.calixyai.ui.auth.forgot
+package com.calixyai.ui.auth.resetpass
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,40 +13,65 @@ import javax.inject.Inject
 
 // ── Intent ────────────────────────────────────────────────────────────────────
 
-sealed interface ForgotPasswordIntent {
-    data class SendReset(val email: String) : ForgotPasswordIntent
+sealed interface ResetPasswordIntent {
+    data class Submit(
+        val email: String,
+        val code: String,
+        val newPassword: String,
+        val confirmPassword: String
+    ) : ResetPasswordIntent
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
-data class ForgotPasswordState(
+data class ResetPasswordState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val successMessage: String? = null,
-    val showSuccess: Boolean = false,
-    val navigateToReset: Boolean = false
+    val navigateToLogin: Boolean = false
 )
 
 // ── ViewModel ─────────────────────────────────────────────────────────────────
 
 @HiltViewModel
-class ForgotPasswordViewModel @Inject constructor(
+class ResetPasswordViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ForgotPasswordState())
-    val state: StateFlow<ForgotPasswordState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(ResetPasswordState())
+    val state: StateFlow<ResetPasswordState> = _state.asStateFlow()
 
-    fun onIntent(intent: ForgotPasswordIntent) {
+    fun onIntent(intent: ResetPasswordIntent) {
         when (intent) {
-            is ForgotPasswordIntent.SendReset -> sendReset(intent.email)
+            is ResetPasswordIntent.Submit -> resetPassword(
+                intent.email,
+                intent.code,
+                intent.newPassword,
+                intent.confirmPassword
+            )
         }
     }
 
-    private fun sendReset(email: String) {
-        if (email.isBlank()) {
-            _state.value = _state.value.copy(error = "Please enter your email.")
-            return
+    private fun resetPassword(
+        email: String,
+        code: String,
+        newPassword: String,
+        confirmPassword: String
+    ) {
+        // Minimal UI-only validation
+        when {
+            code.isBlank() -> {
+                _state.value = _state.value.copy(error = "Please enter the reset code.")
+                return
+            }
+            newPassword.isBlank() -> {
+                _state.value = _state.value.copy(error = "Please enter a new password.")
+                return
+            }
+            newPassword != confirmPassword -> {
+                _state.value = _state.value.copy(error = "Passwords do not match.")
+                return
+            }
         }
 
         viewModelScope.launch {
@@ -56,12 +81,12 @@ class ForgotPasswordViewModel @Inject constructor(
                 successMessage = null
             )
 
-            when (val result = authRepository.forgotPassword(email)) {
+            when (val result = authRepository.resetPassword(email, code, newPassword)) {
                 is NetworkResult.Success -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
-                        showSuccess = true,
-                        successMessage = result.data.message
+                        successMessage = result.data.message,
+                        navigateToLogin = true
                     )
                 }
                 is NetworkResult.Error -> {
@@ -72,5 +97,9 @@ class ForgotPasswordViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun clearNavigation() {
+        _state.value = _state.value.copy(navigateToLogin = false)
     }
 }

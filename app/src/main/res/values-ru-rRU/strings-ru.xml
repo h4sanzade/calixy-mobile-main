@@ -156,4 +156,23 @@
     <string name="error_invalid_email">Введите корректный адрес электронной почты.</string>
     <string name="error_empty_password">Введите ваш пароль.</string>
 
+    <!-- Email Verify -->
+    <string name="btn_verify">Подтвердить почту</string>
+    <string name="btn_verifying">Подтверждение…</string>
+    <string name="btn_resend">Отправить код снова</string>
+    <string name="btn_resend_sending">Отправка…</string>
+
+    <!-- Reset Password Screen -->
+    <string name="reset_heading">Установите новый пароль 🔒</string>
+    <string name="reset_subheading">Введите код из письма и задайте новый пароль.</string>
+    <string name="label_reset_code">Код подтверждения</string>
+    <string name="hint_reset_code">Введите 6-значный код</string>
+    <string name="label_new_password">Новый пароль</string>
+    <string name="hint_new_password">Введите новый пароль</string>
+    <string name="btn_reset_password">Сбросить пароль</string>
+    <string name="btn_resetting">Сброс…</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_subheading">Введите адрес электронной почты, связанный с вашим аккаунтом, и мы отправим вам код для сброса.</string>
+
 </resources>

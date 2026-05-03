@@ -34,11 +34,13 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
         launchAndRepeat {
             viewModel.state.collect { state ->
                 when (state.destination) {
-                    // DƏYIŞDI: ONBOARDING indi languageSelectFragment-ə gedir
-                    // (yeni axın: LanguageSelect → Onboarding → Login)
                     SplashDestination.ONBOARDING ->
                         findNavController().navigate(
                             SplashFragmentDirections.actionSplashFragmentToLanguageSelectFragment()
+                        )
+                    SplashDestination.LOGIN ->
+                        findNavController().navigate(
+                            SplashFragmentDirections.actionSplashFragmentToLoginFragment()
                         )
                     SplashDestination.CHAT_SETUP ->
                         findNavController().navigate(

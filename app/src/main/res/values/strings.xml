@@ -169,6 +169,27 @@
     <string name="error_invalid_email">Please enter a valid email address.</string>
     <string name="error_empty_password">Please enter your password.</string>
 
+
+    <!-- Email Verify - updated button labels -->
+    <string name="btn_verify">Verify Email</string>
+    <string name="btn_verifying">Verifying…</string>
+    <string name="btn_resend">Resend Code</string>
+    <string name="btn_resend_sending">Sending…</string>
+
+    <!-- Reset Password Screen -->
+    <string name="reset_heading">Set New Password 🔒</string>
+    <string name="reset_subheading">Enter the code from your email and choose a new password.</string>
+    <string name="label_reset_code">Reset Code</string>
+    <string name="hint_reset_code">Enter 6-digit code</string>
+    <string name="label_new_password">New Password</string>
+    <string name="hint_new_password">Enter new password</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="btn_resetting">Resetting…</string>
+
+    <!-- Forgot Password - updated subheading key -->
+    <string name="forgot_subheading">Enter the email address linked to your account and we\'ll send you a reset code.</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

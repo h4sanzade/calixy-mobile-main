@@ -7,4 +7,4 @@ data class SplashState(
     val destination: SplashDestination? = null
 )
 
-enum class SplashDestination { ONBOARDING, CHAT_SETUP, PAYMENT, HOME }
+enum class SplashDestination { ONBOARDING, LOGIN, CHAT_SETUP, PAYMENT, HOME }
