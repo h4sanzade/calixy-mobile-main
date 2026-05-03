@@ -1,90 +1,71 @@
-package com.calixyai.ui.auth.login
+package com.calixyai.ui.auth.forgot
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import android.os.Bundle
+import android.view.View
+import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.calixyai.R
+import com.calixyai.databinding.FragmentForgotPasswordBinding
+import com.calixyai.ui.common.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-// ── Contract ──────────────────────────────────────────────────────────────────
+@AndroidEntryPoint
+class ForgotPasswordFragment : BaseFragment(R.layout.fragment_forgot_password) {
 
-sealed interface LoginIntent {
-    data class Submit(val email: String, val password: String) : LoginIntent
-    data object SignInWithGoogle : LoginIntent
-}
+    private var _binding: FragmentForgotPasswordBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: ForgotPasswordViewModel by viewModels()
 
-data class LoginState(
-    val isLoading: Boolean = false,
-    val error: String? = null,
-    val navigateToHome: Boolean = false,
-    val navigateToVerify: Boolean = false
-)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentForgotPasswordBinding.bind(view)
 
-// ── ViewModel ─────────────────────────────────────────────────────────────────
+        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
 
-@HiltViewModel
-class LoginViewModel @Inject constructor(
-    // Inject your AuthRepository here when Firebase / backend is set up:
-    // private val authRepository: AuthRepository
-) : ViewModel() {
+        binding.etEmail.doAfterTextChanged {
+            binding.tilEmail.error = null
+            binding.tvEmailError.isVisible = false
+        }
 
-    private val _state = MutableStateFlow(LoginState())
-    val state: StateFlow<LoginState> = _state.asStateFlow()
+        binding.btnSendReset.setOnClickListener {
+            val email = binding.etEmail.text?.toString().orEmpty().trim()
+            viewModel.onIntent(ForgotPasswordIntent.SendReset(email))
+        }
 
-    fun onIntent(intent: LoginIntent) {
-        when (intent) {
-            is LoginIntent.Submit -> login(intent.email, intent.password)
-            LoginIntent.SignInWithGoogle -> signInWithGoogle()
+        binding.tvGoToLogin.setOnClickListener { findNavController().navigateUp() }
+        binding.btnBackToLogin.setOnClickListener { findNavController().navigateUp() }
+
+        binding.tvResendFromSuccess.setOnClickListener {
+            val email = binding.etEmail.text?.toString().orEmpty().trim()
+            viewModel.onIntent(ForgotPasswordIntent.SendReset(email))
+        }
+
+        observeState()
+    }
+
+    private fun observeState() {
+        launchAndRepeat {
+            viewModel.state.collect { state ->
+                binding.stepRequest.isVisible = !state.showSuccess
+                binding.stepSuccess.isVisible = state.showSuccess
+
+                binding.btnSendReset.isEnabled = !state.isLoading
+                binding.btnSendReset.text = if (state.isLoading)
+                    getString(R.string.btn_sending)
+                else
+                    getString(R.string.btn_send_reset)
+
+                binding.tvEmailError.isVisible = state.error != null
+                binding.tvEmailError.text = state.error
+                if (state.error != null) binding.tilEmail.error = " "
+            }
         }
     }
 
-    private fun login(email: String, password: String) {
-        if (!validateInputs(email, password)) return
-
-        viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true, error = null)
-
-            // TODO: Replace with real auth call:
-            // val result = authRepository.login(email, password)
-            delay(1200) // simulated network call
-
-            // Simulated success — swap with real result handling:
-            _state.value = _state.value.copy(isLoading = false, navigateToHome = true)
-
-            // On email-not-verified error:
-            // _state.value = _state.value.copy(isLoading = false, navigateToVerify = true)
-
-            // On bad credentials:
-            // _state.value = _state.value.copy(isLoading = false, error = "Incorrect email or password.")
-        }
-    }
-
-    private fun signInWithGoogle() {
-        viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true, error = null)
-            // TODO: trigger Google Sign-In flow via Activity result launcher
-        }
-    }
-
-    private fun validateInputs(email: String, password: String): Boolean {
-        return when {
-            email.isBlank() -> {
-                _state.value = _state.value.copy(error = "Please enter your email address.")
-                false
-            }
-            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                _state.value = _state.value.copy(error = "Please enter a valid email address.")
-                false
-            }
-            password.isBlank() -> {
-                _state.value = _state.value.copy(error = "Please enter your password.")
-                false
-            }
-            else -> true
-        }
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

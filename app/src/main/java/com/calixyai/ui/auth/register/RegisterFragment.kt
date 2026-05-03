@@ -28,10 +28,6 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
     }
 
     private fun setupInputListeners() {
-        binding.etFullName.doAfterTextChanged {
-            binding.tilName.error = null
-            binding.tvRegisterError.isVisible = false
-        }
         binding.etEmail.doAfterTextChanged {
             binding.tilEmail.error = null
             binding.tvRegisterError.isVisible = false
@@ -48,11 +44,10 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
 
     private fun setupClickListeners() {
         binding.btnSignUp.setOnClickListener {
-            val name = binding.etFullName.text?.toString().orEmpty().trim()
             val email = binding.etEmail.text?.toString().orEmpty().trim()
             val password = binding.etPassword.text?.toString().orEmpty()
             val confirm = binding.etConfirmPassword.text?.toString().orEmpty()
-            viewModel.onIntent(RegisterIntent.Submit(name, email, password, confirm))
+            viewModel.onIntent(RegisterIntent.Submit(email, password, confirm))
         }
 
         binding.tvGoToLogin.setOnClickListener {
@@ -68,14 +63,15 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
         launchAndRepeat {
             viewModel.state.collect { state ->
                 binding.btnSignUp.isEnabled = !state.isLoading
-                binding.btnSignUp.text = if (state.isLoading) "Creating account…" else "Sign Up"
+                binding.btnSignUp.text = if (state.isLoading)
+                    getString(R.string.btn_signup_loading)
+                else
+                    getString(R.string.btn_signup)
 
                 binding.tvRegisterError.isVisible = state.error != null
                 binding.tvRegisterError.text = state.error
 
-                // Highlight the offending field
                 when (state.errorField) {
-                    RegisterErrorField.NAME -> binding.tilName.error = " "
                     RegisterErrorField.EMAIL -> binding.tilEmail.error = " "
                     RegisterErrorField.PASSWORD -> binding.tilPassword.error = " "
                     RegisterErrorField.CONFIRM -> binding.tilConfirmPassword.error = " "

@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 sealed interface RegisterIntent {
     data class Submit(
-        val fullName: String,
         val email: String,
         val password: String,
         val confirmPassword: String
@@ -22,7 +21,7 @@ sealed interface RegisterIntent {
     data object SignUpWithGoogle : RegisterIntent
 }
 
-enum class RegisterErrorField { NAME, EMAIL, PASSWORD, CONFIRM }
+enum class RegisterErrorField { EMAIL, PASSWORD, CONFIRM }
 
 data class RegisterState(
     val isLoading: Boolean = false,
@@ -43,21 +42,13 @@ class RegisterViewModel @Inject constructor(
 
     fun onIntent(intent: RegisterIntent) {
         when (intent) {
-            is RegisterIntent.Submit -> register(
-                intent.fullName, intent.email,
-                intent.password, intent.confirmPassword
-            )
+            is RegisterIntent.Submit -> register(intent.email, intent.password, intent.confirmPassword)
             RegisterIntent.SignUpWithGoogle -> signUpWithGoogle()
         }
     }
 
-    private fun register(
-        fullName: String,
-        email: String,
-        password: String,
-        confirmPassword: String
-    ) {
-        val (error, field) = validateInputs(fullName, email, password, confirmPassword)
+    private fun register(email: String, password: String, confirmPassword: String) {
+        val (error, field) = validateInputs(email, password, confirmPassword)
         if (error != null) {
             _state.value = _state.value.copy(error = error, errorField = field)
             return
@@ -67,18 +58,11 @@ class RegisterViewModel @Inject constructor(
             _state.value = _state.value.copy(isLoading = true, error = null, errorField = null)
 
             // TODO: Replace with real auth call:
-            // val result = authRepository.register(fullName, email, password)
+            // val result = authRepository.register(email, password)
             delay(1400)
 
             // Simulated success — send verification email, then navigate:
             _state.value = _state.value.copy(isLoading = false, navigateToVerify = true)
-
-            // On email already in use:
-            // _state.value = _state.value.copy(
-            //     isLoading = false,
-            //     error = "An account with this email already exists.",
-            //     errorField = RegisterErrorField.EMAIL
-            // )
         }
     }
 
@@ -90,13 +74,10 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun validateInputs(
-        fullName: String,
         email: String,
         password: String,
         confirmPassword: String
     ): Pair<String?, RegisterErrorField?> = when {
-        fullName.isBlank() ->
-            "Please enter your full name." to RegisterErrorField.NAME
         !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
             "Please enter a valid email address." to RegisterErrorField.EMAIL
         password.length < 8 ->

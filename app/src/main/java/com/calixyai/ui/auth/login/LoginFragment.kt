@@ -28,7 +28,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun setupInputListeners() {
-        // Clear error as user types
         binding.etEmail.doAfterTextChanged {
             binding.tilEmail.error = null
             binding.tvLoginError.isVisible = false
@@ -67,13 +66,16 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         launchAndRepeat {
             viewModel.state.collect { state ->
                 binding.btnLogin.isEnabled = !state.isLoading
-                binding.btnLogin.text = if (state.isLoading) "Logging in…" else "Log In"
+                binding.btnLogin.text = if (state.isLoading)
+                    getString(R.string.btn_login_loading)
+                else
+                    getString(R.string.btn_login)
 
                 binding.tvLoginError.isVisible = state.error != null
                 binding.tvLoginError.text = state.error
 
                 if (state.error != null) {
-                    binding.tilEmail.error = " "     // show red border
+                    binding.tilEmail.error = " "
                     binding.tilPassword.error = " "
                 }
 
