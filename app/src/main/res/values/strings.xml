@@ -112,6 +112,63 @@
     <string name="bmi_zones">Underweight · Normal · Overweight · Obese</string>
 
     <string name="lang_change_later">You can change this later in settings</string>
+
+    <!-- ── AUTH STRINGS ──────────────────────────────────────────────────────── -->
+
+    <!-- Shared auth labels -->
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_confirm_password">Confirm Password</string>
+    <string name="hint_email">your@email.com</string>
+    <string name="hint_password">Min. 8 characters</string>
+    <string name="hint_confirm_password">Re-enter your password</string>
+    <string name="divider_or">OR</string>
+    <string name="password_hint_note">Must be at least 8 characters and include a number</string>
+    <string name="terms_note">By signing up you agree to our Terms of Service and Privacy Policy</string>
+
+    <!-- Login -->
+    <string name="login_heading">Welcome back 👋</string>
+    <string name="login_subheading">Sign in to continue your nutrition journey</string>
+    <string name="btn_login">Sign In</string>
+    <string name="btn_login_loading">Signing in…</string>
+    <string name="btn_google_login">Continue with Google</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="no_account">Don\'t have an account? </string>
+    <string name="go_to_register">Sign up</string>
+
+    <!-- Register -->
+    <string name="register_heading">Create account 🌱</string>
+    <string name="register_subheading">Join thousands building healthier habits with AI</string>
+    <string name="btn_signup">Create Account</string>
+    <string name="btn_signup_loading">Creating account…</string>
+    <string name="btn_google_signup">Sign up with Google</string>
+    <string name="already_account">Already have an account? </string>
+    <string name="go_to_login"> Sign in</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_heading">Reset Password 🔑</string>
+    <string name="forgot_subheading">Enter the email address linked to your account and we\'ll send you a reset link.</string>
+    <string name="btn_send_reset">Send Reset Link</string>
+    <string name="btn_sending">Sending…</string>
+    <string name="remember_password">Remember it? </string>
+    <string name="success_heading">Check your inbox ✓</string>
+    <string name="success_desc">We\'ve sent a password reset link to your email. It may take a minute to arrive.</string>
+    <string name="btn_back_to_login">Back to Sign In</string>
+    <string name="resend_from_success">Didn\'t receive it? Resend</string>
+
+    <!-- Email Verification -->
+    <string name="verify_heading">Verify your email ✉️</string>
+    <string name="verify_description">We sent a verification link to</string>
+    <string name="verify_description_2">Please check your inbox and click the link.</string>
+    <string name="btn_verify">I\'ve Verified My Email</string>
+    <string name="btn_resend">Resend Verification Email</string>
+    <string name="resend_available_in">Resend available in </string>
+    <string name="already_verified">Already verified? </string>
+
+    <!-- Validation errors -->
+    <string name="error_invalid_email">Please enter a valid email address.</string>
+    <string name="error_empty_password">Please enter your password.</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

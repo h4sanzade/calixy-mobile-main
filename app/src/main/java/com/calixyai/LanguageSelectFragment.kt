@@ -49,10 +49,8 @@ class LanguageSelectFragment : BaseFragment(R.layout.fragment_language_select) {
             }
         }
 
-        // Set initial selection
         applySelection("en")
 
-        // Attach click listeners
         items.forEach { item ->
             item.rootView().setOnClickListener {
                 it.animate().scaleX(0.96f).scaleY(0.96f).setDuration(70)
@@ -65,12 +63,10 @@ class LanguageSelectFragment : BaseFragment(R.layout.fragment_language_select) {
 
         binding.btnContinueLang.setOnClickListener {
             applyLocale(selectedLocale)
-            requireContext()
-                .getSharedPreferences("calixy_prefs", Context.MODE_PRIVATE)
-                .edit()
-                .putBoolean("lang_chosen", true)
-                .apply()
-            requireActivity().recreate()
+            findNavController().navigate(
+                LanguageSelectFragmentDirections
+                    .actionLanguageSelectFragmentToLoginFragment()
+            )
         }
     }
 

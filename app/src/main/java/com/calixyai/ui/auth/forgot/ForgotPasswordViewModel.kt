@@ -1,8 +1,11 @@
 package com.calixyai.ui.auth.forgot
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.calixyai.R
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,7 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// ── Contract ──────────────────────────────────────────────────────────────────
 
 sealed interface ForgotPasswordIntent {
     data class SendReset(val email: String) : ForgotPasswordIntent
@@ -22,10 +24,10 @@ data class ForgotPasswordState(
     val showSuccess: Boolean = false
 )
 
-// ── ViewModel ─────────────────────────────────────────────────────────────────
 
 @HiltViewModel
 class ForgotPasswordViewModel @Inject constructor(
+    @ApplicationContext private val context: Context
     // private val authRepository: AuthRepository
 ) : ViewModel() {
 
@@ -40,7 +42,9 @@ class ForgotPasswordViewModel @Inject constructor(
 
     private fun sendReset(email: String) {
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _state.value = _state.value.copy(error = "Please enter a valid email address.")
+            _state.value = _state.value.copy(
+                error = context.getString(R.string.error_invalid_email)
+            )
             return
         }
 

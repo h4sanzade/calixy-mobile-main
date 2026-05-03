@@ -19,14 +19,21 @@ class OnboardingViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
+    // SharedPreferences-dən seçilmiş dili oxu
     private val locale: String
         get() = context.getSharedPreferences("calixy_prefs", Context.MODE_PRIVATE)
             .getString("selected_locale", "en") ?: "en"
 
-    private fun t(en: String, az: String = en, tr: String = en, ru: String = en) =
-        when (locale) { "az" -> az; "tr" -> tr; "ru" -> ru; else -> en }
+    private fun t(en: String, az: String, tr: String, ru: String): String =
+        when (locale) {
+            "az" -> az
+            "tr" -> tr
+            "ru" -> ru
+            else -> en
+        }
 
-    private fun buildPages() = listOf(
+    // Seçilən dilə görə ekran mətnlərini qur
+    private fun buildPages(): List<OnboardingPageUi> = listOf(
         OnboardingPageUi(
             title = t(
                 en = "Your body. Your data. Your rules.",
@@ -74,6 +81,7 @@ class OnboardingViewModel @Inject constructor(
         )
     )
 
+    // ViewModel yaradılanda dili oxu, pages-i qur
     private val _state = MutableStateFlow(OnboardingState(pages = buildPages()))
     val state: StateFlow<OnboardingState> = _state.asStateFlow()
 

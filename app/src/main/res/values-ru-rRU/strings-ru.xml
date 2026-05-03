@@ -24,7 +24,7 @@
     <string name="target_weight_hint_gain">Целевой вес (кг) — должен быть выше текущего</string>
     <string name="target_weight_hint_maintain">Целевой вес (кг)</string>
     <string name="target_weight_error_lose">Введите вес ниже вашего текущего</string>
-    <string name="target_weight_error_gain">Введите вес выше вашего текущего (укажите желаемый вес)</string>
+    <string name="target_weight_error_gain">Введите вес выше вашего текущего</string>
     <string name="target_weight_error_invalid">Введите корректный вес</string>
 
     <string name="log_meal">+ Записать приём пищи</string>
@@ -98,6 +98,62 @@
     <string name="weight_unit">кг</string>
     <string name="slider_confirm">✓ Подтвердить</string>
     <string name="bmi_zones">Недовес · Норма · Избыточный вес · Ожирение</string>
-
     <string name="lang_change_later">Вы можете изменить это позже в настройках</string>
+
+    <!-- ── AUTH STRINGS ──────────────────────────────────────────────────────── -->
+
+    <!-- Общие метки -->
+    <string name="label_email">Электронная почта</string>
+    <string name="label_password">Пароль</string>
+    <string name="label_confirm_password">Подтвердите пароль</string>
+    <string name="hint_email">ваш@email.com</string>
+    <string name="hint_password">Мин. 8 символов</string>
+    <string name="hint_confirm_password">Повторите пароль</string>
+    <string name="divider_or">ИЛИ</string>
+    <string name="password_hint_note">Минимум 8 символов, включая цифру</string>
+    <string name="terms_note">Регистрируясь, вы соглашаетесь с Условиями использования и Политикой конфиденциальности</string>
+
+    <!-- Вход -->
+    <string name="login_heading">С возвращением 👋</string>
+    <string name="login_subheading">Войдите, чтобы продолжить ваш путь к здоровью</string>
+    <string name="btn_login">Войти</string>
+    <string name="btn_login_loading">Выполняется вход…</string>
+    <string name="btn_google_login">Войти через Google</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="no_account">Нет аккаунта? </string>
+    <string name="go_to_register">Зарегистрироваться</string>
+
+    <!-- Регистрация -->
+    <string name="register_heading">Создать аккаунт 🌱</string>
+    <string name="register_subheading">Присоединяйтесь к тысячам людей, формирующих здоровые привычки с AI</string>
+    <string name="btn_signup">Создать аккаунт</string>
+    <string name="btn_signup_loading">Создание аккаунта…</string>
+    <string name="btn_google_signup">Зарегистрироваться через Google</string>
+    <string name="already_account">Уже есть аккаунт? </string>
+    <string name="go_to_login"> Войти</string>
+
+    <!-- Сброс пароля -->
+    <string name="forgot_heading">Сброс пароля 🔑</string>
+    <string name="forgot_subheading">Введите адрес электронной почты, привязанный к аккаунту, и мы отправим ссылку для сброса.</string>
+    <string name="btn_send_reset">Отправить ссылку для сброса</string>
+    <string name="btn_sending">Отправляется…</string>
+    <string name="remember_password">Вспомнили? </string>
+    <string name="success_heading">Проверьте почту ✓</string>
+    <string name="success_desc">Ссылка для сброса пароля отправлена на вашу почту. Это может занять минуту.</string>
+    <string name="btn_back_to_login">Вернуться ко входу</string>
+    <string name="resend_from_success">Не получили? Отправить снова</string>
+
+    <!-- Подтверждение email -->
+    <string name="verify_heading">Подтвердите email ✉️</string>
+    <string name="verify_description">Ссылка для подтверждения отправлена на</string>
+    <string name="verify_description_2">Проверьте почту и перейдите по ссылке.</string>
+    <string name="btn_verify">Я подтвердил email</string>
+    <string name="btn_resend">Отправить письмо повторно</string>
+    <string name="resend_available_in">Повторная отправка через </string>
+    <string name="already_verified">Уже подтверждено? </string>
+
+    <!-- Ошибки -->
+    <string name="error_invalid_email">Введите корректный адрес электронной почты.</string>
+    <string name="error_empty_password">Введите ваш пароль.</string>
+
 </resources>

@@ -24,7 +24,7 @@
     <string name="target_weight_hint_gain">Hədəf çəki (kq) — cari çəkidən çox olmalıdır</string>
     <string name="target_weight_hint_maintain">Hədəf çəki (kq)</string>
     <string name="target_weight_error_lose">Zəhmət olmasa cari çəkinizdən az bir çəki daxil edin</string>
-    <string name="target_weight_error_gain">Zəhmət olmasa cari çəkinizdən çox bir çəki daxil edin (yuxarı çəki yazın)</string>
+    <string name="target_weight_error_gain">Zəhmət olmasa cari çəkinizdən çox bir çəki daxil edin</string>
     <string name="target_weight_error_invalid">Zəhmət olmasa etibarlı bir çəki daxil edin</string>
 
     <string name="log_meal">+ Yemək Qeyd Et</string>
@@ -37,7 +37,7 @@
     <string name="six_days">6 gün</string>
     <string name="welcome_back">Xoş gəlmisiniz</string>
 
-    <string name="start_trial_title">Pulsuz Sınaqı Başladın</string>
+    <string name="start_trial_title">Pulsuz Sınağı Başladın</string>
     <string name="trial_subtitle">3 gün pulsuz — istənilən vaxt ləğv edin</string>
     <string name="featured">Tövsiyə edilən</string>
     <string name="monthly_plan">3 Gün Pulsuz, sonra $9.99/ay</string>
@@ -99,5 +99,61 @@
     <string name="slider_confirm">✓ Təsdiqlə</string>
     <string name="bmi_zones">Az çəkili · Normal · Artıq çəkili · Obez</string>
     <string name="lang_change_later">Bunu daha sonra parametrlərdə dəyişə bilərsiniz</string>
+
+    <!-- ── AUTH STRINGS ──────────────────────────────────────────────────────── -->
+
+    <!-- Ümumi auth etiketləri -->
+    <string name="label_email">E-poçt</string>
+    <string name="label_password">Şifrə</string>
+    <string name="label_confirm_password">Şifrəni Təsdiqlə</string>
+    <string name="hint_email">sizin@email.com</string>
+    <string name="hint_password">Min. 8 simvol</string>
+    <string name="hint_confirm_password">Şifrəni yenidən daxil edin</string>
+    <string name="divider_or">VƏ YA</string>
+    <string name="password_hint_note">Ən azı 8 simvol və bir rəqəm olmalıdır</string>
+    <string name="terms_note">Qeydiyyatdan keçməklə İstifadə Şərtləri və Məxfilik Siyasətimizlə razılaşırsınız</string>
+
+    <!-- Giriş -->
+    <string name="login_heading">Xoş gəlmisiniz 👋</string>
+    <string name="login_subheading">Qidalanma səfərinizə davam etmək üçün daxil olun</string>
+    <string name="btn_login">Daxil ol</string>
+    <string name="btn_login_loading">Daxil olunur…</string>
+    <string name="btn_google_login">Google ilə davam et</string>
+    <string name="forgot_password">Şifrəni unutdunuz?</string>
+    <string name="no_account">Hesabınız yoxdur? </string>
+    <string name="go_to_register">Qeydiyyat</string>
+
+    <!-- Qeydiyyat -->
+    <string name="register_heading">Hesab yarat 🌱</string>
+    <string name="register_subheading">AI ilə sağlam vərdişlər quran minlərlə insana qoşulun</string>
+    <string name="btn_signup">Hesab Yarat</string>
+    <string name="btn_signup_loading">Hesab yaradılır…</string>
+    <string name="btn_google_signup">Google ilə qeydiyyat</string>
+    <string name="already_account">Artıq hesabınız var? </string>
+    <string name="go_to_login"> Daxil ol</string>
+
+    <!-- Şifrəni Sıfırla -->
+    <string name="forgot_heading">Şifrəni Sıfırla 🔑</string>
+    <string name="forgot_subheading">Hesabınıza bağlı e-poçt ünvanını daxil edin, sizə sıfırlama linki göndərək.</string>
+    <string name="btn_send_reset">Sıfırlama Linki Göndər</string>
+    <string name="btn_sending">Göndərilir…</string>
+    <string name="remember_password">Xatırladınız? </string>
+    <string name="success_heading">Poçtunuzu yoxlayın ✓</string>
+    <string name="success_desc">Şifrə sıfırlama linki e-poçtunuza göndərildi. Gəlməsi bir dəqiqə çəkə bilər.</string>
+    <string name="btn_back_to_login">Girişə Qayıt</string>
+    <string name="resend_from_success">Almadınız? Yenidən göndər</string>
+
+    <!-- E-poçt Doğrulama -->
+    <string name="verify_heading">E-poçtunuzu doğrulayın ✉️</string>
+    <string name="verify_description">Doğrulama linki göndərildi</string>
+    <string name="verify_description_2">Zəhmət olmasa poçtunuzu yoxlayın və linkə klikləyin.</string>
+    <string name="btn_verify">E-poçtumu Doğruladım</string>
+    <string name="btn_resend">Doğrulama E-poçtu Göndər</string>
+    <string name="resend_available_in">Yenidən göndərmə mövcuddur: </string>
+    <string name="already_verified">Artıq doğrulandınız? </string>
+
+    <!-- Xəta mesajları -->
+    <string name="error_invalid_email">Zəhmət olmasa etibarlı e-poçt ünvanı daxil edin.</string>
+    <string name="error_empty_password">Zəhmət olmasa şifrənizi daxil edin.</string>
 
 </resources>

@@ -35,7 +35,6 @@ class ForgotPasswordFragment : BaseFragment(R.layout.fragment_forgot_password) {
         }
 
         binding.tvGoToLogin.setOnClickListener { findNavController().navigateUp() }
-
         binding.btnBackToLogin.setOnClickListener { findNavController().navigateUp() }
 
         binding.tvResendFromSuccess.setOnClickListener {
@@ -49,12 +48,14 @@ class ForgotPasswordFragment : BaseFragment(R.layout.fragment_forgot_password) {
     private fun observeState() {
         launchAndRepeat {
             viewModel.state.collect { state ->
-                // Toggle between request step and success step
                 binding.stepRequest.isVisible = !state.showSuccess
                 binding.stepSuccess.isVisible = state.showSuccess
 
                 binding.btnSendReset.isEnabled = !state.isLoading
-                binding.btnSendReset.text = if (state.isLoading) "Sending…" else "Send Reset Link"
+                binding.btnSendReset.text = if (state.isLoading)
+                    getString(R.string.btn_sending)
+                else
+                    getString(R.string.btn_send_reset)
 
                 binding.tvEmailError.isVisible = state.error != null
                 binding.tvEmailError.text = state.error

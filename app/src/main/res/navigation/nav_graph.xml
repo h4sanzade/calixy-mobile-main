@@ -4,19 +4,12 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
-
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.calixyai.ui.splash.SplashFragment"
         android:label="Splash">
-        <action android:id="@+id/action_splashFragment_to_languageSelectFragment"
-            app:destination="@id/languageSelectFragment"
-            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
         <action android:id="@+id/action_splashFragment_to_onboardingFragment"
             app:destination="@id/onboardingFragment"
-            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
-        <action android:id="@+id/action_splashFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
             app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
         <action android:id="@+id/action_splashFragment_to_chatSetupFragment"
             app:destination="@id/chatSetupFragment"
@@ -27,33 +20,33 @@
         <action android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
+        <action android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment" app:popUpToInclusive="true"/>
     </fragment>
 
-    <!-- ── Language ───────────────────────────────────────────────────────────── -->
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.calixyai.ui.onboarding.OnboardingFragment"
+        android:label="Onboarding">
+        <action
+            android:id="@+id/action_onboardingFragment_to_languageSelectFragment"
+            app:destination="@id/languageSelectFragment"
+            app:popUpTo="@id/onboardingFragment" app:popUpToInclusive="true"/>
+    </fragment>
+
 
     <fragment
         android:id="@+id/languageSelectFragment"
         android:name="com.calixyai.ui.language.LanguageSelectFragment"
         android:label="Language">
         <action
-            android:id="@+id/action_languageSelectFragment_to_onboardingFragment"
-            app:destination="@id/onboardingFragment"
+            android:id="@+id/action_languageSelectFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:popUpTo="@id/languageSelectFragment" app:popUpToInclusive="true"/>
     </fragment>
 
-    <!-- ── Onboarding ────────────────────────────────────────────────────────── -->
-
-    <fragment
-        android:id="@+id/onboardingFragment"
-        android:name="com.calixyai.ui.onboarding.OnboardingFragment"
-        android:label="Onboarding">
-
-        <action android:id="@+id/action_onboardingFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/onboardingFragment" app:popUpToInclusive="true"/>
-    </fragment>
-
-    <!-- ── Auth ──────────────────────────────────────────────────────────────── -->
 
     <fragment
         android:id="@+id/loginFragment"
@@ -135,7 +128,6 @@
             app:popUpTo="@id/paymentFragment" app:popUpToInclusive="true"/>
     </fragment>
 
-    <!-- ── Main ───────────────────────────────────────────────────────────────── -->
 
     <fragment android:id="@+id/homeFragment"
         android:name="com.calixyai.ui.home.HomeFragment"

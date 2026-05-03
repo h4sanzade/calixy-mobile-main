@@ -23,7 +23,6 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentOnboardingBinding.bind(view)
 
-        // Set adapter once with the static pages list — not inside collect
         val pages = viewModel.state.value.pages
         binding.viewPager.adapter = OnboardingPagerAdapter(pages)
         binding.indicator.setViewPager(binding.viewPager)
@@ -39,11 +38,13 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
             }
         })
 
-        binding.viewPager.registerOnPageChangeCallback(object : androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                viewModel.onIntent(OnboardingIntent.PageChanged(position))
+        binding.viewPager.registerOnPageChangeCallback(
+            object : androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    viewModel.onIntent(OnboardingIntent.PageChanged(position))
+                }
             }
-        })
+        )
 
         binding.btnNext.setOnClickListener { viewModel.onIntent(OnboardingIntent.Next) }
         binding.tvSkip.setOnClickListener { viewModel.onIntent(OnboardingIntent.Skip) }
@@ -51,14 +52,16 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         launchAndRepeat {
             viewModel.state.collect { state ->
                 binding.viewPager.setCurrentItem(state.currentPage, true)
-                binding.btnNext.text = if (state.currentPage == pages.lastIndex) {
+                binding.btnNext.text = if (state.currentPage == pages.lastIndex)
                     getString(R.string.get_started)
-                } else {
+                else
                     getString(R.string.next)
-                }
+
                 if (state.finished) {
+                    // Onboarding bitti → dil seçiminə keç
                     findNavController().navigate(
-                        OnboardingFragmentDirections.actionOnboardingFragmentToLoginFragment()
+                        OnboardingFragmentDirections
+                            .actionOnboardingFragmentToLanguageSelectFragment()
                     )
                 }
             }

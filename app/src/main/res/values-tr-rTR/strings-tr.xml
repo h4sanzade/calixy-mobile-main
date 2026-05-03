@@ -24,7 +24,7 @@
     <string name="target_weight_hint_gain">Hedef kilo (kg) — mevcut kilodan yüksek olmalı</string>
     <string name="target_weight_hint_maintain">Hedef kilo (kg)</string>
     <string name="target_weight_error_lose">Lütfen mevcut kilonuzdan düşük bir değer girin</string>
-    <string name="target_weight_error_gain">Lütfen mevcut kilonuzdan yüksek bir değer girin (hedef kilo yazın)</string>
+    <string name="target_weight_error_gain">Lütfen mevcut kilonuzdan yüksek bir değer girin</string>
     <string name="target_weight_error_invalid">Lütfen geçerli bir kilo girin</string>
 
     <string name="log_meal">+ Öğün Kaydet</string>
@@ -98,7 +98,62 @@
     <string name="weight_unit">kg</string>
     <string name="slider_confirm">✓ Onayla</string>
     <string name="bmi_zones">Zayıf · Normal · Fazla Kilolu · Obez</string>
-
     <string name="lang_change_later">Bunu daha sonra ayarlardan değiştirebilirsiniz</string>
+
+    <!-- ── AUTH STRINGS ──────────────────────────────────────────────────────── -->
+
+    <!-- Ortak etiketler -->
+    <string name="label_email">E-posta</string>
+    <string name="label_password">Şifre</string>
+    <string name="label_confirm_password">Şifreyi Onayla</string>
+    <string name="hint_email">sizin@email.com</string>
+    <string name="hint_password">Min. 8 karakter</string>
+    <string name="hint_confirm_password">Şifreyi tekrar girin</string>
+    <string name="divider_or">VEYA</string>
+    <string name="password_hint_note">En az 8 karakter ve bir rakam içermelidir</string>
+    <string name="terms_note">Kaydolarak Kullanım Koşulları ve Gizlilik Politikamızı kabul etmiş olursunuz</string>
+
+    <!-- Giriş -->
+    <string name="login_heading">Tekrar hoş geldiniz 👋</string>
+    <string name="login_subheading">Beslenme yolculuğunuza devam etmek için giriş yapın</string>
+    <string name="btn_login">Giriş Yap</string>
+    <string name="btn_login_loading">Giriş yapılıyor…</string>
+    <string name="btn_google_login">Google ile devam et</string>
+    <string name="forgot_password">Şifremi unuttum?</string>
+    <string name="no_account">Hesabınız yok mu? </string>
+    <string name="go_to_register">Kayıt ol</string>
+
+    <!-- Kayıt -->
+    <string name="register_heading">Hesap oluştur 🌱</string>
+    <string name="register_subheading">AI ile sağlıklı alışkanlıklar edinen binlerce kişiye katılın</string>
+    <string name="btn_signup">Hesap Oluştur</string>
+    <string name="btn_signup_loading">Hesap oluşturuluyor…</string>
+    <string name="btn_google_signup">Google ile kayıt ol</string>
+    <string name="already_account">Zaten hesabınız var mı? </string>
+    <string name="go_to_login"> Giriş yap</string>
+
+    <!-- Şifre Sıfırlama -->
+    <string name="forgot_heading">Şifre Sıfırla 🔑</string>
+    <string name="forgot_subheading">Hesabınıza bağlı e-posta adresini girin, size sıfırlama bağlantısı gönderelim.</string>
+    <string name="btn_send_reset">Sıfırlama Bağlantısı Gönder</string>
+    <string name="btn_sending">Gönderiliyor…</string>
+    <string name="remember_password">Hatırladınız mı? </string>
+    <string name="success_heading">Gelen kutunuzu kontrol edin ✓</string>
+    <string name="success_desc">Şifre sıfırlama bağlantısı e-postanıza gönderildi. Ulaşması bir dakika sürebilir.</string>
+    <string name="btn_back_to_login">Girişe Dön</string>
+    <string name="resend_from_success">Almadınız mı? Tekrar gönder</string>
+
+    <!-- E-posta Doğrulama -->
+    <string name="verify_heading">E-postanızı doğrulayın ✉️</string>
+    <string name="verify_description">Doğrulama bağlantısı gönderildi:</string>
+    <string name="verify_description_2">Lütfen gelen kutunuzu kontrol edin ve bağlantıya tıklayın.</string>
+    <string name="btn_verify">E-postamı Doğruladım</string>
+    <string name="btn_resend">Doğrulama E-postası Gönder</string>
+    <string name="resend_available_in">Tekrar gönderme süresi: </string>
+    <string name="already_verified">Zaten doğruladınız mı? </string>
+
+    <!-- Hata mesajları -->
+    <string name="error_invalid_email">Lütfen geçerli bir e-posta adresi girin.</string>
+    <string name="error_empty_password">Lütfen şifrenizi girin.</string>
 
 </resources>

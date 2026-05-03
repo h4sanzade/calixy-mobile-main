@@ -35,6 +35,7 @@ class SplashViewModel @Inject constructor(
             !state.isOnboardingDone -> SplashDestination.ONBOARDING
             !state.isChatSetupDone -> SplashDestination.CHAT_SETUP
             !state.isPaymentShown -> SplashDestination.PAYMENT
+            // Hamısı tamamdır → home
             else -> SplashDestination.HOME
         }
         _state.value = SplashState(isLoading = false, destination = destination)
