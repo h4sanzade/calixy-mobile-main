@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_primary"
+    android:paddingHorizontal="28dp"
+    android:paddingTop="32dp"
+    android:paddingBottom="40dp">
+
+    <!-- Back button -->
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_card"
+        android:src="@android:drawable/ic_media_previous"
+        android:tint="@color/text_primary"
+        android:padding="10dp"
+        android:contentDescription="Back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- Envelope illustration card -->
+    <LinearLayout
+        android:id="@+id/illustrationCard"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/bg_card_elevated"
+        android:layout_marginTop="56dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Envelope icon using accent color -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✉"
+            android:textSize="48sp"
+            android:textColor="@color/accent_primary"/>
+    </LinearLayout>
+
+    <!-- Heading -->
+    <TextView
+        android:id="@+id/tvHeading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Check your email."
+        android:textColor="@color/text_primary"
+        android:textSize="28sp"
+        android:fontFamily="@font/inter_extrabold"
+        android:letterSpacing="-0.02"
+        android:gravity="center"
+        android:layout_marginTop="28dp"
+        app:layout_constraintTop_toBottomOf="@id/illustrationCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="We've sent a verification link to your email address. Click the link to activate your account."
+        android:textColor="@color/text_secondary"
+        android:textSize="15sp"
+        android:fontFamily="@font/inter_regular"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.5"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvHeading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Email display chip -->
+    <LinearLayout
+        android:id="@+id/emailChip"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_chip_selected"
+        android:paddingHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="user@example.com"
+            android:textColor="@color/accent_primary"
+            android:textSize="14sp"
+            android:fontFamily="@font/inter_medium"/>
+    </LinearLayout>
+
+    <!-- Status message -->
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/accent_primary"
+        android:textSize="13sp"
+        android:fontFamily="@font/inter_medium"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/emailChip"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Resend button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnResend"
+        style="@style/Widget.CalixyAI.Button.Primary"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:text="Resend Verification Email"
+        android:textSize="15sp"
+        android:fontFamily="@font/inter_bold"
+        app:cornerRadius="100dp"
+        app:layout_constraintBottom_toTopOf="@id/cooldownGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Cooldown timer row -->
+    <LinearLayout
+        android:id="@+id/cooldownGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/loginRow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resend available in "
+            android:textColor="@color/text_tertiary"
+            android:textSize="13sp"
+            android:fontFamily="@font/inter_regular"/>
+
+        <TextView
+            android:id="@+id/tvCountdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0:60"
+            android:textColor="@color/accent_primary"
+            android:textSize="13sp"
+            android:fontFamily="@font/inter_bold"/>
+    </LinearLayout>
+
+    <!-- Back to login -->
+    <LinearLayout
+        android:id="@+id/loginRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already verified? "
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:fontFamily="@font/inter_regular"/>
+
+        <TextView
+            android:id="@+id/tvGoToLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log In"
+            android:textColor="@color/accent_primary"
+            android:textSize="14sp"
+            android:fontFamily="@font/inter_bold"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
