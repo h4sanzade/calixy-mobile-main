@@ -58,7 +58,7 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
                 }
                 if (state.finished) {
                     findNavController().navigate(
-                        OnboardingFragmentDirections.actionOnboardingFragmentToChatSetupFragment()
+                        OnboardingFragmentDirections.actionOnboardingFragmentToLoginFragment()
                     )
                 }
             }
