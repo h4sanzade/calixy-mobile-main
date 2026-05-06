@@ -77,7 +77,6 @@ class EmailVerifyFragment : BaseFragment(R.layout.fragment_email_verify) {
                 }
             })
 
-            // Handle backspace to go to previous box
             editText.setOnKeyListener { _, keyCode, event ->
                 if (keyCode == KeyEvent.KEYCODE_DEL
                     && event.action == KeyEvent.ACTION_DOWN
@@ -93,7 +92,6 @@ class EmailVerifyFragment : BaseFragment(R.layout.fragment_email_verify) {
             }
         }
 
-        // Focus first box
         boxes.first().requestFocus()
     }
 
@@ -122,7 +120,7 @@ class EmailVerifyFragment : BaseFragment(R.layout.fragment_email_verify) {
                 else
                     getString(R.string.btn_resend)
 
-                // Status message (backend message on resend success)
+                // Status message
                 binding.tvStatus.isVisible = state.statusMessage != null
                 binding.tvStatus.text = state.statusMessage
 
@@ -138,11 +136,11 @@ class EmailVerifyFragment : BaseFragment(R.layout.fragment_email_verify) {
                     countDownTimer?.cancel()
                 }
 
-                // Navigation
-                if (state.navigateToHome) {
+                // Navigation — after verify → go to Login (not home)
+                if (state.navigateToLogin) {
                     viewModel.clearNavigation()
                     findNavController().navigate(
-                        EmailVerifyFragmentDirections.actionEmailVerifyFragmentToHomeFragment()
+                        EmailVerifyFragmentDirections.actionEmailVerifyFragmentToLoginFragment()
                     )
                 }
             }

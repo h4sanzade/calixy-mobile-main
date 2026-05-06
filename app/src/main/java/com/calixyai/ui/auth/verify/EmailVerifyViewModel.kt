@@ -28,7 +28,8 @@ data class EmailVerifyState(
     val cooldownSeconds: Int = 60,
     val statusMessage: String? = null,
     val error: String? = null,
-    val navigateToHome: Boolean = false
+    /** After successful verification → go to Login so user can sign in */
+    val navigateToLogin: Boolean = false
 )
 
 // ── ViewModel ─────────────────────────────────────────────────────────────────
@@ -43,8 +44,8 @@ class EmailVerifyViewModel @Inject constructor(
 
     fun onIntent(intent: EmailVerifyIntent) {
         when (intent) {
-            is EmailVerifyIntent.VerifyCode -> verifyCode(intent.email, intent.code)
-            is EmailVerifyIntent.ResendCode -> resendCode(intent.email)
+            is EmailVerifyIntent.VerifyCode  -> verifyCode(intent.email, intent.code)
+            is EmailVerifyIntent.ResendCode  -> resendCode(intent.email)
             EmailVerifyIntent.CooldownFinished -> {
                 _state.value = _state.value.copy(isCooldown = false, statusMessage = null)
             }
@@ -66,10 +67,10 @@ class EmailVerifyViewModel @Inject constructor(
 
             when (val result = authRepository.verifyEmail(email, code)) {
                 is NetworkResult.Success -> {
-                    // Tokens already saved in repository
+                    // Tokens saved in repository — send user to Login to sign in
                     _state.value = _state.value.copy(
                         isVerifying = false,
-                        navigateToHome = true
+                        navigateToLogin = true
                     )
                 }
                 is NetworkResult.Error -> {
@@ -110,6 +111,6 @@ class EmailVerifyViewModel @Inject constructor(
     }
 
     fun clearNavigation() {
-        _state.value = _state.value.copy(navigateToHome = false)
+        _state.value = _state.value.copy(navigateToLogin = false)
     }
 }
