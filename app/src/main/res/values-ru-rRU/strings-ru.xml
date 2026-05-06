@@ -12,6 +12,7 @@
     <string name="lang_english">English</string>
     <string name="lang_russian">Русский</string>
     <string name="btn_continue">Продолжить</string>
+    <string name="lang_change_later">Вы можете изменить это позже в настройках</string>
 
     <string name="type_answer">Введите ваш ответ…</string>
     <string name="type_custom">Введите своё значение…</string>
@@ -64,12 +65,12 @@
     <string name="activity_athlete">⚡ Режим атлета</string>
     <string name="activity_yoga">🧘 Йога и дзен</string>
 
+    <string name="goal_gain">⬆️ Набрать вес</string>
     <string name="goal_lose">🔥 Похудеть</string>
     <string name="goal_muscle">💪 Набрать мышцы</string>
     <string name="goal_maintain">📊 Сохранить вес</string>
     <string name="goal_fitness">🏃 Улучшить форму</string>
     <string name="goal_health">❤️ Просто быть здоровым</string>
-    <string name="goal_gain">⬆️ Набрать вес</string>
 
     <string name="allergy_peanuts">🥜 Арахис</string>
     <string name="allergy_dairy">🥛 Молочные продукты</string>
@@ -98,11 +99,9 @@
     <string name="weight_unit">кг</string>
     <string name="slider_confirm">✓ Подтвердить</string>
     <string name="bmi_zones">Недовес · Норма · Избыточный вес · Ожирение</string>
-    <string name="lang_change_later">Вы можете изменить это позже в настройках</string>
 
     <!-- ── AUTH STRINGS ──────────────────────────────────────────────────────── -->
 
-    <!-- Общие метки -->
     <string name="label_email">Электронная почта</string>
     <string name="label_password">Пароль</string>
     <string name="label_confirm_password">Подтвердите пароль</string>
@@ -113,7 +112,6 @@
     <string name="password_hint_note">Минимум 8 символов, включая цифру</string>
     <string name="terms_note">Регистрируясь, вы соглашаетесь с Условиями использования и Политикой конфиденциальности</string>
 
-    <!-- Вход -->
     <string name="login_heading">С возвращением 👋</string>
     <string name="login_subheading">Войдите, чтобы продолжить ваш путь к здоровью</string>
     <string name="btn_login">Войти</string>
@@ -123,7 +121,6 @@
     <string name="no_account">Нет аккаунта? </string>
     <string name="go_to_register">Зарегистрироваться</string>
 
-    <!-- Регистрация -->
     <string name="register_heading">Создать аккаунт 🌱</string>
     <string name="register_subheading">Присоединяйтесь к тысячам людей, формирующих здоровые привычки с AI</string>
     <string name="btn_signup">Создать аккаунт</string>
@@ -132,37 +129,27 @@
     <string name="already_account">Уже есть аккаунт? </string>
     <string name="go_to_login"> Войти</string>
 
-    <!-- Сброс пароля -->
     <string name="forgot_heading">Сброс пароля 🔑</string>
-    <string name="forgot_subheading">Введите адрес электронной почты, привязанный к аккаунту, и мы отправим ссылку для сброса.</string>
-    <string name="btn_send_reset">Отправить ссылку для сброса</string>
+    <string name="forgot_subheading">Введите адрес электронной почты, связанный с вашим аккаунтом, и мы отправим вам код для сброса.</string>
+    <string name="btn_send_reset">Отправить код сброса</string>
     <string name="btn_sending">Отправляется…</string>
     <string name="remember_password">Вспомнили? </string>
     <string name="success_heading">Проверьте почту ✓</string>
-    <string name="success_desc">Ссылка для сброса пароля отправлена на вашу почту. Это может занять минуту.</string>
+    <string name="success_desc">Код для сброса пароля отправлен на вашу почту. Это может занять минуту.</string>
     <string name="btn_back_to_login">Вернуться ко входу</string>
     <string name="resend_from_success">Не получили? Отправить снова</string>
 
-    <!-- Подтверждение email -->
     <string name="verify_heading">Подтвердите email ✉️</string>
-    <string name="verify_description">Ссылка для подтверждения отправлена на</string>
-    <string name="verify_description_2">Проверьте почту и перейдите по ссылке.</string>
-    <string name="btn_verify">Я подтвердил email</string>
-    <string name="btn_resend">Отправить письмо повторно</string>
-    <string name="resend_available_in">Повторная отправка через </string>
-    <string name="already_verified">Уже подтверждено? </string>
-
-    <!-- Ошибки -->
-    <string name="error_invalid_email">Введите корректный адрес электронной почты.</string>
-    <string name="error_empty_password">Введите ваш пароль.</string>
-
-    <!-- Email Verify -->
+    <string name="verify_description">6-значный код отправлен на</string>
+    <string name="verify_description_2">Проверьте почту и введите код ниже.</string>
     <string name="btn_verify">Подтвердить почту</string>
     <string name="btn_verifying">Подтверждение…</string>
     <string name="btn_resend">Отправить код снова</string>
     <string name="btn_resend_sending">Отправка…</string>
+    <string name="resend_available_in">Повторная отправка через </string>
+    <string name="already_verified">Уже подтверждено? </string>
+    <string name="go_to_login_link"> Войти</string>
 
-    <!-- Reset Password Screen -->
     <string name="reset_heading">Установите новый пароль 🔒</string>
     <string name="reset_subheading">Введите код из письма и задайте новый пароль.</string>
     <string name="label_reset_code">Код подтверждения</string>
@@ -172,7 +159,6 @@
     <string name="btn_reset_password">Сбросить пароль</string>
     <string name="btn_resetting">Сброс…</string>
 
-    <!-- Forgot Password -->
-    <string name="forgot_subheading">Введите адрес электронной почты, связанный с вашим аккаунтом, и мы отправим вам код для сброса.</string>
-
+    <string name="error_invalid_email">Введите корректный адрес электронной почты.</string>
+    <string name="error_empty_password">Введите ваш пароль.</string>
 </resources>

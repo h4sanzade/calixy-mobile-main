@@ -114,7 +114,6 @@ class ChatSetupFragment : BaseFragment(R.layout.fragment_chat_setup) {
                 binding.inputCustom.isVisible = state.showCustomInput
                 binding.sliderPanel.isVisible = state.showSliders
 
-                // Problem 4: show/hide validation error beneath input
                 if (state.inputError != null) {
                     binding.tvInputError.text = state.inputError
                     binding.tvInputError.isVisible = true

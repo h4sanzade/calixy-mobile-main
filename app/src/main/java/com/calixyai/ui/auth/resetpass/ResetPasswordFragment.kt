@@ -9,8 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.calixyai.R
 import com.calixyai.databinding.FragmentResetPasswordBinding
-import com.calixyai.ui.auth.reset.ResetPasswordFragmentArgs
-import com.calixyai.ui.auth.reset.ResetPasswordFragmentDirections
 import com.calixyai.ui.common.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,13 +62,11 @@ class ResetPasswordFragment : BaseFragment(R.layout.fragment_reset_password) {
                 else
                     getString(R.string.btn_reset_password)
 
-                // Error — exact message from backend
                 binding.tvError.isVisible = state.error != null
                 binding.tvError.text = state.error
 
                 if (state.navigateToLogin) {
                     viewModel.clearNavigation()
-                    // Navigate to Login, clearing the back stack up to Login
                     findNavController().navigate(
                         ResetPasswordFragmentDirections
                             .actionResetPasswordFragmentToLoginFragment()

@@ -12,6 +12,7 @@
     <string name="lang_english">English</string>
     <string name="lang_russian">Русский</string>
     <string name="btn_continue">Devam Et</string>
+    <string name="lang_change_later">Bunu daha sonra ayarlardan değiştirebilirsiniz</string>
 
     <string name="type_answer">Cevabınızı yazın…</string>
     <string name="type_custom">Özel değerinizi yazın…</string>
@@ -64,12 +65,12 @@
     <string name="activity_athlete">⚡ Atlet Modu</string>
     <string name="activity_yoga">🧘 Yoga &amp; Zen</string>
 
+    <string name="goal_gain">⬆️ Kilo Al</string>
     <string name="goal_lose">🔥 Kilo Ver</string>
     <string name="goal_muscle">💪 Kas Yap</string>
     <string name="goal_maintain">📊 Kilomu Koru</string>
     <string name="goal_fitness">🏃 Formu Geliştir</string>
     <string name="goal_health">❤️ Sadece Sağlıklı Ol</string>
-    <string name="goal_gain">⬆️ Kilo Al</string>
 
     <string name="allergy_peanuts">🥜 Yer Fıstığı</string>
     <string name="allergy_dairy">🥛 Süt Ürünleri</string>
@@ -98,11 +99,9 @@
     <string name="weight_unit">kg</string>
     <string name="slider_confirm">✓ Onayla</string>
     <string name="bmi_zones">Zayıf · Normal · Fazla Kilolu · Obez</string>
-    <string name="lang_change_later">Bunu daha sonra ayarlardan değiştirebilirsiniz</string>
 
     <!-- ── AUTH STRINGS ──────────────────────────────────────────────────────── -->
 
-    <!-- Ortak etiketler -->
     <string name="label_email">E-posta</string>
     <string name="label_password">Şifre</string>
     <string name="label_confirm_password">Şifreyi Onayla</string>
@@ -113,7 +112,6 @@
     <string name="password_hint_note">En az 8 karakter ve bir rakam içermelidir</string>
     <string name="terms_note">Kaydolarak Kullanım Koşulları ve Gizlilik Politikamızı kabul etmiş olursunuz</string>
 
-    <!-- Giriş -->
     <string name="login_heading">Tekrar hoş geldiniz 👋</string>
     <string name="login_subheading">Beslenme yolculuğunuza devam etmek için giriş yapın</string>
     <string name="btn_login">Giriş Yap</string>
@@ -123,7 +121,6 @@
     <string name="no_account">Hesabınız yok mu? </string>
     <string name="go_to_register">Kayıt ol</string>
 
-    <!-- Kayıt -->
     <string name="register_heading">Hesap oluştur 🌱</string>
     <string name="register_subheading">AI ile sağlıklı alışkanlıklar edinen binlerce kişiye katılın</string>
     <string name="btn_signup">Hesap Oluştur</string>
@@ -132,37 +129,27 @@
     <string name="already_account">Zaten hesabınız var mı? </string>
     <string name="go_to_login"> Giriş yap</string>
 
-    <!-- Şifre Sıfırlama -->
     <string name="forgot_heading">Şifre Sıfırla 🔑</string>
-    <string name="forgot_subheading">Hesabınıza bağlı e-posta adresini girin, size sıfırlama bağlantısı gönderelim.</string>
-    <string name="btn_send_reset">Sıfırlama Bağlantısı Gönder</string>
+    <string name="forgot_subheading">Hesabınıza bağlı e-posta adresini girin, size sıfırlama kodu gönderelim.</string>
+    <string name="btn_send_reset">Sıfırlama Kodu Gönder</string>
     <string name="btn_sending">Gönderiliyor…</string>
     <string name="remember_password">Hatırladınız mı? </string>
     <string name="success_heading">Gelen kutunuzu kontrol edin ✓</string>
-    <string name="success_desc">Şifre sıfırlama bağlantısı e-postanıza gönderildi. Ulaşması bir dakika sürebilir.</string>
+    <string name="success_desc">Şifre sıfırlama kodu e-postanıza gönderildi. Ulaşması bir dakika sürebilir.</string>
     <string name="btn_back_to_login">Girişe Dön</string>
     <string name="resend_from_success">Almadınız mı? Tekrar gönder</string>
 
-    <!-- E-posta Doğrulama -->
     <string name="verify_heading">E-postanızı doğrulayın ✉️</string>
-    <string name="verify_description">Doğrulama bağlantısı gönderildi:</string>
-    <string name="verify_description_2">Lütfen gelen kutunuzu kontrol edin ve bağlantıya tıklayın.</string>
-    <string name="btn_verify">E-postamı Doğruladım</string>
-    <string name="btn_resend">Doğrulama E-postası Gönder</string>
-    <string name="resend_available_in">Tekrar gönderme süresi: </string>
-    <string name="already_verified">Zaten doğruladınız mı? </string>
-
-    <!-- Hata mesajları -->
-    <string name="error_invalid_email">Lütfen geçerli bir e-posta adresi girin.</string>
-    <string name="error_empty_password">Lütfen şifrenizi girin.</string>
-
-    <!-- Email Verify -->
+    <string name="verify_description">6 haneli kod gönderildi:</string>
+    <string name="verify_description_2">Lütfen gelen kutunuzu kontrol edin ve kodu aşağıya girin.</string>
     <string name="btn_verify">E-postayı doğrula</string>
     <string name="btn_verifying">Doğrulanıyor…</string>
     <string name="btn_resend">Kodu tekrar gönder</string>
     <string name="btn_resend_sending">Gönderiliyor…</string>
+    <string name="resend_available_in">Tekrar gönderme süresi: </string>
+    <string name="already_verified">Zaten doğruladınız mı? </string>
+    <string name="go_to_login_link"> Giriş yap</string>
 
-    <!-- Reset Password Screen -->
     <string name="reset_heading">Yeni şifre belirle 🔒</string>
     <string name="reset_subheading">E-postanıza gelen kodu girin ve yeni bir şifre seçin.</string>
     <string name="label_reset_code">Doğrulama kodu</string>
@@ -172,7 +159,6 @@
     <string name="btn_reset_password">Şifreyi sıfırla</string>
     <string name="btn_resetting">Sıfırlanıyor…</string>
 
-    <!-- Forgot Password -->
-    <string name="forgot_subheading">Hesabınıza bağlı e-posta adresini girin, size sıfırlama kodu gönderelim.</string>
-
+    <string name="error_invalid_email">Lütfen geçerli bir e-posta adresi girin.</string>
+    <string name="error_empty_password">Lütfen şifrenizi girin.</string>
 </resources>

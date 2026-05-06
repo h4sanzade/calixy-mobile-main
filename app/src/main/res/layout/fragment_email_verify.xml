@@ -31,7 +31,7 @@
                 android:padding="11dp"
                 android:contentDescription="Back"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <!-- Envelope icon card -->
             <LinearLayout
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:text="✉"
                     android:textSize="44sp"
-                    android:textColor="@color/accent_primary"/>
+                    android:textColor="@color/accent_primary" />
             </LinearLayout>
 
             <!-- Heading -->
@@ -68,7 +68,7 @@
                 android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@id/illustrationCard"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Description -->
             <LinearLayout
@@ -89,7 +89,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="15sp"
                     android:fontFamily="@font/inter_regular"
-                    android:gravity="center"/>
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/tvEmail"
@@ -100,7 +100,7 @@
                     android:textColor="@color/accent_primary"
                     android:textSize="15sp"
                     android:fontFamily="@font/inter_bold"
-                    android:gravity="center"/>
+                    android:gravity="center" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -110,7 +110,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="15sp"
                     android:fontFamily="@font/inter_regular"
-                    android:gravity="center"/>
+                    android:gravity="center" />
             </LinearLayout>
 
             <!-- OTP 6-box row -->
@@ -139,7 +139,7 @@
                     android:fontFamily="@font/inter_extrabold"
                     android:textAlignment="center"
                     android:imeOptions="actionNext"
-                    android:cursorVisible="false"/>
+                    android:cursorVisible="false" />
 
                 <EditText
                     android:id="@+id/otp2"
@@ -155,7 +155,7 @@
                     android:fontFamily="@font/inter_extrabold"
                     android:textAlignment="center"
                     android:imeOptions="actionNext"
-                    android:cursorVisible="false"/>
+                    android:cursorVisible="false" />
 
                 <EditText
                     android:id="@+id/otp3"
@@ -171,7 +171,7 @@
                     android:fontFamily="@font/inter_extrabold"
                     android:textAlignment="center"
                     android:imeOptions="actionNext"
-                    android:cursorVisible="false"/>
+                    android:cursorVisible="false" />
 
                 <EditText
                     android:id="@+id/otp4"
@@ -187,7 +187,7 @@
                     android:fontFamily="@font/inter_extrabold"
                     android:textAlignment="center"
                     android:imeOptions="actionNext"
-                    android:cursorVisible="false"/>
+                    android:cursorVisible="false" />
 
                 <EditText
                     android:id="@+id/otp5"
@@ -203,7 +203,7 @@
                     android:fontFamily="@font/inter_extrabold"
                     android:textAlignment="center"
                     android:imeOptions="actionNext"
-                    android:cursorVisible="false"/>
+                    android:cursorVisible="false" />
 
                 <EditText
                     android:id="@+id/otp6"
@@ -218,7 +218,7 @@
                     android:fontFamily="@font/inter_extrabold"
                     android:textAlignment="center"
                     android:imeOptions="actionDone"
-                    android:cursorVisible="false"/>
+                    android:cursorVisible="false" />
 
             </LinearLayout>
 
@@ -235,9 +235,9 @@
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/otpContainer"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Status message -->
+            <!-- Status message (resend success) -->
             <TextView
                 android:id="@+id/tvStatus"
                 android:layout_width="0dp"
@@ -250,7 +250,7 @@
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/tvOtpError"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Verify button -->
             <com.google.android.material.button.MaterialButton
@@ -265,7 +265,7 @@
                 app:cornerRadius="100dp"
                 app:layout_constraintTop_toBottomOf="@id/tvStatus"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Resend button -->
             <com.google.android.material.button.MaterialButton
@@ -283,7 +283,7 @@
                 app:cornerRadius="100dp"
                 app:layout_constraintTop_toBottomOf="@id/btnVerify"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Cooldown row -->
             <LinearLayout
@@ -304,16 +304,16 @@
                     android:text="@string/resend_available_in"
                     android:textColor="@color/text_tertiary"
                     android:textSize="13sp"
-                    android:fontFamily="@font/inter_regular"/>
+                    android:fontFamily="@font/inter_regular" />
 
                 <TextView
                     android:id="@+id/tvCountdown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0:60"
+                    android:text="1:00"
                     android:textColor="@color/accent_primary"
                     android:textSize="13sp"
-                    android:fontFamily="@font/inter_bold"/>
+                    android:fontFamily="@font/inter_bold" />
             </LinearLayout>
 
             <!-- Bottom login link -->
@@ -334,18 +334,18 @@
                     android:text="@string/already_verified"
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp"
-                    android:fontFamily="@font/inter_regular"/>
+                    android:fontFamily="@font/inter_regular" />
 
                 <TextView
                     android:id="@+id/tvGoToLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/go_to_login"
+                    android:text="@string/go_to_login_link"
                     android:textColor="@color/accent_primary"
                     android:textSize="14sp"
                     android:fontFamily="@font/inter_bold"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

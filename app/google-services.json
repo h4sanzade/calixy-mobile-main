@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "408720203399",
+    "project_id": "calixy-mobile-main",
+    "storage_bucket": "calixy-mobile-main.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408720203399:android:bc333c325a963f90206222",
+        "android_client_info": {
+          "package_name": "com.calixyai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsoc2xZdJu1BzeSDJdJrQfrh5D9l2twGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

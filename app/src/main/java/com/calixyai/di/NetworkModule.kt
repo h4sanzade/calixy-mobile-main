@@ -23,8 +23,7 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private const val BASE_URL =
-        "https://irrefragably-overcured-clyde.ngrok-free.app/"
-
+        "https://irrefragably-overcured-clyde.ngrok-free.dev"
     private const val TIMEOUT_SECONDS = 30L
 
     @Provides

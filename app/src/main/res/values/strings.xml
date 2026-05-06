@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><!-- BASE strings.xml (English default) -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CalixyAI</string>
     <string name="app_tagline">Your AI Nutrition Coach</string>
     <string name="next">Next</string>
     <string name="get_started">Get Started</string>
 
-    <!-- Language Selection -->
     <string name="select_language">Choose your language</string>
     <string name="select_language_subtitle">We\'ll personalize everything for you</string>
     <string name="lang_azerbaijani">Azərbaycan</string>
@@ -13,8 +12,8 @@
     <string name="lang_english">English</string>
     <string name="lang_russian">Русский</string>
     <string name="btn_continue">Continue</string>
+    <string name="lang_change_later">You can change this later in settings</string>
 
-    <!-- Chat Setup -->
     <string name="type_answer">Type your answer…</string>
     <string name="type_custom">Type custom value…</string>
     <string name="continue_arrow">Continue →</string>
@@ -22,7 +21,6 @@
     <string name="send">Send</string>
     <string name="online_status">AI Nutrition Coach • Online</string>
 
-    <!-- Target weight input -->
     <string name="target_weight_hint_lose">Target weight (kg) — must be lower than current</string>
     <string name="target_weight_hint_gain">Target weight (kg) — must be higher than current</string>
     <string name="target_weight_hint_maintain">Target weight (kg)</string>
@@ -111,8 +109,6 @@
     <string name="slider_confirm">✓ Confirm</string>
     <string name="bmi_zones">Underweight · Normal · Overweight · Obese</string>
 
-    <string name="lang_change_later">You can change this later in settings</string>
-
     <!-- ── AUTH STRINGS ──────────────────────────────────────────────────────── -->
 
     <!-- Shared auth labels -->
@@ -147,34 +143,25 @@
 
     <!-- Forgot Password -->
     <string name="forgot_heading">Reset Password 🔑</string>
-    <string name="forgot_subheading">Enter the email address linked to your account and we\'ll send you a reset link.</string>
-    <string name="btn_send_reset">Send Reset Link</string>
+    <string name="forgot_subheading">Enter the email address linked to your account and we\'ll send you a reset code.</string>
+    <string name="btn_send_reset">Send Reset Code</string>
     <string name="btn_sending">Sending…</string>
     <string name="remember_password">Remember it? </string>
     <string name="success_heading">Check your inbox ✓</string>
-    <string name="success_desc">We\'ve sent a password reset link to your email. It may take a minute to arrive.</string>
+    <string name="success_desc">We\'ve sent a password reset code to your email. It may take a minute to arrive.</string>
     <string name="btn_back_to_login">Back to Sign In</string>
     <string name="resend_from_success">Didn\'t receive it? Resend</string>
 
-    <!-- Email Verification -->
     <string name="verify_heading">Verify your email ✉️</string>
-    <string name="verify_description">We sent a verification link to</string>
-    <string name="verify_description_2">Please check your inbox and click the link.</string>
-    <string name="btn_verify">I\'ve Verified My Email</string>
-    <string name="btn_resend">Resend Verification Email</string>
-    <string name="resend_available_in">Resend available in </string>
-    <string name="already_verified">Already verified? </string>
-
-    <!-- Validation errors -->
-    <string name="error_invalid_email">Please enter a valid email address.</string>
-    <string name="error_empty_password">Please enter your password.</string>
-
-
-    <!-- Email Verify - updated button labels -->
+    <string name="verify_description">We sent a 6-digit code to</string>
+    <string name="verify_description_2">Please check your inbox and enter the code below.</string>
     <string name="btn_verify">Verify Email</string>
     <string name="btn_verifying">Verifying…</string>
     <string name="btn_resend">Resend Code</string>
     <string name="btn_resend_sending">Sending…</string>
+    <string name="resend_available_in">Resend available in </string>
+    <string name="already_verified">Already verified? </string>
+    <string name="go_to_login_link"> Sign in</string>
 
     <!-- Reset Password Screen -->
     <string name="reset_heading">Set New Password 🔒</string>
@@ -186,10 +173,8 @@
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_resetting">Resetting…</string>
 
-    <!-- Forgot Password - updated subheading key -->
-    <string name="forgot_subheading">Enter the email address linked to your account and we\'ll send you a reset code.</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Validation errors -->
+    <string name="error_invalid_email">Please enter a valid email address.</string>
+    <string name="error_empty_password">Please enter your password.</string>
+    <string name="default_web_client_id">408720203399-tpb20to88h9mj42d7mfld41nr3onm0ds.apps.googleusercontent.com</string>
 </resources>
