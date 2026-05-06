@@ -139,7 +139,7 @@
     <string name="btn_signup_loading">Creating account…</string>
     <string name="btn_google_signup">Sign up with Google</string>
     <string name="already_account">Already have an account? </string>
-    <string name="go_to_login"> Sign in</string>
+    <string name="go_to_login"> Sign in </string>
 
     <!-- Forgot Password -->
     <string name="forgot_heading">Reset Password 🔑</string>
