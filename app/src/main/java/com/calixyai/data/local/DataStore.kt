@@ -25,6 +25,12 @@ class FirstTimeUserStore @Inject constructor(
     val isFirstTimeUser: Flow<Boolean> = context.dataStore.data
         .map { prefs -> prefs[KEY_IS_FIRST_TIME] ?: true }
 
+    suspend fun markFirstTime() {
+        context.dataStore.edit { prefs ->
+            prefs[KEY_IS_FIRST_TIME] = true
+        }
+    }
+
     suspend fun markNotFirstTime() {
         context.dataStore.edit { prefs ->
             prefs[KEY_IS_FIRST_TIME] = false

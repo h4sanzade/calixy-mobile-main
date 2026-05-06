@@ -212,7 +212,13 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.calixyai.ui.home.HomeFragment"
-        android:label="Home" />
+        android:label="Home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_chatSetupFragment"
+            app:destination="@id/chatSetupFragment" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/tab_plan"

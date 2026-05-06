@@ -2,6 +2,7 @@ package com.calixyai.ui.auth.verify
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.calixyai.data.local.FirstTimeUserStore
 import com.calixyai.data.remote.NetworkResult
 import com.calixyai.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +37,8 @@ data class EmailVerifyState(
 
 @HiltViewModel
 class EmailVerifyViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val firstTimeUserStore: FirstTimeUserStore
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(EmailVerifyState())
@@ -68,6 +70,7 @@ class EmailVerifyViewModel @Inject constructor(
             when (val result = authRepository.verifyEmail(email, code)) {
                 is NetworkResult.Success -> {
                     // Tokens saved in repository — send user to Login to sign in
+                    firstTimeUserStore.markFirstTime()
                     _state.value = _state.value.copy(
                         isVerifying = false,
                         navigateToLogin = true

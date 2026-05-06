@@ -177,4 +177,6 @@
     <string name="error_invalid_email">Please enter a valid email address.</string>
     <string name="error_empty_password">Please enter your password.</string>
     <string name="default_web_client_id">408720203399-tpb20to88h9mj42d7mfld41nr3onm0ds.apps.googleusercontent.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

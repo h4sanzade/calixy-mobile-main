@@ -26,6 +26,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
         observeState()
         observeEffects()
+        observeDialogResult()
     }
 
 
@@ -59,24 +60,21 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         }
     }
 
+    private fun observeDialogResult() {
+        parentFragmentManager.setFragmentResultListener(
+            AICoachDialogFragment.REQUEST_KEY,
+            viewLifecycleOwner
+        ) { _, _ ->
+            viewModel.onIntent(HomeIntent.ContinueClicked)
+        }
+    }
+
     // ── AI Coach Dialog ───────────────────────────────────────────────────────
 
     private fun showAICoachDialog() {
-        if (parentFragmentManager.findFragmentByTag("ai_coach_dialog") != null) return
+        if (parentFragmentManager.findFragmentByTag(AICoachDialogFragment.TAG) != null) return
 
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Meet Your AI Coach 🤖")
-            .setMessage(
-                "To provide you with a better experience, you need to share your " +
-                        "information with our AI coach."
-            )
-            .setPositiveButton("Continue") { dialog, _ ->
-                dialog.dismiss()
-                viewModel.onIntent(HomeIntent.ContinueClicked)
-            }
-            .setCancelable(false)
-            .show()
-            .also { it.window?.setBackgroundDrawableResource(android.R.color.transparent) }
+        AICoachDialogFragment().show(parentFragmentManager, AICoachDialogFragment.TAG)
     }
 
     override fun onDestroyView() {
