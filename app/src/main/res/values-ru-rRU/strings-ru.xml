@@ -139,7 +139,7 @@
     <string name="btn_back_to_login">Вернуться ко входу</string>
     <string name="resend_from_success">Не получили? Отправить снова</string>
 
-    <string name="verify_heading">Подтвердите email ✉️</string>
+    <string name="verify_heading">Подтвердите email ️</string>
     <string name="verify_description">6-значный код отправлен на</string>
     <string name="verify_description_2">Проверьте почту и введите код ниже.</string>
     <string name="btn_verify">Подтвердить почту</string>

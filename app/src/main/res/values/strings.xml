@@ -152,7 +152,7 @@
     <string name="btn_back_to_login">Back to Sign In</string>
     <string name="resend_from_success">Didn\'t receive it? Resend</string>
 
-    <string name="verify_heading">Verify your email ✉️</string>
+    <string name="verify_heading">Verify your email </string>
     <string name="verify_description">We sent a 6-digit code to</string>
     <string name="verify_description_2">Please check your inbox and enter the code below.</string>
     <string name="btn_verify">Verify Email</string>

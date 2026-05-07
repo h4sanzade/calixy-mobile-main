@@ -7,7 +7,6 @@ import androidx.navigation.fragment.findNavController
 import com.calixyai.R
 import com.calixyai.databinding.FragmentHomeBinding
 import com.calixyai.ui.common.BaseFragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,7 +61,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     private fun observeDialogResult() {
         parentFragmentManager.setFragmentResultListener(
-            AICoachDialogFragment.REQUEST_KEY,
+            AICoachPremiumDialogFragment.REQUEST_KEY,
             viewLifecycleOwner
         ) { _, _ ->
             viewModel.onIntent(HomeIntent.ContinueClicked)
@@ -72,9 +71,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     // ── AI Coach Dialog ───────────────────────────────────────────────────────
 
     private fun showAICoachDialog() {
-        if (parentFragmentManager.findFragmentByTag(AICoachDialogFragment.TAG) != null) return
+        if (parentFragmentManager.findFragmentByTag(AICoachPremiumDialogFragment.TAG) != null) return
 
-        AICoachDialogFragment().show(parentFragmentManager, AICoachDialogFragment.TAG)
+        AICoachPremiumDialogFragment().show(parentFragmentManager, AICoachPremiumDialogFragment.TAG)
     }
 
     override fun onDestroyView() {

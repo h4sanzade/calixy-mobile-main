@@ -2,83 +2,144 @@ package com.calixyai.ui.onboarding
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.calixyai.R
 import com.calixyai.databinding.FragmentOnboardingBinding
 import com.calixyai.ui.common.BaseFragment
-import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.abs
 
-@AndroidEntryPoint
+data class OnboardingPage(
+    val tag: String,
+    val title: String,
+    val subtitle: String,
+    val pageIndex: Int
+)
+
 class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
 
     private var _binding: FragmentOnboardingBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: OnboardingViewModel by viewModels()
+    private val dotViews = mutableListOf<View>()
+
+    companion object {
+        private val PAGES = listOf(
+            OnboardingPage(
+                tag = "Personalized",
+                title = "Your body.\nYour data.\nYour rules.",
+                subtitle = "CalixyAI turns your daily habits into a clear, personalized nutrition rhythm built only for you.",
+                pageIndex = 0
+            ),
+            OnboardingPage(
+                tag = "Smart Tracking",
+                title = "Smart tracking\nwithout the noise.",
+                subtitle = "Log meals in seconds. Understand calories and macros instantly. Stay focused on what actually matters.",
+                pageIndex = 1
+            ),
+            OnboardingPage(
+                tag = "AI Coach",
+                title = "A premium coach\nfor real life.",
+                subtitle = "Context-aware plans, habit reminders, and beautiful insights that keep you moving forward every day.",
+                pageIndex = 2
+            )
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentOnboardingBinding.bind(view)
 
-        // LanguageSelectFragment locale-i SharedPreferences-ə yazdı və
-        // Activity.attachBaseContext() vasitəsilə context yeniləndi.
-        // ViewModel burada yaradılır, buildPages() artıq seçilmiş dili oxuyur.
-        viewModel.refreshPages()
+        setupViewPager()
+        setupDots()
+        setupClickListeners()
+    }
 
-        val pages = viewModel.state.value.pages
-        binding.viewPager.adapter = OnboardingPagerAdapter(pages)
-        binding.indicator.setViewPager(binding.viewPager)
-
-        binding.viewPager.setPageTransformer(CompositePageTransformer().apply {
-            addTransformer(MarginPageTransformer(24))
-            addTransformer { page, position ->
-                page.alpha = 0.3f + (1 - abs(position))
-                page.translationX = -position * 80
-                val scale = 0.88f + (1 - abs(position)) * 0.12f
-                page.scaleX = scale
-                page.scaleY = scale
-            }
-        })
-
-        binding.viewPager.registerOnPageChangeCallback(
-            object : androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
+    private fun setupViewPager() {
+        binding.viewPager.apply {
+            adapter = OnboardingPagerAdapter(PAGES)
+            offscreenPageLimit = 2
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    viewModel.onIntent(OnboardingIntent.PageChanged(position))
+                    updateDots(position)
+                    updateNextButtonText(position)
                 }
-            }
-        )
-
-        binding.btnNext.setOnClickListener { viewModel.onIntent(OnboardingIntent.Next) }
-        binding.tvSkip.setOnClickListener { viewModel.onIntent(OnboardingIntent.Skip) }
-
-        launchAndRepeat {
-            viewModel.state.collect { state ->
-                // Adapter yenilənibsə (refreshPages sonrası) ona tətbiq et
-                val currentAdapter = binding.viewPager.adapter as? OnboardingPagerAdapter
-                if (currentAdapter?.itemCount != state.pages.size) {
-                    binding.viewPager.adapter = OnboardingPagerAdapter(state.pages)
-                    binding.indicator.setViewPager(binding.viewPager)
-                }
-
-                binding.viewPager.setCurrentItem(state.currentPage, true)
-                binding.btnNext.text = if (state.currentPage == state.pages.lastIndex)
-                    getString(R.string.get_started)
-                else
-                    getString(R.string.next)
-
-                if (state.finished) {
-                    // DƏYIŞDI: artıq languageSelectFragment deyil, loginFragment-ə keçir
-                    findNavController().navigate(
-                        OnboardingFragmentDirections
-                            .actionOnboardingFragmentToLoginFragment()
-                    )
-                }
-            }
+            })
         }
     }
+
+    private fun setupDots() {
+        val container = binding.dotsContainer
+        container.removeAllViews()
+        dotViews.clear()
+
+        PAGES.forEachIndexed { index, _ ->
+            val dot = createDotView(index == 0)
+            container.addView(dot)
+            dotViews.add(dot)
+        }
+    }
+
+    private fun createDotView(isActive: Boolean): View {
+        return View(requireContext()).apply {
+            val dp = resources.displayMetrics.density
+            layoutParams = LinearLayout.LayoutParams(
+                (if (isActive) 22 else 6).dpToPx(),
+                6.dpToPx()
+            ).apply { marginEnd = 6.dpToPx() }
+
+            background = ContextCompat.getDrawable(
+                requireContext(),
+                if (isActive) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive
+            )
+        }
+    }
+
+    private fun updateDots(selectedPosition: Int) {
+        val dp = resources.displayMetrics.density
+        dotViews.forEachIndexed { index, dot ->
+            val isActive = index == selectedPosition
+            val lp = dot.layoutParams as LinearLayout.LayoutParams
+            lp.width = if (isActive) 22.dpToPx() else 6.dpToPx()
+            dot.layoutParams = lp
+
+            dot.background = ContextCompat.getDrawable(
+                requireContext(),
+                if (isActive) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive
+            )
+            dot.animate().scaleX(1f).scaleY(1f).setDuration(200).start()
+        }
+    }
+
+    private fun updateNextButtonText(position: Int) {
+        binding.btnNext.text = if (position == PAGES.size - 1) {
+            getString(R.string.get_started)
+        } else {
+            getString(R.string.next)
+        }
+    }
+
+    private fun setupClickListeners() {
+        binding.tvSkip.setOnClickListener { navigateToLogin() }
+        binding.btnNext.setOnClickListener { handleNextClick() }
+    }
+
+    private fun handleNextClick() {
+        val currentPosition = binding.viewPager.currentItem
+        if (currentPosition < PAGES.size - 1) {
+            binding.viewPager.setCurrentItem(currentPosition + 1, true)
+        } else {
+            navigateToLogin()
+        }
+    }
+
+    private fun navigateToLogin() {
+        findNavController().navigate(
+            OnboardingFragmentDirections.actionOnboardingFragmentToLoginFragment()
+        )
+    }
+
+    private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 
     override fun onDestroyView() {
         _binding = null

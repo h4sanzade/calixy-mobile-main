@@ -139,7 +139,7 @@
     <string name="btn_back_to_login">Girişə Qayıt</string>
     <string name="resend_from_success">Almadınız? Yenidən göndər</string>
 
-    <string name="verify_heading">E-poçtunuzu doğrulayın ✉️</string>
+    <string name="verify_heading">E-poçtunuzu doğrulayın</string>
     <string name="verify_description">6 rəqəmli kod göndərildi</string>
     <string name="verify_description_2">Zəhmət olmasa poçtunuzu yoxlayın və kodu aşağıya daxil edin.</string>
     <string name="btn_verify">E-poçtu təsdiqlə</string>

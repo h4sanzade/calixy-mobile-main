@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.calixyai.R
 import com.calixyai.databinding.FragmentSplashBinding
 import com.calixyai.ui.common.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SplashFragment : BaseFragment(R.layout.fragment_splash) {
@@ -28,34 +33,37 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
             binding.logoGroup.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(700).start()
         }
 
-        binding.lottieSplash.playAnimation()
         viewModel.onIntent(SplashIntent.Load)
 
-        launchAndRepeat {
-            viewModel.state.collect { state ->
-                when (state.destination) {
-                    SplashDestination.ONBOARDING ->
-                        findNavController().navigate(
-                            SplashFragmentDirections.actionSplashFragmentToLanguageSelectFragment()
-                        )
-                    SplashDestination.LOGIN ->
-                        findNavController().navigate(
-                            SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-                        )
-                    SplashDestination.CHAT_SETUP ->
-                        findNavController().navigate(
-                            SplashFragmentDirections.actionSplashFragmentToChatSetupFragment()
-                        )
-                    SplashDestination.PAYMENT ->
-                        findNavController().navigate(
-                            SplashFragmentDirections.actionSplashFragmentToPaymentFragment()
-                        )
-                    SplashDestination.HOME ->
-                        findNavController().navigate(
-                            SplashFragmentDirections.actionSplashFragmentToHomeFragment()
-                        )
-                    null -> Unit
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            val minDelay = launch { delay((3000L..5000L).random()) }
+            val destination = viewModel.state
+                .filterNotNull()
+                .first { it.destination != null }
+                .destination!!
+            minDelay.join()
+
+            when (destination) {
+                SplashDestination.ONBOARDING ->
+                    findNavController().navigate(
+                        SplashFragmentDirections.actionSplashFragmentToLanguageSelectFragment()
+                    )
+                SplashDestination.LOGIN ->
+                    findNavController().navigate(
+                        SplashFragmentDirections.actionSplashFragmentToLoginFragment()
+                    )
+                SplashDestination.CHAT_SETUP ->
+                    findNavController().navigate(
+                        SplashFragmentDirections.actionSplashFragmentToChatSetupFragment()
+                    )
+                SplashDestination.PAYMENT ->
+                    findNavController().navigate(
+                        SplashFragmentDirections.actionSplashFragmentToPaymentFragment()
+                    )
+                SplashDestination.HOME ->
+                    findNavController().navigate(
+                        SplashFragmentDirections.actionSplashFragmentToHomeFragment()
+                    )
             }
         }
     }
