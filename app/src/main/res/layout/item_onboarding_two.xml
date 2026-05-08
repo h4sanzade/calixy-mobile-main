@@ -3,11 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FAF7F2">
+    android:layout_height="match_parent">
 
-    <com.calixyai.ui.onboarding.OnboardingAnimView
-        android:id="@+id/animView"
+    <com.calixyai.ui.onboarding.OnboardingAnimViewSecond
+        android:id="@+id/animView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -16,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@id/textBlock"
         app:layout_constraintVertical_weight="1" />
 
-    <!-- Text block (bottom 45%) -->
+    <!-- Text block — eyni quruluş item_onboarding_page.xml ilə -->
     <LinearLayout
         android:id="@+id/textBlock"
         android:layout_width="0dp"
@@ -28,7 +27,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Tag pill -->
         <TextView
             android:id="@+id/tvTag"
             android:layout_width="wrap_content"
