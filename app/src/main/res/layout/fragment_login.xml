@@ -44,7 +44,6 @@
                     android:layout_width="38dp"
                     android:layout_height="38dp"
                     android:src="@drawable/ic_bot_avatar"
-                    android:background="@drawable/bg_avatar"
                     android:padding="2dp"
                     android:contentDescription="@string/app_name"/>
 
