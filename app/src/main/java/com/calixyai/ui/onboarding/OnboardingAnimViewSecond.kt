@@ -195,7 +195,6 @@ class OnboardingAnimViewSecond @JvmOverloads constructor(
     private fun drawOrbitalRings(canvas: Canvas, w: Float, h: Float) {
         val cx = w / 2f
         val cy = h * 0.50f
-        val steps = 120
 
         // Ring 1 — tilt 62° X, 18° Z, radius w*0.42
         drawTiltedRing(canvas, cx, cy, w * 0.42f, 62.0, 18.0,
@@ -257,7 +256,8 @@ class OnboardingAnimViewSecond @JvmOverloads constructor(
 
     private fun drawPlatformGlow(canvas: Canvas, w: Float, h: Float) {
         val cx = w / 2f
-        val baseY = h * 0.72f
+        // FIX: match tubes baseY (62%)
+        val baseY = h * 0.62f
         val grad = RadialGradient(
             cx, baseY, w * 0.30f,
             intArrayOf(
@@ -280,18 +280,27 @@ class OnboardingAnimViewSecond @JvmOverloads constructor(
 
     private fun drawTubes(canvas: Canvas, w: Float, h: Float) {
         val tubeCount = 4
-        val tubeW = w * 0.13f
-        val gap = w * 0.04f
+        val dp = resources.displayMetrics.density
+
+        // Narrower tubes with equal gaps so labels fit without overlap
+        val tubeW = w * 0.115f
+        val gap = w * 0.045f
         val totalW = tubeCount * tubeW + (tubeCount - 1) * gap
         val startX = (w - totalW) / 2f
-        val maxH = h * 0.46f
-        val baseY = h * 0.72f
-        val dp = resources.displayMetrics.density
+
+        // Tubes end at 62% — bottom 28% is reserved for labels
+        val baseY = h * 0.62f
+        val maxH = h * 0.40f
+
+        // Fixed label zone: label name on first line, pct on second, well separated
+        val labelZoneY = baseY + dp * 14f   // tube name
+        val pctZoneY   = labelZoneY + dp * 17f  // percentage — clear gap below name
 
         // Heights vary slightly per tube for natural feel
         val tubeHeights = floatArrayOf(maxH, maxH * 0.92f, maxH * 0.84f, maxH * 0.96f)
 
         tubes.forEachIndexed { i, tube ->
+            // FIX: floatOffset only affects the tube visual, NOT the labels
             val floatOffset = sin(tick * 0.025f + i * 0.8f) * dp * 4f
             val x = startX + i * (tubeW + gap)
             val tH = tubeHeights[i]
@@ -408,20 +417,18 @@ class OnboardingAnimViewSecond @JvmOverloads constructor(
             )
             reflPaint.shader = null
 
-            // Label
-            val labelY = baseY + floatOffset + dp * 18f
-            val pctY = labelY + dp * 14f
-            val textScale = w / 380f
+            // Labels drawn at fixed y positions (no floatOffset) — never overlap
+            val tubeCenterX = x + tubeW / 2f
 
-            labelPaint.textSize = 11f * dp * textScale
-            labelPaint.color = Color.argb(120, 0, 0, 0)
+            labelPaint.textSize = 12f * dp
+            labelPaint.color = Color.argb(160, 20, 50, 30)
             labelPaint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-            canvas.drawText(tube.label, x + tubeW / 2f, labelY, labelPaint)
+            canvas.drawText(tube.label, tubeCenterX, labelZoneY, labelPaint)
 
-            pctPaint.textSize = 13f * dp * textScale
+            pctPaint.textSize = 14f * dp
             pctPaint.color = COLOR_GREEN_1
             pctPaint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-            canvas.drawText("${(fillProgress[i] * 100).toInt()}%", x + tubeW / 2f, pctY, pctPaint)
+            canvas.drawText("${(fillProgress[i] * 100).toInt()}%", tubeCenterX, pctZoneY, pctPaint)
         }
     }
 
@@ -460,50 +467,51 @@ class OnboardingAnimViewSecond @JvmOverloads constructor(
 
     private fun drawFloatingIcons(canvas: Canvas, w: Float, h: Float) {
         val dp = resources.displayMetrics.density
-        val iconR = dp * 21f
+        // Smaller icons — was dp*21, now dp*14
+        val iconR = dp * 14f
 
-        // Positions: top-left, top-right, bottom-left, bottom-right (relative)
+        // Keep only the two top-corner icons; skip bottom ones that overlap tubes/labels
         val positions = listOf(
-            Pair(w * 0.06f, h * 0.08f),
-            Pair(w * 0.88f, h * 0.06f),
-            Pair(w * 0.04f, h * 0.68f),
-            Pair(w * 0.90f, h * 0.66f)
+            Pair(w * 0.08f, h * 0.07f),   // top-left
+            Pair(w * 0.88f, h * 0.07f)    // top-right
         )
+        val iconsSubset = listOf(floatIcons[0], floatIcons[1])
+        val phasesSubset = listOf(iconPhases[0], iconPhases[1])
 
         positions.forEachIndexed { i, (bx, by) ->
-            val floatY = sin(tick * 0.022f + iconPhases[i]) * dp * 8f
+            val floatY = sin(tick * 0.022f + phasesSubset[i]) * dp * 5f
             val cx = bx; val cy = by + floatY
 
-            // Outer glow
+            // Small subtle glow only
             val gGrad = RadialGradient(
-                cx, cy, iconR * 2.2f,
-                intArrayOf(Color.argb(50, 13, 191, 133), Color.TRANSPARENT),
+                cx, cy, iconR * 1.6f,
+                intArrayOf(Color.argb(30, 13, 191, 133), Color.TRANSPARENT),
                 floatArrayOf(0f, 1f), Shader.TileMode.CLAMP
             )
             glowPaint.shader = gGrad
             glowPaint.style = Paint.Style.FILL
-            canvas.drawCircle(cx, cy, iconR * 2.2f, glowPaint)
+            canvas.drawCircle(cx, cy, iconR * 1.6f, glowPaint)
             glowPaint.shader = null
 
             // Icon background circle
             val bgGrad = RadialGradient(
                 cx - iconR * 0.25f, cy - iconR * 0.25f, iconR,
-                intArrayOf(Color.argb(230, 255, 255, 255), Color.argb(160, 245, 250, 248)),
+                intArrayOf(Color.argb(220, 255, 255, 255), Color.argb(140, 245, 250, 248)),
                 floatArrayOf(0f, 1f), Shader.TileMode.CLAMP
             )
             iconBgPaint.shader = bgGrad
             canvas.drawCircle(cx, cy, iconR, iconBgPaint)
 
             // Circle border
-            glassPaint.color = Color.argb(180, 255, 255, 255)
-            glassPaint.strokeWidth = 1.2f
+            glassPaint.color = Color.argb(120, 13, 191, 133)
+            glassPaint.strokeWidth = 0.8f
             glassPaint.shader = null
             canvas.drawCircle(cx, cy, iconR, glassPaint)
 
             // Emoji text
-            iconTxtPaint.textSize = iconR * 1.05f
-            iconTxtPaint.alpha = 230
-            canvas.drawText(floatIcons[i], cx, cy + iconR * 0.38f, iconTxtPaint)
+            iconTxtPaint.textSize = iconR * 1.0f
+            iconTxtPaint.alpha = 210
+            canvas.drawText(iconsSubset[i], cx, cy + iconR * 0.36f, iconTxtPaint)
         }
     }
 }

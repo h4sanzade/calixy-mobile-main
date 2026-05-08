@@ -15,7 +15,6 @@
         app:layout_constraintBottom_toTopOf="@id/textBlock"
         app:layout_constraintVertical_weight="1" />
 
-    <!-- Text block — eyni quruluş item_onboarding_page.xml ilə -->
     <LinearLayout
         android:id="@+id/textBlock"
         android:layout_width="0dp"
