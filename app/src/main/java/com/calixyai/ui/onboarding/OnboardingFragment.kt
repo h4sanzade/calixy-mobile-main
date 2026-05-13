@@ -26,21 +26,21 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
     companion object {
         private val PAGES = listOf(
             OnboardingPage(
-                tag = "Personalized",
-                title = "Your body.\nYour data.\nYour rules.",
+                tag      = "Personalized",
+                title    = "Your body.\nYour data.\nYour rules.",
                 subtitle = "CalixyAI turns your daily habits into a clear, personalized nutrition rhythm built only for you.",
                 pageIndex = 0
             ),
             OnboardingPage(
-                tag = "Smart Tracking",
-                title = "Smart tracking\nwithout the noise.",
+                tag      = "Smart Tracking",
+                title    = "Smart tracking\nwithout the noise.",
                 subtitle = "Log meals in seconds. Understand calories and macros instantly. Stay focused on what actually matters.",
                 pageIndex = 1
             ),
             OnboardingPage(
-                tag = "AI Coach",
-                title = "A premium coach\nfor real life.",
-                subtitle = "Context-aware plans, habit reminders, and beautiful insights that keep you moving forward every day.",
+                tag      = "Step 1 of 3",
+                title    = "Point. Shoot.\nLet Calixy think.",
+                subtitle = "Frame your meal and tap capture. Your AI coach analyzes it in seconds.",
                 pageIndex = 2
             )
         )
@@ -72,7 +72,6 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         val container = binding.dotsContainer
         container.removeAllViews()
         dotViews.clear()
-
         PAGES.forEachIndexed { index, _ ->
             val dot = createDotView(index == 0)
             container.addView(dot)
@@ -82,12 +81,10 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
 
     private fun createDotView(isActive: Boolean): View {
         return View(requireContext()).apply {
-            val dp = resources.displayMetrics.density
             layoutParams = LinearLayout.LayoutParams(
-                (if (isActive) 22 else 6).dpToPx(),
+                if (isActive) 22.dpToPx() else 6.dpToPx(),
                 6.dpToPx()
             ).apply { marginEnd = 6.dpToPx() }
-
             background = ContextCompat.getDrawable(
                 requireContext(),
                 if (isActive) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive
@@ -96,13 +93,11 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
     }
 
     private fun updateDots(selectedPosition: Int) {
-        val dp = resources.displayMetrics.density
         dotViews.forEachIndexed { index, dot ->
             val isActive = index == selectedPosition
             val lp = dot.layoutParams as LinearLayout.LayoutParams
             lp.width = if (isActive) 22.dpToPx() else 6.dpToPx()
             dot.layoutParams = lp
-
             dot.background = ContextCompat.getDrawable(
                 requireContext(),
                 if (isActive) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive
@@ -112,11 +107,10 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
     }
 
     private fun updateNextButtonText(position: Int) {
-        binding.btnNext.text = if (position == PAGES.size - 1) {
+        binding.btnNext.text = if (position == PAGES.size - 1)
             getString(R.string.get_started)
-        } else {
+        else
             getString(R.string.next)
-        }
     }
 
     private fun setupClickListeners() {
