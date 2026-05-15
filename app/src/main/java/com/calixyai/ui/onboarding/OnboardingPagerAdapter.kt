@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.calixyai.databinding.ItemOnboardingPageBinding
+import com.calixyai.databinding.ItemOnboardingThreeBinding
 import com.calixyai.databinding.ItemOnboardingTwoBinding
 
 class OnboardingPagerAdapter(
